@@ -25,6 +25,8 @@ public class StudyYear {
 	@OneToMany
 	private Set<StudyCourse> studyCoures;
 	
+	public StudyYear() {}
+	
 	public StudyYear(Long id, @NotNull Date year, Set<StudentOnYear> studentsOnYear) {
 		this.id = id;
 		this.year = year;

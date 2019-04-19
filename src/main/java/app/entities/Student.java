@@ -28,7 +28,7 @@ public class Student {
 	@JoinColumn(name="addressId")
 	private Address address;
 	
-	@OneToMany(mappedBy="index")
+	@OneToMany(mappedBy="student")
 	private Set<StudentOnYear> studentYears;
 	
 	public Student() {}
