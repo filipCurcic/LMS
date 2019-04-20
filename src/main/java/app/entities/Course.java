@@ -19,33 +19,27 @@ public class Course {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
 	@Size(max = 50)
 	@NotNull
 	private String name;
-	
 	@NotNull
 	private int espb;
-	
 	@NotNull
 	private boolean mandatory;
-	
+	private int numberOfLectures;
+	private int numberOfExercises;
+	private int otherTypesOfTeachings;
+	private int researchWork;
+	private int otherClasses;
 	@OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private Set<CourseRealization> courseRealizations;
-
-	
 	@ManyToMany(fetch = FetchType.LAZY)
 	private Set<StudyYear> yearsOfStudy;
-	
 	@OneToMany(mappedBy = "course" ,fetch = FetchType.LAZY)
 	private CourseOutcome syllabus;
-	
-	
 	private Set<Course> precondition;
 
-	public Course() {
-		
-	}
+	public Course() {}
 	
 	public Course(Long id, @Size(max = 50) @NotNull String name, @NotNull int espb, @NotNull boolean mandatory,
 			int numberOfLectures, int numberOfExercises, int otherTypesOfTeachings, int researchWork,
@@ -183,9 +177,5 @@ public class Course {
 	public void setOtherClasses(int otherClasses) {
 		this.otherClasses = otherClasses;
 	}
-	private int numberOfLectures;
-	private int numberOfExercises;
-	private int otherTypesOfTeachings;
-	private int researchWork;
-	private int otherClasses;
+
 }
