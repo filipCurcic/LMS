@@ -1,15 +1,17 @@
 package app.entities;
 
 import java.util.Date;
-import java.util.Set;
 
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+
+import javax.persistence.OneToOne;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
@@ -21,6 +23,7 @@ public class Title {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="titleId")
 	private Long id;
 	
 	@NotNull
@@ -28,11 +31,14 @@ public class Title {
 	@NotNull
 	private Date DateOfCessation;
 	
-	@OneToMany(mappedBy = "title")
-	private Set<ScientificField> fields;
+	@OneToOne(mappedBy = "title")
+    private TitleType titleType;
 	
-	@OneToMany(mappedBy = "title")
-	private Set<TitleType> types;
+	@OneToOne(mappedBy = "title")
+    private ScientificField scientificField;
+	
+
+	
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Teacher teacher;
@@ -42,13 +48,13 @@ public class Title {
 	
 	public Title() {}
 	
-	public Title(Long id, Date DateOfSelection, Date DateOfCessation, Set<ScientificField> fields, Set<TitleType> types, Teacher teacher) {
+	public Title(Long id, Date DateOfSelection, Date DateOfCessation, ScientificField scientificField, TitleType titleType, Teacher teacher) {
 		super();
 		this.id = id;	
 		this.DateOfSelection = DateOfSelection;
 		this.DateOfCessation = DateOfCessation;
-		this.fields = fields;
-		this.types = types;
+		this.scientificField = scientificField;
+		this.titleType = titleType;
 		this.teacher = teacher;
 	}
 
@@ -84,20 +90,22 @@ public class Title {
 		DateOfCessation = dateOfCessation;
 	}
 
-	public Set<ScientificField> getFields() {
-		return fields;
+	
+
+	public TitleType getTitleType() {
+		return titleType;
 	}
 
-	public void setFields(Set<ScientificField> fields) {
-		this.fields = fields;
+	public void setTitleType(TitleType titleType) {
+		this.titleType = titleType;
 	}
 
-	public Set<TitleType> getTypes() {
-		return types;
+	public ScientificField getScientificField() {
+		return scientificField;
 	}
 
-	public void setTypes(Set<TitleType> types) {
-		this.types = types;
+	public void setScientificField(ScientificField scientificField) {
+		this.scientificField = scientificField;
 	}
 
 	public Teacher getTeacher() {

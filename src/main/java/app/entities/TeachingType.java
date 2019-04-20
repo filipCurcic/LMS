@@ -1,12 +1,13 @@
 package app.entities;
 
-import java.util.Set;
+
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
@@ -21,8 +22,9 @@ public class TeachingType {
 	@NotNull
 	private String name;
 	
-	@OneToMany(mappedBy="teachingType")
-	private Set<TeacherOnRealization> teachersOnRealization;
+	@OneToOne
+	@JoinColumn(name="teacherOnRealizationId")
+	private TeacherOnRealization teacherOnRealization;
 	
 	@Version
 	private int version = 0;
@@ -30,10 +32,10 @@ public class TeachingType {
 	
 	public TeachingType() {}
 	
-	public TeachingType(Long id, String name, Set<TeacherOnRealization> teachersOnRealization) {
+	public TeachingType(Long id, String name, TeacherOnRealization teacherOnRealization) {
 		super();
 		this.id = id;
-		this.teachersOnRealization = teachersOnRealization;
+		this.teacherOnRealization = teacherOnRealization;
 		
 	}
 
@@ -53,12 +55,14 @@ public class TeachingType {
 		this.name = name;
 	}
 
-	public Set<TeacherOnRealization> getTeachersOnRealization() {
-		return teachersOnRealization;
+	
+
+	public TeacherOnRealization getTeacherOnRealization() {
+		return teacherOnRealization;
 	}
 
-	public void setTeachersOnRealization(Set<TeacherOnRealization> teachersOnRealization) {
-		this.teachersOnRealization = teachersOnRealization;
+	public void setTeacherOnRealization(TeacherOnRealization teacherOnRealization) {
+		this.teacherOnRealization = teacherOnRealization;
 	}
 
 	public int getVersion() {

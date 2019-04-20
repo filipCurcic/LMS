@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
@@ -23,6 +24,9 @@ public class Address {
 	private String streetNumber;
 	@ManyToOne(fetch = FetchType.LAZY)
 	private City city;
+	
+	@OneToOne(mappedBy = "address")
+    private Teacher teacher;
 	
 	@Version
 	private int version = 0;

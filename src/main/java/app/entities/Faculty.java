@@ -35,12 +35,15 @@ public class Faculty {
 	@JoinColumn(name="addressId")
 	private Address address;
 	
+	@OneToMany(mappedBy="faculty")
+	private Set<Teacher> teachers;
+	
 	@Version
 	private int version = 0;
 	
 	public Faculty() {}
 
-	public Faculty(Long id, String name, Set<StudyCourse> studyCourse, University university, Address address,
+	public Faculty(Long id, String name, Set<StudyCourse> studyCourse, University university, Address address, Set<Teacher> teachers,
 			int version) {
 		this.id = id;
 		this.name = name;
@@ -48,6 +51,7 @@ public class Faculty {
 		this.university = university;
 		this.address = address;
 		this.version = version;
+		this.teachers = teachers;
 	}
 
 
@@ -90,6 +94,15 @@ public class Faculty {
 	public void setUniversity(University university) {
 		this.university = university;
 	}
+
+	public Set<Teacher> getTeachers() {
+		return teachers;
+	}
+
+	public void setTeachers(Set<Teacher> teachers) {
+		this.teachers = teachers;
+	}
+	
 	
 	
 	

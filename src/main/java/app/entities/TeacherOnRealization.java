@@ -1,11 +1,13 @@
 package app.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
@@ -14,6 +16,7 @@ public class TeacherOnRealization {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="teacherOnRealizationId")
 	private Long id;
 	
 	@NotNull
@@ -22,8 +25,9 @@ public class TeacherOnRealization {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Teacher teacher;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	private TeachingType teachingType;
+	
+	@OneToOne(mappedBy = "teacherOnRealization")
+    private TeachingType teachingType;
 	
 	@Version
 	private int version = 0;

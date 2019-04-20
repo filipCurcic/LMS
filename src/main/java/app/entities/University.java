@@ -32,6 +32,9 @@ public class University {
 	@OneToOne
 	@JoinColumn(name="addressId")
 	private Address address;
+		
+	@OneToMany(mappedBy="university")
+	private Set<Teacher> teachers;
 	
 	@Version
 	private int version = 0;
@@ -41,13 +44,14 @@ public class University {
 	
 
 	public University(Long id, String name, Date establishmentDate, Set<Faculty> faculties,
-			Address address, int version) {
+			Address address, Set<Teacher> teachers, int version) {
 		this.id = id;
 		this.name = name;
 		this.establishmentDate = establishmentDate;
 		this.faculties = faculties;
 		this.address = address;
 		this.version = version;
+		this.teachers = teachers;
 	}
 
 
@@ -82,7 +86,21 @@ public class University {
 
 	public void setVersion(int version) {
 		this.version = version;
+	}
+
+
+
+	public Set<Teacher> getTeachers() {
+		return teachers;
+	}
+
+
+
+	public void setTeachers(Set<Teacher> teachers) {
+		this.teachers = teachers;
 	}	
+	
+	
 
 	
 	

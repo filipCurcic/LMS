@@ -1,11 +1,14 @@
 package app.entities;
 
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
@@ -23,6 +26,9 @@ public class StudyCourse {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Faculty faculty;
+	
+	@OneToMany(mappedBy="studyCourse")
+	private Set<Teacher> teachers;
 	
 	@Version
 	private int version = 0;
