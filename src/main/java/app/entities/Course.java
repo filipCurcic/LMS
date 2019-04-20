@@ -35,10 +35,13 @@ public class Course {
 
 	
 	@ManyToMany(fetch = FetchType.LAZY)
-	private Set<YearOfStudy> yearsOfStudy;
+	private Set<StudyYear> yearsOfStudy;
 	
 	@OneToMany(mappedBy = "course" ,fetch = FetchType.LAZY)
 	private CourseOutcome syllabus;
+	
+	
+	private Set<Course> precondition;
 
 	public Course() {
 		
@@ -144,10 +147,10 @@ public class Course {
 	public void setCourseRealizations(Set<CourseRealization> courseRealizations) {
 		this.courseRealizations = courseRealizations;
 	}
-	public Set<YearOfStudy> getYearsOfStudy() {
+	public Set<StudyYear> getYearsOfStudy() {
 		return yearsOfStudy;
 	}
-	public void setYearsOfStudy(Set<YearOfStudy> yearsOfStudy) {
+	public void setYearsOfStudy(Set<StudyYear> yearsOfStudy) {
 		this.yearsOfStudy = yearsOfStudy;
 	}
 	public int getNumberOfLectures() {

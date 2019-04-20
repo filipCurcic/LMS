@@ -23,19 +23,27 @@ public class CourseRealization {
 		
 	}
 	
-	public CourseRealization(Long id, Date startDate, Date endDate) {
+	
+
+	public CourseRealization(Long id, Date startDate, Date endDate, Set<TeacherOnRealization> teacherOnRealization,
+			Set<CourseAttending> courseAttendings, Course course) {
 		super();
 		this.id = id;
 		this.startDate = startDate;
 		this.endDate = endDate;
+		this.teacherOnRealization = teacherOnRealization;
+		this.courseAttendings = courseAttendings;
+		this.course = course;
 	}
+
+
 
 	private Date startDate;
 	
 	private Date endDate;
 	
 	@OneToMany(mappedBy = "courseRealization", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	private Set<CourseTeaching> courseTeachings;
+	private Set<TeacherOnRealization> teacherOnRealization;
 
 	@OneToMany(mappedBy = "courseRealization", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private Set<CourseAttending> courseAttendings;
@@ -67,12 +75,12 @@ public class CourseRealization {
 		this.endDate = endDate;
 	}
 
-	public Set<CourseTeaching> getCourseTeachings() {
-		return courseTeachings;
+	public Set<TeacherOnRealization> getTeacherOnRealization() {
+		return teacherOnRealization;
 	}
 
-	public void setCourseTeachings(Set<CourseTeaching> courseTeachings) {
-		this.courseTeachings = courseTeachings;
+	public void setTeacherOnRealization(Set<TeacherOnRealization> teacherOnRealization) {
+		this.teacherOnRealization = teacherOnRealization;
 	}
 
 	public Set<CourseAttending> getCourseAttendings() {

@@ -16,6 +16,13 @@ public class CourseAttending {
 	
 
 	
+	public CourseAttending(Long id, Student student, CourseRealization courseRealization) {
+		super();
+		this.id = id;
+		this.student = student;
+		this.courseRealization = courseRealization;
+	}
+
 	public Long getId() {
 		return id;
 	}
