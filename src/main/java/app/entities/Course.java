@@ -36,14 +36,17 @@ public class Course {
 	@ManyToMany(fetch = FetchType.LAZY)
 	private Set<StudyYear> yearsOfStudy;
 	@OneToMany(mappedBy = "course" ,fetch = FetchType.LAZY)
-	private CourseOutcome syllabus;
+	private Set<CourseOutcome> syllabus;
 	private Set<Course> precondition;
 
 	public Course() {}
 	
+	
+	
 	public Course(Long id, @Size(max = 50) @NotNull String name, @NotNull int espb, @NotNull boolean mandatory,
-			int numberOfLectures, int numberOfExercises, int otherTypesOfTeachings, int researchWork,
-			int otherClasses) {
+			int numberOfLectures, int numberOfExercises, int otherTypesOfTeachings, int researchWork, int otherClasses,
+			Set<CourseRealization> courseRealizations, Set<StudyYear> yearsOfStudy, Set<CourseOutcome> syllabus,
+			Set<Course> precondition) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -54,7 +57,14 @@ public class Course {
 		this.otherTypesOfTeachings = otherTypesOfTeachings;
 		this.researchWork = researchWork;
 		this.otherClasses = otherClasses;
+		this.courseRealizations = courseRealizations;
+		this.yearsOfStudy = yearsOfStudy;
+		this.syllabus = syllabus;
+		this.precondition = precondition;
 	}
+
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -111,71 +121,164 @@ public class Course {
 			return false;
 		return true;
 	}
+
+
+
 	public Long getId() {
 		return id;
 	}
+
+
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+
+
 	public String getName() {
 		return name;
 	}
+
+
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
+
+
 	public int getEspb() {
 		return espb;
 	}
+
+
+
 	public void setEspb(int espb) {
 		this.espb = espb;
 	}
+
+
+
 	public boolean isMandatory() {
 		return mandatory;
 	}
+
+
+
 	public void setMandatory(boolean mandatory) {
 		this.mandatory = mandatory;
 	}
-	public Set<CourseRealization> getCourseRealizations() {
-		return courseRealizations;
-	}
-	public void setCourseRealizations(Set<CourseRealization> courseRealizations) {
-		this.courseRealizations = courseRealizations;
-	}
-	public Set<StudyYear> getYearsOfStudy() {
-		return yearsOfStudy;
-	}
-	public void setYearsOfStudy(Set<StudyYear> yearsOfStudy) {
-		this.yearsOfStudy = yearsOfStudy;
-	}
+
+
+
 	public int getNumberOfLectures() {
 		return numberOfLectures;
 	}
+
+
+
 	public void setNumberOfLectures(int numberOfLectures) {
 		this.numberOfLectures = numberOfLectures;
 	}
+
+
+
 	public int getNumberOfExercises() {
 		return numberOfExercises;
 	}
+
+
+
 	public void setNumberOfExercises(int numberOfExercises) {
 		this.numberOfExercises = numberOfExercises;
 	}
+
+
+
 	public int getOtherTypesOfTeachings() {
 		return otherTypesOfTeachings;
 	}
+
+
+
 	public void setOtherTypesOfTeachings(int otherTypesOfTeachings) {
 		this.otherTypesOfTeachings = otherTypesOfTeachings;
 	}
+
+
+
 	public int getResearchWork() {
 		return researchWork;
 	}
+
+
+
 	public void setResearchWork(int researchWork) {
 		this.researchWork = researchWork;
 	}
+
+
+
 	public int getOtherClasses() {
 		return otherClasses;
 	}
+
+
+
 	public void setOtherClasses(int otherClasses) {
 		this.otherClasses = otherClasses;
 	}
+
+
+
+	public Set<CourseRealization> getCourseRealizations() {
+		return courseRealizations;
+	}
+
+
+
+	public void setCourseRealizations(Set<CourseRealization> courseRealizations) {
+		this.courseRealizations = courseRealizations;
+	}
+
+
+
+	public Set<StudyYear> getYearsOfStudy() {
+		return yearsOfStudy;
+	}
+
+
+
+	public void setYearsOfStudy(Set<StudyYear> yearsOfStudy) {
+		this.yearsOfStudy = yearsOfStudy;
+	}
+
+
+
+	public Set<CourseOutcome> getSyllabus() {
+		return syllabus;
+	}
+
+
+
+	public void setSyllabus(Set<CourseOutcome> syllabus) {
+		this.syllabus = syllabus;
+	}
+
+
+
+	public Set<Course> getPrecondition() {
+		return precondition;
+	}
+
+
+
+	public void setPrecondition(Set<Course> precondition) {
+		this.precondition = precondition;
+	}
+	
+	
+	
 
 }

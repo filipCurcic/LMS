@@ -37,6 +37,9 @@ public class Teacher {
 	private University university;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
+	private StudyCourse studyCourse;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Faculty faculty;
 	
 	@OneToOne

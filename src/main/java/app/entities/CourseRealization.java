@@ -18,6 +18,18 @@ public class CourseRealization {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	private Date startDate;
+	
+	private Date endDate;
+	
+	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	private TeacherOnRealization teacherOnRealization;
+
+	@OneToMany(mappedBy = "courseRealization", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	private Set<CourseAttending> courseAttendings;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Course course;
 	
 	public CourseRealization() {
 		
@@ -25,7 +37,7 @@ public class CourseRealization {
 	
 	
 
-	public CourseRealization(Long id, Date startDate, Date endDate, Set<TeacherOnRealization> teacherOnRealization,
+	public CourseRealization(Long id, Date startDate, Date endDate, TeacherOnRealization teacherOnRealization,
 			Set<CourseAttending> courseAttendings, Course course) {
 		super();
 		this.id = id;
@@ -36,20 +48,6 @@ public class CourseRealization {
 		this.course = course;
 	}
 
-
-
-	private Date startDate;
-	
-	private Date endDate;
-	
-	@OneToMany(mappedBy = "courseRealization", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	private Set<TeacherOnRealization> teacherOnRealization;
-
-	@OneToMany(mappedBy = "courseRealization", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	private Set<CourseAttending> courseAttendings;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	private Course course;
 
 	public Long getId() {
 		return id;
@@ -75,11 +73,11 @@ public class CourseRealization {
 		this.endDate = endDate;
 	}
 
-	public Set<TeacherOnRealization> getTeacherOnRealization() {
+	public TeacherOnRealization getTeacherOnRealization() {
 		return teacherOnRealization;
 	}
 
-	public void setTeacherOnRealization(Set<TeacherOnRealization> teacherOnRealization) {
+	public void setTeacherOnRealization(TeacherOnRealization teacherOnRealization) {
 		this.teacherOnRealization = teacherOnRealization;
 	}
 
