@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -37,17 +36,13 @@ public class Course {
 	private Set<StudyYear> yearsOfStudy;
 	@OneToMany(mappedBy = "course" ,fetch = FetchType.LAZY)
 	private Set<CourseOutcome> syllabus;
-	private Set<Course> precondition;
+//	private Set<Course> precondition;
 
 	public Course() {}
-	
-	
-	
+
+
 	public Course(Long id, @Size(max = 50) @NotNull String name, @NotNull int espb, @NotNull boolean mandatory,
-			int numberOfLectures, int numberOfExercises, int otherTypesOfTeachings, int researchWork, int otherClasses,
-			Set<CourseRealization> courseRealizations, Set<StudyYear> yearsOfStudy, Set<CourseOutcome> syllabus,
-			Set<Course> precondition) {
-		super();
+			int numberOfLectures, int numberOfExercises, int otherTypesOfTeachings, int researchWork, int otherClasses) {
 		this.id = id;
 		this.name = name;
 		this.espb = espb;
@@ -57,12 +52,7 @@ public class Course {
 		this.otherTypesOfTeachings = otherTypesOfTeachings;
 		this.researchWork = researchWork;
 		this.otherClasses = otherClasses;
-		this.courseRealizations = courseRealizations;
-		this.yearsOfStudy = yearsOfStudy;
-		this.syllabus = syllabus;
-		this.precondition = precondition;
 	}
-
 
 
 	@Override
@@ -268,15 +258,15 @@ public class Course {
 
 
 
-	public Set<Course> getPrecondition() {
-		return precondition;
-	}
-
-
-
-	public void setPrecondition(Set<Course> precondition) {
-		this.precondition = precondition;
-	}
+//	public Set<Course> getPrecondition() {
+//		return precondition;
+//	}
+//
+//
+//
+//	public void setPrecondition(Set<Course> precondition) {
+//		this.precondition = precondition;
+//	}
 	
 	
 	

@@ -12,8 +12,13 @@ public class CourseAttending {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Student student;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	private CourseRealization courseRealization;
 	
+	public CourseAttending() {}
 
 	
 	public CourseAttending(Long id, Student student, CourseRealization courseRealization) {
@@ -78,10 +83,5 @@ public class CourseAttending {
 		this.courseRealization = courseRealization;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	private Student student;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	private CourseRealization courseRealization;
 
 }
