@@ -3,10 +3,12 @@ package app.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import app.entities.ScientificField;
 import app.repositories.ScientificFieldRepository;
 
+@Service
 public class ScientificFieldService {
 	@Autowired
 	ScientificFieldRepository scientificFieldRep;

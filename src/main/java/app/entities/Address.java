@@ -36,7 +36,8 @@ public class Address {
 		
 	}
 
-	public Address(String street, String streetNumber, City city) {
+	public Address(Long id,String street, String streetNumber, City city) {
+		this.id = id;
 		this.street = street;
 		this.streetNumber = streetNumber;
 		this.city = city;

@@ -34,10 +34,10 @@ public class City {
 	}
 
 
-	public City(String name, Country country, Set<Address> address) {
+	public City(Long id, String name, Country country) {
+		this.id = id;
 		this.name = name;
 		this.country = country;
-		this.address = address;
 	}
 
 

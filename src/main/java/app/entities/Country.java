@@ -29,9 +29,15 @@ public class Country {
 		
 	}
 	
-	public Country(String name, Set<City> city) {
+	public Country(String name) {
 		this.name = name;
-		this.city = city;
+		
+	}
+	
+	public Country(Long id, String name) {
+		this.id = id;
+		this.name = name;
+		
 	}
 
 	public Long getId() {
