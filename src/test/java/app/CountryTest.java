@@ -64,6 +64,7 @@ public class CountryTest {
 		.andExpect(jsonPath("$.name", equalTo("Spain")));
 	}
 	
+	
 	@Test
 	public void addCountry() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.get("/country/all").accept(MediaType.APPLICATION_JSON_UTF8))
@@ -71,10 +72,12 @@ public class CountryTest {
 		mockMvc.perform(MockMvcRequestBuilders.post("/country/add").contentType(MediaType.APPLICATION_JSON_UTF8).content(
 			"{\"name\": \"England\"}"))
 			.andExpect(status().isCreated());
-		mockMvc.perform(MockMvcRequestBuilders.get("/country/add").accept(MediaType.APPLICATION_JSON_UTF8))
+		mockMvc.perform(MockMvcRequestBuilders.get("/country/all").accept(MediaType.APPLICATION_JSON_UTF8))
 			.andExpect(status().isOk()).andExpect(jsonPath("$", hasSize(6)));
 
 	}
+	
+	
 	@Test
 	public void removeCountry() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders.get("/country/all").accept(MediaType.APPLICATION_JSON_UTF8))

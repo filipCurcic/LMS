@@ -15,7 +15,7 @@ import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Teacher {
+public class Teacher extends RegisteredUser {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,9 +46,6 @@ public class Teacher {
 	@JoinColumn(name="addressId")
 	private Address address;
 	
-	@Version
-	private int version = 0;
-	
 	public Teacher() {}
 
 	public Teacher(Long id, String name, String biography, String umcn, Set<Title> titles, Set<TeacherOnRealization> teachersOnRealization) {
@@ -58,7 +55,16 @@ public class Teacher {
 		this.umcn = umcn;
 		this.titles = titles;
 		this.teachersOnRealization = teachersOnRealization;
+		
+	}
 
+	
+	
+	
+	public Teacher(String username, String password, String email, String name, String biography, String umcn) {
+		super(username, password, email);
+		this.biography = biography;
+		this.umcn = umcn;
 		
 	}
 
@@ -110,18 +116,6 @@ public class Teacher {
 		this.teachersOnRealization = teachersOnRealization;
 	}
 
-	public int getVersion() {
-		return version;
-	}
 
-	public void setVersion(int version) {
-		this.version = version;
-	}
-	
-	
-	
-	
-
-	
 
 }

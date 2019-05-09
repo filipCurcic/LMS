@@ -25,6 +25,16 @@ public class Faculty {
 	@NotNull
 	private String name;
 	
+	@NotNull
+	private String contact;
+	
+	@NotNull
+	private String email;
+	
+	@NotNull
+	private String description;
+	
+	
 	@OneToMany(mappedBy="faculty")
 	private Set<StudyCourse> studyCourse;
 	
@@ -43,15 +53,31 @@ public class Faculty {
 	
 	public Faculty() {}
 
-	public Faculty(Long id, String name, Set<StudyCourse> studyCourse, University university, Address address, Set<Teacher> teachers,
-			int version) {
-		this.id = id;
+	
+	public Faculty(@NotNull String name, @NotNull String contact, @NotNull String email, @NotNull String description,
+			Set<StudyCourse> studyCourse, University university, Address address, Set<Teacher> teachers, int version) {
+		super();
 		this.name = name;
+		this.contact = contact;
+		this.email = email;
+		this.description = description;
 		this.studyCourse = studyCourse;
 		this.university = university;
 		this.address = address;
-		this.version = version;
 		this.teachers = teachers;
+		this.version = version;
+	}
+	
+	
+	public Faculty(Long id, String name, String contact, String email,
+			String description, University university, int version) {
+		this.id = id;
+		this.name = name;
+		this.contact = contact;
+		this.email = email;
+		this.description = description;
+		this.university = university;
+		this.version = version;
 	}
 
 
@@ -70,6 +96,48 @@ public class Faculty {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	
+
+	public String getContact() {
+		return contact;
+	}
+
+
+	public void setContact(String contact) {
+		this.contact = contact;
+	}
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+	public String getDescription() {
+		return description;
+	}
+
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+
+	public Address getAddress() {
+		return address;
+	}
+
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
 
 	public Set<StudyCourse> getStudyCourse() {
 		return studyCourse;

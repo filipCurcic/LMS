@@ -1,6 +1,7 @@
 package app;
 
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -61,6 +62,11 @@ public class AddressTest {
 		addressRepository.save(new Address(3l, "The Oldie", "1564", cityService.getOne(3l).get()));
 		addressRepository.save(new Address(4l, "Corso Venezia", "168", cityService.getOne(4l).get()));
 		addressRepository.save(new Address(5l, " Calle Fuencarral", "111", cityService.getOne(5l).get()));
+	}
+	
+	@Test
+	public void getAddress() throws Exception {
+		
 	}
 
 }

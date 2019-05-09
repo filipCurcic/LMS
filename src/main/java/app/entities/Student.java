@@ -12,7 +12,7 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Student {
+public class Student extends RegisteredUser {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,8 +41,14 @@ public class Student {
 		this.address = address;
 		this.studentYears = studentYears;
 	}
-
-
+	
+	public Student(String username, String password, String email, Long id, String name, String jmbg, Address address) {
+		super(username, password, email);
+		this.id = id;
+		this.name = name;
+		this.jmbg = jmbg;
+		this.address = address;
+	}
 
 	public Long getId() {
 		return id;

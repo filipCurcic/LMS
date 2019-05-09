@@ -26,6 +26,16 @@ public class University {
 	@NotNull
 	private Date establishmentDate;
 	
+	@NotNull
+	private String contact;
+	
+	@NotNull
+	private String email;
+	
+	@NotNull
+	private String description;
+	
+	
 	@OneToMany(mappedBy="university")
 	private Set<Faculty> faculties;
 	
@@ -39,23 +49,27 @@ public class University {
 	@Version
 	private int version = 0;
 	
-	public University () {}
-
-	
-
-	public University(Long id, String name, Date establishmentDate, Set<Faculty> faculties,
-			Address address, Set<Teacher> teachers, int version) {
-		this.id = id;
-		this.name = name;
-		this.establishmentDate = establishmentDate;
-		this.faculties = faculties;
-		this.address = address;
-		this.version = version;
-		this.teachers = teachers;
+	public University () {
+		
 	}
 
+	
+	public University(String name,Date establishmentDate, String contact,
+			String email, String description, Set<Faculty> faculties, Address address,
+			Set<Teacher> teachers, int version) {
+		this.name = name;
+		this.establishmentDate = establishmentDate;
+		this.contact = contact;
+		this.email = email;
+		this.description = description;
+		this.faculties = faculties;
+		this.address = address;
+		this.teachers = teachers;
+		this.version = version;
+	}
 
-
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -71,6 +85,107 @@ public class University {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	
+	public Date getEstablishmentDate() {
+		return establishmentDate;
+	}
+
+
+
+
+
+
+
+	public void setEstablishmentDate(Date establishmentDate) {
+		this.establishmentDate = establishmentDate;
+	}
+
+
+
+
+
+
+
+	public String getContact() {
+		return contact;
+	}
+
+
+
+
+
+
+
+	public void setContact(String contact) {
+		this.contact = contact;
+	}
+
+
+
+
+
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+
+
+
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+
+
+
+
+
+	public String getDescription() {
+		return description;
+	}
+
+
+
+
+
+
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+
+
+
+
+
+
+	public Address getAddress() {
+		return address;
+	}
+
+
+
+
+
+
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+
+
+
+
+
 
 	public Set<Faculty> getFaculties() {
 		return faculties;
