@@ -2,6 +2,7 @@ package app.entities;
 
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,7 +16,7 @@ import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Teacher extends RegisteredUser {
+public class Teacher {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +27,10 @@ public class Teacher extends RegisteredUser {
 	private String biography;
 	@NotNull
 	private String umcn;
+	
+	@Column(length=128)
+	private String profilePicturePath;
+	
 	
 	@OneToMany(mappedBy = "teacher")
 	private Set<Title> titles;
@@ -46,13 +51,18 @@ public class Teacher extends RegisteredUser {
 	@JoinColumn(name="addressId")
 	private Address address;
 	
+	@ManyToOne
+	private RegisteredUser registeredUser;
+	
+	
 	public Teacher() {}
 
-	public Teacher(Long id, String name, String biography, String umcn, Set<Title> titles, Set<TeacherOnRealization> teachersOnRealization) {
+	public Teacher(Long id, String name, String biography, String umcn, String profilePicturePath, Set<Title> titles, Set<TeacherOnRealization> teachersOnRealization) {
 		super();
 		this.id = id;
 		this.biography = biography;
 		this.umcn = umcn;
+		this.profilePicturePath = profilePicturePath;
 		this.titles = titles;
 		this.teachersOnRealization = teachersOnRealization;
 		
@@ -61,8 +71,7 @@ public class Teacher extends RegisteredUser {
 	
 	
 	
-	public Teacher(String username, String password, String email, String name, String biography, String umcn) {
-		super(username, password, email);
+	public Teacher(String name, String biography, String umcn) {
 		this.biography = biography;
 		this.umcn = umcn;
 		
@@ -98,6 +107,15 @@ public class Teacher extends RegisteredUser {
 
 	public void setUmcn(String umcn) {
 		this.umcn = umcn;
+	}
+	 
+
+	public String getProfilePicturePath() {
+		return profilePicturePath;
+	}
+
+	public void setProfilePicturePath(String profilePicturePath) {
+		this.profilePicturePath = profilePicturePath;
 	}
 
 	public Set<Title> getTitles() {

@@ -40,5 +40,6 @@ public class AdministatorService {
 			adminRepository.save(administrator);
 		}
 	}
+	
 
 }

@@ -36,7 +36,8 @@ public class Course {
 	private Set<StudyYear> yearsOfStudy;
 	@OneToMany(mappedBy = "course" ,fetch = FetchType.LAZY)
 	private Set<CourseOutcome> syllabus;
-//	private Set<Course> precondition;
+	
+	//private Set<Course> precondition;
 
 	public Course() {}
 
