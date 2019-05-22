@@ -65,19 +65,19 @@ public class LoginService {
 			return new ResponseEntity<HashMap<String, String>>(data, HttpStatus.OK);
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 			return new ResponseEntity<HashMap<String, String>>(HttpStatus.UNAUTHORIZED);
 		}
 	
 	}
 
-	public void addPermsion(RegisteredUser registeredUser, String role) {
-		registeredUser.setPassword(passwordEncoder.encode(registeredUser.getPassword()));
+	public void addPermssion(RegisteredUser regUser, String role) {
+		regUser.setPassword(passwordEncoder.encode(regUser.getPassword()));
 
-		registeredUser = registeredUserRepository.save(registeredUser);
-		registeredUser.setUserPermission(new HashSet<UserPermission>());
-		registeredUser.getUserPermission().add(new UserPermission(null, registeredUser, permissionRepository.findByTitle(role).get()));
-		registeredUserRepository.save(registeredUser);
+		regUser = registeredUserRepository.save(regUser);
+		regUser.setUserPermission(new HashSet<UserPermission>());
+		regUser.getUserPermission().add(new UserPermission(null, regUser, permissionRepository.findByTitle(role).get()));
+		registeredUserRepository.save(regUser);
 	}
 	
-	}
+}

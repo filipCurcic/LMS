@@ -29,11 +29,10 @@ public class File {
 	private Message message;
 
 	public File() {
-		super();
+		
 	}
 
 	public File(String description, String url, Message message) {
-		super();
 		this.description = description;
 		this.url = url;
 		this.message = message;

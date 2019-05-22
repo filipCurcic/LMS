@@ -14,6 +14,13 @@ public class AdministatorService {
 	@Autowired
 	AdministatorRepository adminRepository;
 	
+	@Autowired
+	LoginService loginService;
+	
+	public AdministatorService() {
+		
+	}
+	
 	public Iterable<Administrator> getAdministrator() {
 		return adminRepository.findAll();
 	}
@@ -23,6 +30,7 @@ public class AdministatorService {
 	}
 	
 	public void addAdministrator(Administrator admin) {
+		loginService.addPermssion(admin.getRegisteredUser(), "ROLE_ADMINISTRATOR");
 		adminRepository.save(admin);
 	}
 	

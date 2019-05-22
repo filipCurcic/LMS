@@ -36,6 +36,18 @@ public class Administrator{
 	public void setId(Long id) {
 		this.id = id;
 	}
+
+
+	public RegisteredUser getRegisteredUser() {
+		return registeredUser;
+	}
+
+
+	public void setRegisteredUser(RegisteredUser registeredUser) {
+		this.registeredUser = registeredUser;
+	}
+	
+	
 	
 	
 	

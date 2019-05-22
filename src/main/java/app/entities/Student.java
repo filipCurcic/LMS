@@ -99,6 +99,22 @@ public class Student{
 	public void setProfilePicturePath(String profilePicturePath) {
 		this.profilePicturePath = profilePicturePath;
 	}
+
+	public Set<StudentOnYear> getStudentYears() {
+		return studentYears;
+	}
+
+	public void setStudentYears(Set<StudentOnYear> studentYears) {
+		this.studentYears = studentYears;
+	}
+
+	public RegisteredUser getRegisteredUser() {
+		return registeredUser;
+	}
+
+	public void setRegisteredUser(RegisteredUser registeredUser) {
+		this.registeredUser = registeredUser;
+	}
 	
 	
 	

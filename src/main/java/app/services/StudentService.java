@@ -14,6 +14,9 @@ public class StudentService {
 	@Autowired
 	StudentRepository stuRep;
 	
+	@Autowired
+	LoginService loginService;
+	
 	public Iterable<Student> getAll(){
 		return stuRep.findAll();
 	}
@@ -22,8 +25,9 @@ public class StudentService {
 		return stuRep.findById(id);
 	}
 	
-	public void addStudent(Student ispit) {
-		stuRep.save(ispit);
+	public void addStudent(Student student) {
+		loginService.addPermssion(student.getRegisteredUser(), "ROLE_sTUDENT");
+		stuRep.save(student);
 	}
 	
 	public void removeStudent(Long id) {
