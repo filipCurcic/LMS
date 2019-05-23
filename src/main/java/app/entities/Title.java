@@ -27,6 +27,9 @@ public class Title {
 	private Long id;
 	
 	@NotNull
+	private String naziv;
+	
+	@NotNull
 	private Date DateOfSelection;
 	@NotNull
 	private Date DateOfCessation;
@@ -47,16 +50,21 @@ public class Title {
 	private int version = 0;
 	
 	public Title() {}
-	
-	public Title(Long id, Date DateOfSelection, Date DateOfCessation, ScientificField scientificField, TitleType titleType, Teacher teacher) {
+
+	public Title(Long id, @NotNull String naziv, @NotNull Date dateOfSelection, @NotNull Date dateOfCessation,
+			TitleType titleType, ScientificField scientificField, Teacher teacher, int version) {
 		super();
-		this.id = id;	
-		this.DateOfSelection = DateOfSelection;
-		this.DateOfCessation = DateOfCessation;
-		this.scientificField = scientificField;
+		this.id = id;
+		this.naziv = naziv;
+		DateOfSelection = dateOfSelection;
+		DateOfCessation = dateOfCessation;
 		this.titleType = titleType;
+		this.scientificField = scientificField;
 		this.teacher = teacher;
+		this.version = version;
 	}
+
+
 
 	public Long getId() {
 		return id;

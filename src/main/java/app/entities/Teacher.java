@@ -41,8 +41,9 @@ public class Teacher {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private University university;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	private StudyCourse studyCourse;
+	// Middle table with StudyCourse
+	@OneToMany(mappedBy="teacher")
+	private Set<StudyCourseTeacher> studyCourseTeacher;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Faculty faculty;
@@ -57,20 +58,30 @@ public class Teacher {
 	
 	public Teacher() {}
 
-	public Teacher(Long id, String name, String biography, String umcn, String profilePicturePath, Set<Title> titles, Set<TeacherOnRealization> teachersOnRealization) {
+	public Teacher(Long id, @NotNull String name, @NotNull String biography, @NotNull String umcn,
+			String profilePicturePath, Set<Title> titles, Set<TeacherOnRealization> teachersOnRealization,
+			University university, Set<StudyCourseTeacher> studyCourseTeacher, Faculty faculty, Address address,
+			RegisteredUser registeredUser) {
 		super();
 		this.id = id;
+		this.name = name;
 		this.biography = biography;
 		this.umcn = umcn;
 		this.profilePicturePath = profilePicturePath;
 		this.titles = titles;
 		this.teachersOnRealization = teachersOnRealization;
-		
+		this.university = university;
+		this.studyCourseTeacher = studyCourseTeacher;
+		this.faculty = faculty;
+		this.address = address;
+		this.registeredUser = registeredUser;
 	}
 
-	
-	
-	
+
+
+
+
+
 	public Teacher(String name, String biography, String umcn) {
 		this.biography = biography;
 		this.umcn = umcn;
