@@ -36,13 +36,22 @@ public class Course {
 	private Set<StudyYear> yearsOfStudy;
 	@OneToMany(mappedBy = "course" ,fetch = FetchType.LAZY)
 	private Set<CourseOutcome> syllabus;
-//	private Set<Course> precondition;
-
+	
+	@ManyToMany
+	private Set<Course> precondition;
+	
+	@ManyToMany(mappedBy="precondition")
+	private Set<Course> preconditionFor;
+	
+	
 	public Course() {}
 
 
 	public Course(Long id, @Size(max = 50) @NotNull String name, @NotNull int espb, @NotNull boolean mandatory,
-			int numberOfLectures, int numberOfExercises, int otherTypesOfTeachings, int researchWork, int otherClasses) {
+			int numberOfLectures, int numberOfExercises, int otherTypesOfTeachings, int researchWork, int otherClasses,
+			Set<CourseRealization> courseRealizations, Set<StudyYear> yearsOfStudy, Set<CourseOutcome> syllabus,
+			Set<Course> precondition, Set<Course> preconditionFor) {
+		super();
 		this.id = id;
 		this.name = name;
 		this.espb = espb;
@@ -52,6 +61,11 @@ public class Course {
 		this.otherTypesOfTeachings = otherTypesOfTeachings;
 		this.researchWork = researchWork;
 		this.otherClasses = otherClasses;
+		this.courseRealizations = courseRealizations;
+		this.yearsOfStudy = yearsOfStudy;
+		this.syllabus = syllabus;
+		this.precondition = precondition;
+		this.preconditionFor = preconditionFor;
 	}
 
 

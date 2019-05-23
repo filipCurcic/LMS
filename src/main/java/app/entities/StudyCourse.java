@@ -28,20 +28,25 @@ public class StudyCourse {
 	private Faculty faculty;
 	
 	@OneToMany(mappedBy="studyCourse")
-	private Set<Teacher> teachers;
+	private Set<StudyCourseTeacher> studyCourseTeacher;
 	
 	@Version
 	private int version = 0;
 	
 	public StudyCourse () {}
+	
 
-	public StudyCourse(Long id, @NotNull String name, Faculty faculty, int version) {
+	public StudyCourse(Long id, @NotNull String name, Faculty faculty, Set<StudyCourseTeacher> studyCourseTeacher,
+			int version) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.faculty = faculty;
+		this.studyCourseTeacher = studyCourseTeacher;
 		this.version = version;
 	}
+
+
 
 	public Long getId() {
 		return id;

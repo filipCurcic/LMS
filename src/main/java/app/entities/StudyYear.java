@@ -16,7 +16,6 @@ public class StudyYear {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="addressId")
 	private Long id;
 	@NotNull
 	private Date year;

@@ -26,7 +26,7 @@ import app.services.CountryService;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = App.class)
 @AutoConfigureMockMvc
-public class CItyTest {
+public class CityTest {
 
 	@Autowired
 	MockMvc mockMvc;

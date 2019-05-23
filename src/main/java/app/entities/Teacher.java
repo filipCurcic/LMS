@@ -2,6 +2,7 @@ package app.entities;
 
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -27,6 +28,10 @@ public class Teacher {
 	@NotNull
 	private String umcn;
 	
+	@Column(length=128)
+	private String profilePicturePath;
+	
+	
 	@OneToMany(mappedBy = "teacher")
 	private Set<Title> titles;
 	
@@ -36,8 +41,9 @@ public class Teacher {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private University university;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	private StudyCourse studyCourse;
+	// Middle table with StudyCourse
+	@OneToMany(mappedBy="teacher")
+	private Set<StudyCourseTeacher> studyCourseTeacher;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Faculty faculty;
@@ -46,19 +52,39 @@ public class Teacher {
 	@JoinColumn(name="addressId")
 	private Address address;
 	
-	@Version
-	private int version = 0;
+	@ManyToOne
+	private RegisteredUser registeredUser;
+	
 	
 	public Teacher() {}
 
-	public Teacher(Long id, String name, String biography, String umcn, Set<Title> titles, Set<TeacherOnRealization> teachersOnRealization) {
+	public Teacher(Long id, @NotNull String name, @NotNull String biography, @NotNull String umcn,
+			String profilePicturePath, Set<Title> titles, Set<TeacherOnRealization> teachersOnRealization,
+			University university, Set<StudyCourseTeacher> studyCourseTeacher, Faculty faculty, Address address,
+			RegisteredUser registeredUser) {
 		super();
 		this.id = id;
+		this.name = name;
 		this.biography = biography;
 		this.umcn = umcn;
+		this.profilePicturePath = profilePicturePath;
 		this.titles = titles;
 		this.teachersOnRealization = teachersOnRealization;
+		this.university = university;
+		this.studyCourseTeacher = studyCourseTeacher;
+		this.faculty = faculty;
+		this.address = address;
+		this.registeredUser = registeredUser;
+	}
 
+
+
+
+
+
+	public Teacher(String name, String biography, String umcn) {
+		this.biography = biography;
+		this.umcn = umcn;
 		
 	}
 
@@ -93,6 +119,15 @@ public class Teacher {
 	public void setUmcn(String umcn) {
 		this.umcn = umcn;
 	}
+	 
+
+	public String getProfilePicturePath() {
+		return profilePicturePath;
+	}
+
+	public void setProfilePicturePath(String profilePicturePath) {
+		this.profilePicturePath = profilePicturePath;
+	}
 
 	public Set<Title> getTitles() {
 		return titles;
@@ -110,18 +145,32 @@ public class Teacher {
 		this.teachersOnRealization = teachersOnRealization;
 	}
 
-	public int getVersion() {
-		return version;
+	public University getUniversity() {
+		return university;
 	}
 
-	public void setVersion(int version) {
-		this.version = version;
+	public void setUniversity(University university) {
+		this.university = university;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
+	public RegisteredUser getRegisteredUser() {
+		return registeredUser;
+	}
+
+	public void setRegisteredUser(RegisteredUser registeredUser) {
+		this.registeredUser = registeredUser;
 	}
 	
 	
-	
-	
 
-	
+
 
 }

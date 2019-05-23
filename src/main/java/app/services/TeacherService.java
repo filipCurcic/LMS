@@ -15,6 +15,9 @@ public class TeacherService {
 	@Autowired
 	TeacherRepository teacherRep;
 	
+	@Autowired
+	LoginService loginService;
+	
 	public Iterable<Teacher> getTeachers() {
 		return teacherRep.findAll();
 	}
@@ -24,6 +27,7 @@ public class TeacherService {
 	}
 	
 	public void addTeacher(Teacher teacher) {
+		loginService.addPermssion(teacher.getRegisteredUser(), "ROLE_PROFESSOR");
 		teacherRep.save(teacher);
 	}
 	

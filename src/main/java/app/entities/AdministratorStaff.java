@@ -1,63 +1,45 @@
 package app.entities;
 
-import java.util.Set;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class Student{
-	
+public class AdministratorStaff {
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	
 	@NotNull
 	private String name;
-	
+	@NotNull
+	private String surname;
 	@NotNull
 	private String jmbg;
 	
-	@Column(length=128)
+	private boolean deleted = false;
+	
 	private String profilePicturePath;
-	
-	@OneToOne
-	@JoinColumn(name="addressId")
-	private Address address;
-	
-	@OneToMany(mappedBy="student")
-	private Set<StudentOnYear> studentYears;
-	
 	@ManyToOne
 	private RegisteredUser registeredUser;
 	
-	public Student() {}
-
-	public Student(Long id, String name, String jmbg, String profilePicturePath, Address address,
-			Set<StudentOnYear> studentYears, RegisteredUser registeredUser) {
-		this.id = id;
-		this.name = name;
-		this.jmbg = jmbg;
-		this.profilePicturePath = profilePicturePath;
-		this.address = address;
-		this.studentYears = studentYears;
-		this.registeredUser = registeredUser;
+	public AdministratorStaff() {
+		
 	}
-	
-	public Student(Long id, String name, String jmbg, String profilePicturePath, Address address) {
+
+	public AdministratorStaff(Long id, @NotNull String name, @NotNull String surname, @NotNull String jmbg,
+			boolean deleted, String profilePicturePath, RegisteredUser registeredUser) {
+		super();
 		this.id = id;
 		this.name = name;
+		this.surname = surname;
 		this.jmbg = jmbg;
+		this.deleted = deleted;
 		this.profilePicturePath = profilePicturePath;
-		this.address = address;
+		this.registeredUser = registeredUser;
 	}
 
 	public Long getId() {
@@ -76,6 +58,14 @@ public class Student{
 		this.name = name;
 	}
 
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
 	public String getJmbg() {
 		return jmbg;
 	}
@@ -84,12 +74,12 @@ public class Student{
 		this.jmbg = jmbg;
 	}
 
-	public Address getAddress() {
-		return address;
+	public boolean isDeleted() {
+		return deleted;
 	}
 
-	public void setAddress(Address address) {
-		this.address = address;
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 
 	public String getProfilePicturePath() {
@@ -98,14 +88,6 @@ public class Student{
 
 	public void setProfilePicturePath(String profilePicturePath) {
 		this.profilePicturePath = profilePicturePath;
-	}
-
-	public Set<StudentOnYear> getStudentYears() {
-		return studentYears;
-	}
-
-	public void setStudentYears(Set<StudentOnYear> studentYears) {
-		this.studentYears = studentYears;
 	}
 
 	public RegisteredUser getRegisteredUser() {
@@ -119,5 +101,4 @@ public class Student{
 	
 	
 	
-
 }
