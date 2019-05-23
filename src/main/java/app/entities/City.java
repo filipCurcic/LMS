@@ -2,6 +2,7 @@ package app.entities;
 
 import java.util.Set;
 
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
+
 @Entity
 public class City {
 
@@ -20,6 +22,8 @@ public class City {
 	private Long id;
 	@NotNull
 	private String name;
+	
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Country country;
 	@OneToMany(mappedBy="city")

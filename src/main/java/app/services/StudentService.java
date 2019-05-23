@@ -30,6 +30,7 @@ public class StudentService {
 		Optional<Student> is = stuRep.findById(id);
 		stuRep.delete(is.get());
 	}
-
+	
+	
 
 }
