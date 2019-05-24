@@ -18,14 +18,12 @@ public class FileService {
 	public void addProfileImageAdministratorStaff(MultipartFile file, String fileName, AdministratorStaff adminStaff) throws IOException {
 	    Tika tika = new Tika();
 	    String mimeType = tika.detect(file.getBytes());
-		if(file != null && (mimeType == "image/png" || mimeType == "image/jpeg")) {
+		if(file != null && (mimeType.equals("image/png")|| mimeType.equals("image/jpeg"))) {
 			File convertFile = new File("resources\\images\\profileImages\\" + fileName + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")));
 			convertFile.createNewFile();
 			FileOutputStream fout = new FileOutputStream(convertFile);
 			fout.write(file.getBytes());
 			fout.close();
-			//student.setProfilePicturePath(convertFile.getPath());
-			//teacher.setProfilePicturePath(convertFile.getPath());
 			adminStaff.setProfilePicturePath(convertFile.getPath());
 			
 		}
@@ -34,8 +32,8 @@ public class FileService {
 	public void addProfileImageTeacher(MultipartFile file, String fileName, Teacher teacher) throws IOException {
 	    Tika tika = new Tika();
 	    String mimeType = tika.detect(file.getBytes());
-		if(file != null && (mimeType == "image/png" || mimeType == "image/jpeg")) {
-			File convertFile = new File("resources\\images\\profileImages\\" + fileName + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")));
+	    if(file != null && (mimeType.equals("image/png")|| mimeType.equals("image/jpeg"))) {
+	    	File convertFile = new File("resources\\images\\profileImages\\" + fileName + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")));
 			convertFile.createNewFile();
 			FileOutputStream fout = new FileOutputStream(convertFile);
 			fout.write(file.getBytes());
@@ -48,7 +46,7 @@ public class FileService {
 	public void addProfileImageStudent(MultipartFile file, String fileName, Student student) throws IOException {
 	    Tika tika = new Tika();
 	    String mimeType = tika.detect(file.getBytes());
-		if(file != null && (mimeType == "image/png" || mimeType == "image/jpeg")) {
+	    if(file != null && (mimeType.equals("image/png")|| mimeType.equals("image/jpeg"))) {
 			File convertFile = new File("resources\\images\\profileImages\\" + fileName + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")));
 			convertFile.createNewFile();
 			FileOutputStream fout = new FileOutputStream(convertFile);
