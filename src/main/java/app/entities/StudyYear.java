@@ -19,17 +19,23 @@ public class StudyYear {
 	private Long id;
 	@NotNull
 	private Date year;
+	@NotNull
+	private Integer studyYear; // (1, 2, 3, 4)
 	@OneToMany(mappedBy="studyYear")
 	private Set<StudentOnYear> studentsOnYear;
 	@OneToMany
 	private Set<StudyCourse> studyCoures;
 	
 	public StudyYear() {}
-	
-	public StudyYear(Long id, @NotNull Date year, Set<StudentOnYear> studentsOnYear) {
+
+	public StudyYear(Long id, @NotNull Date year, @NotNull Integer studyYear, Set<StudentOnYear> studentsOnYear,
+			Set<StudyCourse> studyCoures) {
+		super();
 		this.id = id;
 		this.year = year;
+		this.studyYear = studyYear;
 		this.studentsOnYear = studentsOnYear;
+		this.studyCoures = studyCoures;
 	}
 
 	public Long getId() {
