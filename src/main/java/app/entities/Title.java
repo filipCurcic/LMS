@@ -27,7 +27,7 @@ public class Title {
 	private Long id;
 	
 	@NotNull
-	private String naziv;
+	private String name;
 	
 	@NotNull
 	private Date DateOfSelection;
@@ -51,11 +51,11 @@ public class Title {
 	
 	public Title() {}
 
-	public Title(Long id, @NotNull String naziv, @NotNull Date dateOfSelection, @NotNull Date dateOfCessation,
+	public Title(Long id, @NotNull String name, @NotNull Date dateOfSelection, @NotNull Date dateOfCessation,
 			TitleType titleType, ScientificField scientificField, Teacher teacher, int version) {
 		super();
 		this.id = id;
-		this.naziv = naziv;
+		this.name = name;
 		DateOfSelection = dateOfSelection;
 		DateOfCessation = dateOfCessation;
 		this.titleType = titleType;
@@ -63,8 +63,6 @@ public class Title {
 		this.teacher = teacher;
 		this.version = version;
 	}
-
-
 
 	public Long getId() {
 		return id;
@@ -74,12 +72,12 @@ public class Title {
 		this.id = id;
 	}
 
-	public int getVersion() {
-		return version;
+	public String getName() {
+		return name;
 	}
 
-	public void setVersion(int version) {
-		this.version = version;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public Date getDateOfSelection() {
@@ -97,8 +95,6 @@ public class Title {
 	public void setDateOfCessation(Date dateOfCessation) {
 		DateOfCessation = dateOfCessation;
 	}
-
-	
 
 	public TitleType getTitleType() {
 		return titleType;
@@ -123,6 +119,19 @@ public class Title {
 	public void setTeacher(Teacher teacher) {
 		this.teacher = teacher;
 	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
+
+
+
+
 	
 	
 	
