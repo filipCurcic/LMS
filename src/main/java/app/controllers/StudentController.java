@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import app.entities.Student;
 import app.services.FileService;
 import app.services.StudentService;
+import app.utils.View.HideOptionalProperties;
 
 @Controller
 @RequestMapping("/student")
@@ -31,6 +33,7 @@ public class StudentController {
 	@Autowired
 	FileService fileService;
 	
+	@JsonView(HideOptionalProperties.class)
 	@RequestMapping("/all")
 	public ResponseEntity<Iterable<Student>> getStudent(){
 		return new ResponseEntity<Iterable<Student>>(stuSer.getAll(), HttpStatus.OK);

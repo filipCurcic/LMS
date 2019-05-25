@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Student{
 	
@@ -24,6 +26,9 @@ public class Student{
 	private String name;
 	
 	@NotNull
+	private String lastName;
+	
+	@NotNull
 	private String jmbg;
 	
 	@Column(length=128)
@@ -33,6 +38,7 @@ public class Student{
 	@JoinColumn(name="addressId")
 	private Address address;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="student")
 	private Set<StudentOnYear> studentYears;
 	
@@ -41,10 +47,11 @@ public class Student{
 	
 	public Student() {}
 
-	public Student(Long id, String name, String jmbg, String profilePicturePath, Address address,
+	public Student(Long id, String name, String lastName, String jmbg, String profilePicturePath, Address address,
 			Set<StudentOnYear> studentYears, RegisteredUser registeredUser) {
 		this.id = id;
 		this.name = name;
+		this.lastName = lastName;
 		this.jmbg = jmbg;
 		this.profilePicturePath = profilePicturePath;
 		this.address = address;
@@ -52,9 +59,10 @@ public class Student{
 		this.registeredUser = registeredUser;
 	}
 	
-	public Student(Long id, String name, String jmbg, String profilePicturePath, Address address) {
+	public Student(Long id, String name, String lastName, String jmbg, String profilePicturePath, Address address) {
 		this.id = id;
 		this.name = name;
+		this.lastName = lastName;
 		this.jmbg = jmbg;
 		this.profilePicturePath = profilePicturePath;
 		this.address = address;
@@ -74,6 +82,15 @@ public class Student{
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getJmbg() {
