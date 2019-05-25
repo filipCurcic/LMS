@@ -1,5 +1,6 @@
 package app.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import app.dto.CountryDto;
 import app.entities.Country;
+import app.mappers.CountryMapper;
 import app.services.CountryService;
+import app.utils.View.HideOptionalProperties;
 
 
 @CrossOrigin(origins = { "http://localhost:4200" })
@@ -25,11 +31,19 @@ public class CountryController {
 	@Autowired
 	CountryService countServ;
 	
+	@Autowired
+	CountryMapper countryMapper;
+	
 	@RequestMapping("/all")
-	public ResponseEntity<Iterable<Country>> getCountries(){
-		return new ResponseEntity<Iterable<Country>>(countServ.getAll(), HttpStatus.OK);
+	public ResponseEntity<Iterable<CountryDto>> getCountries(){
+		List<Country> country = countServ.getAll();
+		return ResponseEntity.ok(countryMapper.toDTO(country));
+
+
+		//return new ResponseEntity<Iterable<Country>>(countServ.getAll(), HttpStatus.OK);
 	}
 	
+	@JsonView(HideOptionalProperties.class)
 	@RequestMapping("/{id}")
 	public ResponseEntity<Country> getCountry(@PathVariable Long id) {
 		Optional<Country> count = countServ.getOne(id);

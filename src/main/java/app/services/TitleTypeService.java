@@ -1,5 +1,6 @@
 package app.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ public class TitleTypeService {
 	@Autowired
 	TitleTypeRepository titleTypeRep;
 	
-	public Iterable<TitleType> getTeachers() {
+	public List<TitleType> getAll() {
 		return titleTypeRep.findAll();
 	}
 	

@@ -1,6 +1,7 @@
 package app.controllers;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import app.dto.StudentDto;
+import app.entities.Address;
 import app.entities.Student;
+import app.mappers.StudentMapper;
 import app.services.FileService;
 import app.services.StudentService;
 import app.utils.View.HideOptionalProperties;
@@ -31,12 +35,16 @@ public class StudentController {
 	StudentService stuSer;
 	
 	@Autowired
+	StudentMapper studentMapper;
+	
+	@Autowired
 	FileService fileService;
 	
-	@JsonView(HideOptionalProperties.class)
 	@RequestMapping("/all")
-	public ResponseEntity<Iterable<Student>> getStudent(){
-		return new ResponseEntity<Iterable<Student>>(stuSer.getAll(), HttpStatus.OK);
+	public ResponseEntity<Iterable<StudentDto>> getStudent(){
+		List<Student> student= stuSer.getAll();
+		return ResponseEntity.ok(studentMapper.toDTO(student));	
+		//return new ResponseEntity<Iterable<Student>>(stuSer.getAll(), HttpStatus.OK);
 	}
 	
 	@RequestMapping("/{id}")

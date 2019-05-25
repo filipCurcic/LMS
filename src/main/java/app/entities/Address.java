@@ -1,13 +1,14 @@
 package app.entities;
 
-import javax.persistence.Column;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
@@ -16,18 +17,18 @@ public class Address {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="addressId")
 	private Long id;
 	@NotNull
 	private String street;
 	@NotNull
 	private String streetNumber;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(cascade=CascadeType.ALL)
 	private City city;
 	
-	@OneToOne(mappedBy = "address")
-    private Teacher teacher;
-	
+	@OneToMany(mappedBy = "address")
+    private Set<Teacher> teacher;
+	@OneToMany(mappedBy = "address")
+	private Set<Student> student;
 	@Version
 	private int version = 0;
 	
@@ -65,6 +66,31 @@ public class Address {
 
 	public void setStreetNumber(String streetNumber) {
 		this.streetNumber = streetNumber;
+	}
+	
+	
+	public Set<Teacher> getTeacher() {
+		return teacher;
+	}
+
+	public void setTeacher(Set<Teacher> teacher) {
+		this.teacher = teacher;
+	}
+
+	public Set<Student> getStudent() {
+		return student;
+	}
+
+	public void setStudent(Set<Student> student) {
+		this.student = student;
+	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
 	}
 
 	public City getCity() {

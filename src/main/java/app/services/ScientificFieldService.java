@@ -1,5 +1,6 @@
 package app.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ public class ScientificFieldService {
 	@Autowired
 	ScientificFieldRepository scientificFieldRep;
 	
-	public Iterable<ScientificField> getScientificFields() {
+	public List<ScientificField> getScientificFields() {
 		return scientificFieldRep.findAll();
 	}
 	

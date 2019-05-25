@@ -1,5 +1,6 @@
 package app.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,8 @@ public class CityService {
 	@Autowired
 	CityRepository cityRep;
 	
-	public Iterable<City> getCities() {
+
+	public List<City> getAll() {
 		return cityRep.findAll();
 	}
 	

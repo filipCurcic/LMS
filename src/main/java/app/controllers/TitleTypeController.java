@@ -1,5 +1,6 @@
 package app.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import app.dto.TitleTypeDto;
 import app.entities.TitleType;
+import app.mappers.TitleTypeMapper;
 import app.services.TitleTypeService;
 
 
@@ -20,12 +23,17 @@ import app.services.TitleTypeService;
 @RestController 
 @RequestMapping( "/titletype" ) 
 public class TitleTypeController {
+	
 	@Autowired
 	TitleTypeService ts;
+	
+	@Autowired
+	TitleTypeMapper titleTypeMapper;
 
 	@RequestMapping("/all")
-	public ResponseEntity<Iterable<TitleType>> getTitleTypes() {
-		return new ResponseEntity<Iterable<TitleType>>(ts.getTeachers(), HttpStatus.OK);
+	public ResponseEntity<Iterable<TitleTypeDto>> getCountries(){
+		List<TitleType> titleType= ts.getAll();
+		return ResponseEntity.ok(titleTypeMapper.toDTO(titleType));
 	}
 
 	@RequestMapping(value="/", method=RequestMethod.POST)

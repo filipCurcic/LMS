@@ -2,6 +2,7 @@ package app.entities;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -34,15 +34,13 @@ public class Student{
 	@Column(length=128)
 	private String profilePicturePath;
 	
-	@OneToOne
-	@JoinColumn(name="addressId")
+	@ManyToOne(cascade=CascadeType.ALL)
 	private Address address;
 	
-	@JsonIgnore
 	@OneToMany(mappedBy="student")
 	private Set<StudentOnYear> studentYears;
 	
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	private RegisteredUser registeredUser;
 	
 	public Student() {}

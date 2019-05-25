@@ -1,5 +1,6 @@
 package app.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import app.dto.ScientificFieldDto;
 import app.entities.ScientificField;
+import app.mappers.ScientificFieldMapper;
 import app.services.ScientificFieldService;
 
 @CrossOrigin(origins= {"http://localhost:4200"} ) 
@@ -22,10 +25,14 @@ public class ScientificFieldController {
 	
 	@Autowired
 	ScientificFieldService ss;
+	
+	@Autowired
+	ScientificFieldMapper scientificFieldMapper; 
 
 	@RequestMapping("/all")
-	public ResponseEntity<Iterable<ScientificField>> getScientificFields() {
-		return new ResponseEntity<Iterable<ScientificField>>(ss.getScientificFields(), HttpStatus.OK);
+	public ResponseEntity<Iterable<ScientificFieldDto>> getScientificFields() {
+		List<ScientificField> scientificField = ss.getScientificFields();
+		return ResponseEntity.ok(scientificFieldMapper.toDTO(scientificField));
 	}
 
 	@RequestMapping(value="/", method=RequestMethod.POST)

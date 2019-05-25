@@ -2,7 +2,6 @@ package app.entities;
 
 import java.util.Set;
 
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,17 +11,18 @@ import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+
+import app.utils.View.ShowCountry;
 
 @Entity
 public class Country {
-
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	@NotNull
 	private String name;
-	
 	@OneToMany(mappedBy="country", cascade=CascadeType.ALL)
 	private Set<City> city;
 	
@@ -57,6 +57,14 @@ public class Country {
 		this.name = name;
 	}
 
+	
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
 
 	public Set<City> getCity() {
 		return city;

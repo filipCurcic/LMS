@@ -1,5 +1,6 @@
 package app.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class StudentService {
 	@Autowired
 	LoginService loginService;
 	
-	public Iterable<Student> getAll(){
+	public List<Student> getAll(){
 		return stuRep.findAll();
 	}
 	

@@ -12,6 +12,8 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class RegisteredUser {
 	
@@ -27,6 +29,7 @@ public class RegisteredUser {
 	@NotNull
 	private String email;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="registeredUser", cascade = CascadeType.ALL)
 	private Set<UserPermission> userPermission;
 	

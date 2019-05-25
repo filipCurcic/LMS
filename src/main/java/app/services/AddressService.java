@@ -1,5 +1,6 @@
 package app.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ public class AddressService {
 	@Autowired
 	AddressRepository addressRep;
 	
-	public Iterable<Address> getAddress() {
+	public List<Address> getAddress() {
 		return addressRep.findAll();
 	}
 	

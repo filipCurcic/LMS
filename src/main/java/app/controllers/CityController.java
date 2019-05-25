@@ -1,6 +1,7 @@
 package app.controllers;
 
 import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,8 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import app.dto.CityDto;
+import app.dto.CountryDto;
 import app.entities.City;
+import app.entities.Country;
+import app.mappers.CityMapper;
 import app.services.CityService;
+import app.utils.View.HideOptionalProperties;
 
 
 @CrossOrigin(origins = { "http://localhost:4200" })
@@ -24,10 +32,20 @@ public class CityController {
 	@Autowired
 	CityService cityService;
 	
+	@Autowired
+	CityMapper cityMapper;
+	
+	
+	
 	@RequestMapping("/all")
-	public ResponseEntity<Iterable<City>> getCities(){
-		return new ResponseEntity<Iterable<City>>(cityService.getCities(), HttpStatus.OK);
+	public ResponseEntity<Iterable<CityDto>> getAll(){
+		List<City> city= cityService.getAll();
+		return ResponseEntity.ok(cityMapper.toDTO(city));
+
+
+		//return new ResponseEntity<Iterable<Country>>(countServ.getAll(), HttpStatus.OK);
 	}
+
 	
 	@RequestMapping("/{id}")
 	public ResponseEntity<City> getCity(@PathVariable Long id) {

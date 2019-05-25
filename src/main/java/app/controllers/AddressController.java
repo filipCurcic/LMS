@@ -1,5 +1,6 @@
 package app.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +13,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import app.dto.AddressDto;
 import app.entities.Address;
+import app.mappers.AddressMapper;
 import app.services.AddressService;
+import app.utils.View.HideOptionalProperties;
 
 @CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
@@ -23,11 +29,17 @@ public class AddressController {
 	@Autowired
 	AddressService addressService;
 	
+	@Autowired
+	AddressMapper addressMapper;
+	
+	@JsonView(HideOptionalProperties.class)
 	@RequestMapping("/all")
-	public ResponseEntity<Iterable<Address>> getAll(){
-		return new ResponseEntity<Iterable<Address>>(addressService.getAddress(), HttpStatus.OK);
+	public ResponseEntity<Iterable<AddressDto>> getAll(){
+		List<Address> address = addressService.getAddress();
+		return ResponseEntity.ok(addressMapper.toDTO(address));
 	}
 	
+	@JsonView(HideOptionalProperties.class)
 	@RequestMapping("/{id}")
 	public ResponseEntity<Address> getAddress(@PathVariable Long id) {
 		Optional<Address> address = addressService.getOne(id);

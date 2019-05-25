@@ -2,7 +2,7 @@ package app.entities;
 
 import java.util.Date;
 
-
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -23,7 +23,6 @@ public class Title {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="titleId")
 	private Long id;
 	
 	@NotNull
@@ -34,14 +33,11 @@ public class Title {
 	@NotNull
 	private Date DateOfCessation;
 	
-	@OneToOne(mappedBy = "title")
+	@ManyToOne(cascade=CascadeType.ALL)
     private TitleType titleType;
 	
 	@OneToOne(mappedBy = "title")
     private ScientificField scientificField;
-	
-
-	
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Teacher teacher;
