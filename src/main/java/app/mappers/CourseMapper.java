@@ -1,6 +1,7 @@
 package app.mappers;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -15,6 +16,11 @@ import app.entities.StudyYear;
 public class CourseMapper implements Mapper<Course, CourseDto>{
 
 	public CourseDto toDTO(Course course) {
+		
+		if(course == null) {
+			return null;
+		}
+		
 		CourseDto retVal = new CourseDto();
 			retVal.setId(course.getId());
 			retVal.setNumberOfExercises(course.getNumberOfExercises());
@@ -50,10 +56,30 @@ public class CourseMapper implements Mapper<Course, CourseDto>{
 	}
 	
 	public Course toEntity(CourseDto courseDto) {
-		return null;		
+		if(courseDto == null) {
+			return null;		
+		}
+		
+		Course course = new Course();
+		
+		course.setId(courseDto.getId() );
+		course.setEspb(courseDto.getEspb());
+		course.setMandatory(course.isMandatory());
+		course.setName(courseDto.getName());
+		course.setNumberOfExercises(courseDto.getNumberOfExercises());
+		course.setNumberOfLectures(courseDto.getNumberOfLectures());
+		course.setOtherClasses(courseDto.getOtherClasses());
+		course.setOtherTypesOfTeachings(courseDto.getOtherTypesOfTeachings());
+		course.setResearchWork(courseDto.getResearchWork());
+		return course;
 	}
 	
 	public List<CourseDto> toDTO(List<Course> course){
+		
+		if(course == null) {
+			return null;
+		}
+		
 		List<CourseDto > retVal = new ArrayList<CourseDto >();
 		for (Course courses: course) {
 			retVal.add(toDTO(courses));
@@ -61,8 +87,17 @@ public class CourseMapper implements Mapper<Course, CourseDto>{
 		return retVal;
 	}
 
-	public List<Course> toEntity(List<CourseDto > courseDto){
-		return null;
+	public Collection<Course> toEntity(Collection<CourseDto > courseDto){
+		if(courseDto == null) {
+			return null;
+		}
+		
+		Collection<Course> course = new ArrayList<Course>(courseDto.size());
+		for(CourseDto cDto: courseDto) {
+			course.add(toEntity(cDto));
+		}
+		
+		return course;
 	}
 
 

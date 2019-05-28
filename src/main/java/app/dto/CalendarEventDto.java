@@ -14,6 +14,7 @@ public class CalendarEventDto {
 	private String header;
 	private String type;
 	private String info;
+	private StudyYearDto studyYearDto;
 	
 	public CalendarEventDto() {
 		
@@ -58,6 +59,15 @@ public class CalendarEventDto {
 	public void setInfo(String info) {
 		this.info = info;
 	}
+
+	public StudyYearDto getStudyYearDto() {
+		return studyYearDto;
+	}
+
+	public void setStudyYearDto(StudyYearDto studyYearDto) {
+		this.studyYearDto = studyYearDto;
+	}
+	
 	
 	
 }

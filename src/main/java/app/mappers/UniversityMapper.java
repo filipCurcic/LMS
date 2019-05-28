@@ -1,6 +1,7 @@
 package app.mappers;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,11 @@ public class UniversityMapper implements Mapper<University, UniversityDto> {
 	AddressMapper addressMappper;
 
 	public UniversityDto toDTO(University university) {
+		
+		if(university == null) {
+			return null;
+		}
+		
 		UniversityDto retVal = new UniversityDto();
 			retVal.setId(university.getId());
 			retVal.setName(university.getName());
@@ -44,10 +50,30 @@ public class UniversityMapper implements Mapper<University, UniversityDto> {
 	}
 	
 	public University toEntity(UniversityDto universityDto) {
-		return null;		
+		if(universityDto == null) {
+			return null;		
+		}
+		
+		University university = new University();
+		
+		university.setId(universityDto.getId());
+		university.setContact(universityDto.getContact());
+		university.setDescription(universityDto.getDescription());
+		university.setEmail(universityDto.getEmail());
+		university.setEstablishmentDate(universityDto.getEstablishmentDate());
+		university.setName(universityDto.getName());
+		university.setAddress(addressMappper.toEntity(universityDto.getAddress()));
+		university.setVersion(universityDto.getVersion());
+		
+		return university;
 	}
 	
 	public List<UniversityDto> toDTO(List<University> university){
+		
+		if(university == null) {
+			return null;
+		}
+		
 		List<UniversityDto > retVal = new ArrayList<UniversityDto >();
 		for (University universities: university) {
 			retVal.add(toDTO(universities));
@@ -55,8 +81,17 @@ public class UniversityMapper implements Mapper<University, UniversityDto> {
 		return retVal;
 	}
 
-	public List<University> toEntity(List<UniversityDto > universityDto){
-		return null;
+	public Collection<University> toEntity(Collection<UniversityDto > universityDto){
+		if(universityDto == null) {
+			return null;
+		}
+		
+		Collection<University> university = new ArrayList<University>(universityDto.size());
+		for(UniversityDto uDto: universityDto) {
+			university.add(toEntity(uDto));
+		}
+		
+		return university;
 	}
 
 }

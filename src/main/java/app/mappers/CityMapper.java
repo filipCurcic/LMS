@@ -1,6 +1,7 @@
 package app.mappers;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,15 @@ public class CityMapper implements Mapper<City, CityDto> {
 	
 
 	public CityDto toDTO(City city) {
+		
+		if(city == null) {
+			return null;
+		}
+		
 		CityDto retVal = new CityDto();
 			retVal.setId(city.getId());
 			retVal.setName(city.getName());
 			retVal.setVersion(city.getVersion());
-		//	city.getCountry().getName();
 			retVal.setCountryDto(new CountryDto());
 			retVal.setCountryDto(countryMapper.toDTO(city.getCountry()));
 			retVal.setAddress(new ArrayList<>());
@@ -37,11 +42,25 @@ public class CityMapper implements Mapper<City, CityDto> {
 
 	}
 	
-	public City toEntity(CityDto cityDto) {
-		return null;		
+	public Collection<City> toEntity(Collection<CityDto> cityDto) {
+		if(cityDto == null) {
+			return null;
+		}
+		
+		Collection<City> city = new ArrayList<City>(cityDto.size());
+		for(CityDto cDto: cityDto) {
+			city.add(toEntity(cDto));
+		}
+		
+		return city;
 	}
 	
 	public List<CityDto> toDTO(List<City> city){
+		
+		if(city == null) {
+			return null;
+		}
+		
 		List<CityDto> retVal = new ArrayList<CityDto >();
 		for (City cities: city) {
 			retVal.add(toDTO(cities));
@@ -49,10 +68,19 @@ public class CityMapper implements Mapper<City, CityDto> {
 		return retVal;
 	}
 
-	public List<City> toEntity(List<CityDto> cityDto){
-		return null;
+	public City toEntity(CityDto cityDto){
+		if( cityDto == null) { 
+			return null;
+		}
+		
+		City city = new City();
+		
+		city.setId(cityDto.getId());
+		city.setName(cityDto.getName());
+		city.setVersion(cityDto.getVersion());
+		city.setCountry(countryMapper.toEntity(cityDto.getCountryDto()));
+		return city;
 	}
-
 	
 
 }

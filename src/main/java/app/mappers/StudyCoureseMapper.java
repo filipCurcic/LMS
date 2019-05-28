@@ -1,6 +1,7 @@
 package app.mappers;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,11 @@ public class StudyCoureseMapper implements Mapper<StudyCourse, StudyCourseDto> {
 	FacultyMapper facultyMapper;
 
 	public StudyCourseDto toDTO(StudyCourse studyCourse) {
+		
+		if(studyCourse == null) {
+			return null;
+		}
+		
 		StudyCourseDto retVal = new StudyCourseDto();
 			retVal.setId(studyCourse.getId());
 			retVal.setName(studyCourse.getName());
@@ -33,10 +39,25 @@ public class StudyCoureseMapper implements Mapper<StudyCourse, StudyCourseDto> {
 	}
 	
 	public StudyCourse toEntity(StudyCourseDto studyCourseDto) {
-		return null;		
+		if(studyCourseDto == null) {
+			return null;		
+		}
+		
+		StudyCourse studyCourse = new StudyCourse();
+		
+		studyCourse.setId(studyCourseDto.getId());
+		studyCourse.setName(studyCourseDto.getName());
+		studyCourse.setVersion(studyCourseDto.getVersion());
+		studyCourse.setFaculty(facultyMapper.toEntity(studyCourseDto.getFacultyDto()));
+		return studyCourse;
 	}
 	
 	public List<StudyCourseDto> toDTO(List<StudyCourse> studyCourse){
+		
+		if(studyCourse == null) {
+			return null;
+		}
+		
 		List<StudyCourseDto > retVal = new ArrayList<StudyCourseDto >();
 		for (StudyCourse studyCourses: studyCourse) {
 			retVal.add(toDTO(studyCourses));
@@ -44,8 +65,17 @@ public class StudyCoureseMapper implements Mapper<StudyCourse, StudyCourseDto> {
 		return retVal;
 	}
 
-	public List<StudyCourse> toEntity(List<StudyCourseDto > studyCourseDto){
-		return null;
+	public Collection<StudyCourse> toEntity(Collection<StudyCourseDto > studyCourseDto){
+		if(studyCourseDto == null) {
+			return null;
+		}
+		
+		Collection<StudyCourse> studyCourse = new ArrayList<StudyCourse>(studyCourseDto.size());
+		for(StudyCourseDto sDto: studyCourseDto) {
+			studyCourse.add(toEntity(sDto));
+		}
+		
+		return studyCourse;
 	}
 
 	

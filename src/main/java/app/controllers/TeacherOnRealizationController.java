@@ -35,7 +35,7 @@ public class TeacherOnRealizationController {
 		return ResponseEntity.ok(teacherOnRealizationMapper.toDTO(teacherOnRealization));
 
 	}
-	@RequestMapping(value="/", method=RequestMethod.POST)
+	@RequestMapping(value="/add", method=RequestMethod.POST)
 	public ResponseEntity<TeacherOnRealization> addTeacherOnRealization(@RequestBody TeacherOnRealization teacherOnRealization) {
 		ts.addTeacherOnRealization(teacherOnRealization);
 		return new ResponseEntity<TeacherOnRealization>(teacherOnRealization, HttpStatus.OK);
