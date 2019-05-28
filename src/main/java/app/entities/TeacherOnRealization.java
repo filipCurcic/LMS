@@ -18,7 +18,6 @@ public class TeacherOnRealization {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="teacherOnRealizationId")
 	private Long id;
 	
 	@NotNull

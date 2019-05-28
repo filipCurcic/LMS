@@ -20,8 +20,8 @@ public class CountryService {
 		return couRep.findAll();
 	}
 	
-	public Optional<Country> getOne(Long id) {
-		return couRep.findById(id);
+	public Country getOne(Long id) {
+		return couRep.findById(id).orElse(null);
 	}
 	
 	public void addCountry(Country country) {

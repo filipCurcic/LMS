@@ -19,8 +19,8 @@ public class AddressService {
 		return addressRep.findAll();
 	}
 	
-	public Optional<Address> getOne(Long id) {
-		return addressRep.findById(id);
+	public Address getOne(Long id) {
+		return addressRep.findById(id).orElse(null);
 	}
 	
 	public void addAddress(Address address) {

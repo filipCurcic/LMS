@@ -1,5 +1,6 @@
 package app.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,22 +13,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import app.dto.TeacherOnRealizationDto;
 import app.entities.TeacherOnRealization;
+import app.mappers.TeacherOnRealizationMapper;
 import app.services.TeacherOnRealizationService;
 
 
 @CrossOrigin(origins= {"http://localhost:4200"} ) 
 @RestController 
-@RequestMapping( "/teacheronrealization" ) 
+@RequestMapping( "/teacher-on-realization" ) 
 public class TeacherOnRealizationController {
 	@Autowired
 	TeacherOnRealizationService ts;
+	
+	@Autowired
+	TeacherOnRealizationMapper teacherOnRealizationMapper;
 
 	@RequestMapping("/all")
-	public ResponseEntity<Iterable<TeacherOnRealization>> getTeachersOnRealization() {
-		return new ResponseEntity<Iterable<TeacherOnRealization>>(ts.getTeachersOnRealization(), HttpStatus.OK);
-	}
+	public ResponseEntity<Iterable<TeacherOnRealizationDto>> getTeachersOnRealization() {
+		List<TeacherOnRealization> teacherOnRealization = ts.getTeachersOnRealization();
+		return ResponseEntity.ok(teacherOnRealizationMapper.toDTO(teacherOnRealization));
 
+	}
 	@RequestMapping(value="/", method=RequestMethod.POST)
 	public ResponseEntity<TeacherOnRealization> addTeacherOnRealization(@RequestBody TeacherOnRealization teacherOnRealization) {
 		ts.addTeacherOnRealization(teacherOnRealization);
@@ -36,12 +43,9 @@ public class TeacherOnRealizationController {
 
 
 	@RequestMapping("/{id}")
-	public ResponseEntity<TeacherOnRealization> getOne(@PathVariable Long id) {
-		Optional<TeacherOnRealization> teacherOnRealization = ts.getOne(id);
-		if (teacherOnRealization.isPresent()) {
-			return new ResponseEntity<TeacherOnRealization>(teacherOnRealization.get(), HttpStatus.OK);
-		}
-		return new ResponseEntity<TeacherOnRealization>(HttpStatus.NOT_FOUND);
+	public TeacherOnRealizationDto getOne(@PathVariable Long id) {
+		TeacherOnRealization teacherOnRealization = ts.getOne(id);
+		return teacherOnRealizationMapper.toDTO(teacherOnRealization);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

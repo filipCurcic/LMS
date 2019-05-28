@@ -1,9 +1,12 @@
 
 package app.services;
 
+import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import app.entities.CourseAttending;
 import app.repositories.CourseAttendingRepository;
 
@@ -15,12 +18,12 @@ public class CourseAttendingService {
 	public CourseAttendingService() {
 	}
 
-	public Iterable<CourseAttending> getCourseAttendings() {
+	public List<CourseAttending> getCourseAttendings() {
 		return cr.findAll();
 	}
 
-	public Optional<CourseAttending> getCourseAttending(Long id) {
-		return cr.findById(id);
+	public CourseAttending getCourseAttending(Long id) {
+		return cr.findById(id).orElse(null);
 	}
 
 	public void AddCourseAttending(CourseAttending courseattending) {

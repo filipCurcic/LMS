@@ -33,6 +33,7 @@ public class TitleController {
 	@RequestMapping("/all")
 	public ResponseEntity<Iterable<TitleDto>> getTitles() {
 		List<Title> title = ts.getTitles();
+		System.out.println("controller");
 		return ResponseEntity.ok(titleMapper.toDTO(title));
 	}
 
@@ -44,12 +45,9 @@ public class TitleController {
 
 
 	@RequestMapping("/{id}")
-	public ResponseEntity<Title> getOne(@PathVariable Long id) {
-		Optional<Title> title = ts.getOne(id);
-		if (title.isPresent()) {
-			return new ResponseEntity<Title>(title.get(), HttpStatus.OK);
-		}
-		return new ResponseEntity<Title>(HttpStatus.NOT_FOUND);
+	public TitleDto getOne(@PathVariable Long id) {
+		Title title = ts.getOne(id);
+		return titleMapper.toDTO(title);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

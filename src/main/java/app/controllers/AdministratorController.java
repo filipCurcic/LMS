@@ -1,5 +1,6 @@
 package app.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
+import app.dto.AdministratorDto;
 import app.entities.Administrator;
+import app.mappers.AdministratorMapper;
 import app.services.AdministatorService;
 import app.utils.View.HideOptionalProperties;
 
@@ -26,20 +29,19 @@ public class AdministratorController {
 	@Autowired
 	AdministatorService adminService;
 	
-	@JsonView(HideOptionalProperties.class)
+	@Autowired
+	AdministratorMapper administratorMapper;
+	
 	@RequestMapping("/all")
-	public ResponseEntity<Iterable<Administrator>> getAll(){
-		return new ResponseEntity<Iterable<Administrator>>(adminService.getAdministrator(), HttpStatus.OK);
+	public ResponseEntity<Iterable<AdministratorDto>> getAll(){
+		List<Administrator> administrator = adminService.getAdministrator();
+		return ResponseEntity.ok(administratorMapper.toDTO(administrator));
 	}
 	
-	@JsonView(HideOptionalProperties.class)
 	@RequestMapping("/{id}")
-	public ResponseEntity<Administrator> getAdministrator(@PathVariable Long id) {
-		Optional<Administrator> admin = adminService.getOne(id);
-		if (admin.isPresent()) {
-			return new ResponseEntity<Administrator>(admin.get(), HttpStatus.OK);
-		}
-		return new ResponseEntity<Administrator>(HttpStatus.NOT_FOUND);
+	public AdministratorDto getAdministrator(@PathVariable Long id) {
+		Administrator administrator = adminService.getOne(id);
+		return administratorMapper.toDTO(administrator);
 	}
 	
 	

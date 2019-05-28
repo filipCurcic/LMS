@@ -27,8 +27,10 @@ public class Address {
 	
 	@OneToMany(mappedBy = "address")
     private Set<Teacher> teacher;
+	
 	@OneToMany(mappedBy = "address")
 	private Set<Student> student;
+	
 	@Version
 	private int version = 0;
 	

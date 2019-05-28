@@ -44,7 +44,7 @@ public class CityTest {
 	CountryRepository countryRepository;
 	
 	@Before
-	public void setupCity() {
+/*	public void setupCity() {
 		countryService.addCountry(new Country(1l, "Serbia"));
 		countryService.addCountry(new Country(2l, "USA"));
 		countryService.addCountry(new Country(3l, "France"));
@@ -56,7 +56,7 @@ public class CityTest {
 		cityRepository.save(new City(4l, "Milano", countryService.getOne(4l).get()));
 		cityRepository.save(new City(5l, "Madrid", countryService.getOne(5l).get()));
 		
-	}
+	}*/
 	
 	@After
 	public void cleanupCity() {

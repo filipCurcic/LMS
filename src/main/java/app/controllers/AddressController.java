@@ -32,21 +32,16 @@ public class AddressController {
 	@Autowired
 	AddressMapper addressMapper;
 	
-	@JsonView(HideOptionalProperties.class)
 	@RequestMapping("/all")
 	public ResponseEntity<Iterable<AddressDto>> getAll(){
 		List<Address> address = addressService.getAddress();
 		return ResponseEntity.ok(addressMapper.toDTO(address));
 	}
 	
-	@JsonView(HideOptionalProperties.class)
 	@RequestMapping("/{id}")
-	public ResponseEntity<Address> getAddress(@PathVariable Long id) {
-		Optional<Address> address = addressService.getOne(id);
-		if (address.isPresent()) {
-			return new ResponseEntity<Address>(address.get(), HttpStatus.OK);
-		}
-		return new ResponseEntity<Address>(HttpStatus.NOT_FOUND);
+	public AddressDto getAddress(@PathVariable Long id) {
+		Address address = addressService.getOne(id);
+		return addressMapper.toDTO(address);
 	}
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST)

@@ -5,17 +5,17 @@ import java.util.Collection;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 public class AddressDto {
-
+	
 	@JacksonXmlProperty(isAttribute = true)
 	private Long id;
 	private String street;
 	private String streetNumber;
-	@JacksonXmlProperty(isAttribute = true)
-	private int version = 0;
+	private CityDto cityDto;
 	private Collection<String> student;
+	private Collection<String> teacher;
 	
-	public  AddressDto() {
-		
+	public AddressDto() {
+		System.out.println("DTO konsstruktor");
 	}
 
 	public Long getId() {
@@ -42,12 +42,12 @@ public class AddressDto {
 		this.streetNumber = streetNumber;
 	}
 
-	public int getVersion() {
-		return version;
+	public CityDto getCityDto() {
+		return cityDto;
 	}
 
-	public void setVersion(int version) {
-		this.version = version;
+	public void setCityDto(CityDto cityDto) {
+		this.cityDto = cityDto;
 	}
 
 	public Collection<String> getStudent() {
@@ -58,5 +58,13 @@ public class AddressDto {
 		this.student = student;
 	}
 
+	public Collection<String> getTeacher() {
+		return teacher;
+	}
+
+	public void setTeacher(Collection<String> teacher) {
+		this.teacher = teacher;
+	}
+	
 	
 }

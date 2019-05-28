@@ -1,6 +1,8 @@
 package app.controllers;
 
+import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import app.dto.CourseDto;
 import app.entities.Course;
+import app.mappers.CourseMapper;
 import app.services.CourseService;
 
 @CrossOrigin(origins = { "http://localhost:4200" })
@@ -19,10 +24,14 @@ import app.services.CourseService;
 public class CourseController {
 	@Autowired
 	CourseService cs;
+	
+	@Autowired
+	CourseMapper courseMapper;
 
 	@RequestMapping("/all")
-	public ResponseEntity<Iterable<Course>> getCourses() {
-		return new ResponseEntity<Iterable<Course>>(cs.getCourses(), HttpStatus.OK);
+	public ResponseEntity<Iterable<CourseDto>> getCourses() {
+		List<Course> course = cs.getCourses();
+		return ResponseEntity.ok(courseMapper.toDTO(course));
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
@@ -32,12 +41,9 @@ public class CourseController {
 	}
 
 	@RequestMapping("/{id}")
-	public ResponseEntity<Course> getCourse(@PathVariable Long id) {
-		Optional<Course> course = cs.getCourse(id);
-		if (course.isPresent()) {
-			return new ResponseEntity<Course>(course.get(), HttpStatus.OK);
-		}
-		return new ResponseEntity<Course>(HttpStatus.NOT_FOUND);
+	public CourseDto getCourse(@PathVariable Long id) {
+		Course course = cs.getCourse(id);
+		return courseMapper.toDTO(course);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

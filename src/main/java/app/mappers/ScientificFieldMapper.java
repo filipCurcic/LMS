@@ -3,26 +3,26 @@ package app.mappers;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import app.dto.ScientificFieldDto;
 import app.entities.ScientificField;
+import app.entities.Title;
 
 
 @Component
 public class ScientificFieldMapper implements Mapper<ScientificField, ScientificFieldDto> {
 
-	
 
-	public ScientificFieldDto toDTO(ScientificField cientificField) {
+	public ScientificFieldDto toDTO(ScientificField scientificField) {
 		ScientificFieldDto retVal = new ScientificFieldDto();
-			retVal.setId(cientificField.getId());
-			retVal.setName(cientificField.getName());
-			retVal.setVersion(cientificField.getVersion());
-			//retVal.setCity(new ArrayList<>());
-			
-			//retVal.setCity(CityMapper.toDTO(country.g));
+			retVal.setId(scientificField.getId());
+			retVal.setName(scientificField.getName());
+			retVal.setVersion(scientificField.getVersion());
+			retVal.setTitle(new ArrayList<>());
+			for(Title title: scientificField.getTitle()) {
+				retVal.getTitle().add("/title/" + title.getId());
+			}
 			return retVal;
 
 	}

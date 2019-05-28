@@ -22,6 +22,8 @@ public class Teacher {
 	@NotNull
 	private String name;
 	@NotNull
+	private String lastName;
+	@NotNull
 	private String biography;
 	@NotNull
 	private String umcn;
@@ -55,13 +57,14 @@ public class Teacher {
 	
 	public Teacher() {}
 
-	public Teacher(Long id, @NotNull String name, @NotNull String biography, @NotNull String umcn,
+	public Teacher(Long id, @NotNull String name, @NotNull String lastName, String biography, @NotNull String umcn,
 			String profilePicturePath, Set<Title> titles, Set<TeacherOnRealization> teachersOnRealization,
 			University university, Set<StudyCourseTeacher> studyCourseTeacher, Faculty faculty, Address address,
 			RegisteredUser registeredUser) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.lastName = lastName;
 		this.biography = biography;
 		this.umcn = umcn;
 		this.profilePicturePath = profilePicturePath;
@@ -99,6 +102,32 @@ public class Teacher {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public Set<StudyCourseTeacher> getStudyCourseTeacher() {
+		return studyCourseTeacher;
+	}
+
+	public void setStudyCourseTeacher(Set<StudyCourseTeacher> studyCourseTeacher) {
+		this.studyCourseTeacher = studyCourseTeacher;
+	}
+
+	public Faculty getFaculty() {
+		return faculty;
+	}
+
+	public void setFaculty(Faculty faculty) {
+		this.faculty = faculty;
 	}
 
 	public String getBiography() {

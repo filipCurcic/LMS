@@ -19,8 +19,8 @@ public class CalendarEventService {
 		return calendarEventRepository.findAll();
 	}
 	
-	public Optional<CalendarEvent> getOneEvent(Long id) {
-		return calendarEventRepository.findById(id);
+	public CalendarEvent getOneEvent(Long id) {
+		return calendarEventRepository.findById(id).orElse(null);
 	}
 	
 	public void addCalendarEvent(CalendarEvent calendarEvent) {

@@ -1,7 +1,6 @@
 package app.mappers;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import app.dto.CityDto;
 import app.dto.CountryDto;
 import app.entities.Address;
 import app.entities.City;
-import app.entities.Country;
 
 @Component
 public class CityMapper implements Mapper<City, CityDto> {
@@ -19,22 +17,27 @@ public class CityMapper implements Mapper<City, CityDto> {
 	@Autowired
 	AddressMapper addressMapper;
 	
+	@Autowired
+	CountryMapper countryMapper;
+	
 
 	public CityDto toDTO(City city) {
 		CityDto retVal = new CityDto();
 			retVal.setId(city.getId());
 			retVal.setName(city.getName());
 			retVal.setVersion(city.getVersion());
+		//	city.getCountry().getName();
+			retVal.setCountryDto(new CountryDto());
+			retVal.setCountryDto(countryMapper.toDTO(city.getCountry()));
 			retVal.setAddress(new ArrayList<>());
 			for (Address address: city.getAddress()) {
 				retVal.getAddress().add("/address/"+address.getId());
 			}
-			//retVal.setCity(CityMapper.toDTO(country.g));
 			return retVal;
 
 	}
 	
-	public Country toEntity(CountryDto countryDto) {
+	public City toEntity(CityDto cityDto) {
 		return null;		
 	}
 	
@@ -47,14 +50,9 @@ public class CityMapper implements Mapper<City, CityDto> {
 	}
 
 	public List<City> toEntity(List<CityDto> cityDto){
-		// TODO implementirati logiku konverzije
 		return null;
 	}
 
-	@Override
-	public City toEntity(CityDto edto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 }

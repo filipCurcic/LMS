@@ -19,8 +19,8 @@ public class TitleTypeService {
 		return titleTypeRep.findAll();
 	}
 	
-	public Optional<TitleType> getOne(Long id) {
-		return titleTypeRep.findById(id);
+	public TitleType getOne(Long id) {
+		return titleTypeRep.findById(id).orElse(null);
 	}
 	
 	public void addTitleType(TitleType titleType) {

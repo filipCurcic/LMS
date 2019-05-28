@@ -1,7 +1,9 @@
 
 package app.controllers;
 
+import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,34 +13,39 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import app.dto.CourseRealizationDto;
 import app.entities.CourseRealization;
+import app.mappers.CourseRealizationMapper;
 import app.services.CourseRealizationService;
 
 @CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
-@RequestMapping("/courserealization")
+@RequestMapping("/course-realization")
 public class CourseRealizationController {
+	
 	@Autowired
 	CourseRealizationService cs;
+	
+	@Autowired
+	CourseRealizationMapper courseRealizationMapper;
 
-	@RequestMapping("/")
-	public ResponseEntity<Iterable<CourseRealization>> getCourseRealizations() {
-		return new ResponseEntity<Iterable<CourseRealization>>(cs.getCourseRealizations(), HttpStatus.OK);
+	@RequestMapping("/all")
+	public ResponseEntity<Iterable<CourseRealizationDto>> getCourseRealizations() {
+		List<CourseRealization> courseRealization = cs.getCourseRealizations();
+		return ResponseEntity.ok(courseRealizationMapper.toDTO(courseRealization));
 	}
 
-	@RequestMapping(value = "/", method = RequestMethod.POST)
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ResponseEntity<CourseRealization> addCourseRealization(@RequestBody CourseRealization courserealization) {
 		cs.AddCourseRealization(courserealization);
 		return new ResponseEntity<CourseRealization>(courserealization, HttpStatus.OK);
 	}
 
 	@RequestMapping("/{id}")
-	public ResponseEntity<CourseRealization> getCourseRealization(@PathVariable Long id) {
-		Optional<CourseRealization> courserealization = cs.getCourseRealization(id);
-		if (courserealization.isPresent()) {
-			return new ResponseEntity<CourseRealization>(courserealization.get(), HttpStatus.OK);
-		}
-		return new ResponseEntity<CourseRealization>(HttpStatus.NOT_FOUND);
+	public CourseRealizationDto getCourseRealization(@PathVariable Long id) {
+		CourseRealization courseRealization = cs.getCourseRealization(id);
+		return courseRealizationMapper.toDTO(courseRealization);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

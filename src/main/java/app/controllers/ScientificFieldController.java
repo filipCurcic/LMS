@@ -20,7 +20,7 @@ import app.services.ScientificFieldService;
 
 @CrossOrigin(origins= {"http://localhost:4200"} ) 
 @RestController 
-@RequestMapping( "/scientificfield" )
+@RequestMapping( "/scientific-field" )
 public class ScientificFieldController {
 	
 	@Autowired
@@ -43,12 +43,9 @@ public class ScientificFieldController {
 
 
 	@RequestMapping("/{id}")
-	public ResponseEntity<ScientificField> getOne(@PathVariable Long id) {
-		Optional<ScientificField> scientificField = ss.getOne(id);
-		if (scientificField.isPresent()) {
-			return new ResponseEntity<ScientificField>(scientificField.get(), HttpStatus.OK);
-		}
-		return new ResponseEntity<ScientificField>(HttpStatus.NOT_FOUND);
+	public ScientificFieldDto getOne(@PathVariable Long id) {
+		ScientificField scientificField = ss.getOne(id);
+		return scientificFieldMapper.toDTO(scientificField);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

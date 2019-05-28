@@ -1,5 +1,6 @@
 package app.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,29 +12,33 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import app.dto.StudyCourseDto;
 import app.entities.StudyCourse;
+import app.mappers.StudyCoureseMapper;
 import app.services.StudyCourseService;
 
 @Controller
-@RequestMapping("/studyCourse")
+@RequestMapping("/study-course")
 public class StudyCourseController {
 	
 	@Autowired
 	StudyCourseService stuCouSer;
 	
+	@Autowired
+	StudyCoureseMapper studyCourseMapper;
+	
 	@RequestMapping("/all")
-	public ResponseEntity<Iterable<StudyCourse>> getUniversities(){
-		return new ResponseEntity<Iterable<StudyCourse>>(stuCouSer.getAll(), HttpStatus.OK);
+	public ResponseEntity<Iterable<StudyCourseDto>> getUniversities(){
+		List<StudyCourse> studyCourse = stuCouSer.getAll();
+		return ResponseEntity.ok(studyCourseMapper.toDTO(studyCourse));
 	}
 	
 	@RequestMapping("/{id}")
-	public ResponseEntity<StudyCourse> getStudyCourse(@PathVariable Long id) {
-		Optional<StudyCourse> uni = stuCouSer.getOne(id);
-		if (uni.isPresent()) {
-			return new ResponseEntity<StudyCourse>(uni.get(), HttpStatus.OK);
-		}
-		return new ResponseEntity<StudyCourse>(HttpStatus.NOT_FOUND);
+	public StudyCourseDto getStudyCourse(@PathVariable Long id) {
+		StudyCourse studyCourse = stuCouSer.getOne(id);
+		return studyCourseMapper.toDTO(studyCourse);
 	}
+	
 	
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public ResponseEntity<StudyCourse> addStudyCourse(@RequestBody StudyCourse stuCou){

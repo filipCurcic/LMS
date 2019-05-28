@@ -25,7 +25,7 @@ public class CourseRealization {
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private TeacherOnRealization teacherOnRealization;
 
-	@OneToMany(mappedBy = "courseRealization", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@OneToMany(mappedBy = "courseRealization", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private Set<CourseAttending> courseAttendings;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -96,7 +96,7 @@ public class CourseRealization {
 	public void setCourse(Course course) {
 		this.course = course;
 	}
-
+/*
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -146,5 +146,5 @@ public class CourseRealization {
 		return true;
 	}
 	
-
+*/
 }

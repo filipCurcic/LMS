@@ -12,6 +12,9 @@ public class StudentDto {
 	private String lastName;
 	private String jmbg;
 	private String profilePicturePath;
+	private RegisteredUserDto registeredUserDto;
+	private AddressDto addressDto;
+	private Collection<String> studentYear;
 	
 	public StudentDto() {
 		
@@ -55,6 +58,30 @@ public class StudentDto {
 	
 	public void setProfilePicturePath(String profilePicturePath) {
 		this.profilePicturePath = profilePicturePath;
+	}
+
+	public RegisteredUserDto getRegisteredUserDto() {
+		return registeredUserDto;
+	}
+
+	public void setRegisteredUserDto(RegisteredUserDto registeredUserDto) {
+		this.registeredUserDto = registeredUserDto;
+	}
+
+	public AddressDto getAddressDto() {
+		return addressDto;
+	}
+
+	public void setAddressDto(AddressDto addressDto) {
+		this.addressDto = addressDto;
+	}
+
+	public Collection<String> getStudentYear() {
+		return studentYear;
+	}
+
+	public void setStudentYear(Collection<String> studentYear) {
+		this.studentYear = studentYear;
 	}
 	
 	

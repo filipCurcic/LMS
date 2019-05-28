@@ -2,13 +2,14 @@ package app.dto;
 
 import java.util.Date;
 
-
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 public class CalendarEventDto {
 
 	@JacksonXmlProperty(isAttribute = true)
 	private Long id;
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date dateEvent;
 	private String header;
 	private String type;

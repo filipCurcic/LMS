@@ -26,7 +26,6 @@ public class CountryMapper implements Mapper<Country, CountryDto> {
 			for (City city: country.getCity()) {
 				retVal.getCity().add("/city/"+city.getId());
 			}
-			//retVal.setCity(CityMapper.toDTO(country.g));
 			return retVal;
 
 	}
@@ -44,7 +43,6 @@ public class CountryMapper implements Mapper<Country, CountryDto> {
 	}
 
 	public List<Country> toEntity(List<CountryDto > countryDto){
-		// TODO implementirati logiku konverzije
 		return null;
 	}
 

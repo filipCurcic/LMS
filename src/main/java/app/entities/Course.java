@@ -23,17 +23,20 @@ public class Course {
 	private String name;
 	@NotNull
 	private int espb;
-	@NotNull
-	private boolean mandatory;
+	//@NotNull
+	private boolean mandatory = false; 
 	private int numberOfLectures;
 	private int numberOfExercises;
 	private int otherTypesOfTeachings;
 	private int researchWork;
 	private int otherClasses;
+	
 	@OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private Set<CourseRealization> courseRealizations;
+	
 	@ManyToMany(fetch = FetchType.LAZY)
 	private Set<StudyYear> yearsOfStudy;
+	
 	@OneToMany(mappedBy = "course" ,fetch = FetchType.LAZY)
 	private Set<CourseOutcome> syllabus;
 	
@@ -272,15 +275,27 @@ public class Course {
 
 
 
-//	public Set<Course> getPrecondition() {
-//		return precondition;
-//	}
-//
-//
-//
-//	public void setPrecondition(Set<Course> precondition) {
-//		this.precondition = precondition;
-//	}
+	public Set<Course> getPrecondition() {
+		return precondition;
+	}
+
+
+
+	public void setPrecondition(Set<Course> precondition) {
+		this.precondition = precondition;
+	}
+
+
+	public Set<Course> getPreconditionFor() {
+		return preconditionFor;
+	}
+
+
+	public void setPreconditionFor(Set<Course> preconditionFor) {
+		this.preconditionFor = preconditionFor;
+	}
+	
+	
 	
 	
 	

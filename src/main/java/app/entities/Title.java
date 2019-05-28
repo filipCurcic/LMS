@@ -15,6 +15,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Cascade;
 
 
 
@@ -36,7 +37,7 @@ public class Title {
 	@ManyToOne(cascade=CascadeType.ALL)
     private TitleType titleType;
 	
-	@OneToOne(mappedBy = "title")
+	@ManyToOne(fetch = FetchType.LAZY)
     private ScientificField scientificField;
 	
 	@ManyToOne(fetch = FetchType.LAZY)

@@ -1,10 +1,10 @@
 package app.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 
 import app.entities.Teacher;
 import app.repositories.TeacherRepository;
@@ -18,12 +18,12 @@ public class TeacherService {
 	@Autowired
 	LoginService loginService;
 	
-	public Iterable<Teacher> getTeachers() {
+	public List<Teacher> getTeachers() {
 		return teacherRep.findAll();
 	}
 	
-	public Optional<Teacher> getOne(Long id) {
-		return teacherRep.findById(id);
+	public Teacher getOne(Long id) {
+		return teacherRep.findById(id).orElse(null);
 	}
 	
 	public void addTeacher(Teacher teacher) {

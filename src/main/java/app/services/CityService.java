@@ -20,8 +20,8 @@ public class CityService {
 		return cityRep.findAll();
 	}
 	
-	public Optional<City> getOne(Long id) {
-		return cityRep.findById(id);
+	public City getOne(Long id) {
+		return cityRep.findById(id).orElse(null);
 	}
 	
 	public void addCity(City city) {

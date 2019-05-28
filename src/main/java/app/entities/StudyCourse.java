@@ -24,7 +24,7 @@ public class StudyCourse {
 	@NotNull
 	private String name;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Faculty faculty;
 	
 	@OneToMany(mappedBy="studyCourse")
@@ -71,13 +71,26 @@ public class StudyCourse {
 	public void setFaculty(Faculty faculty) {
 		this.faculty = faculty;
 	}
-	
-	
-	
-	
-	
-	
-	
+
+
+	public Set<StudyCourseTeacher> getStudyCourseTeacher() {
+		return studyCourseTeacher;
+	}
+
+
+	public void setStudyCourseTeacher(Set<StudyCourseTeacher> studyCourseTeacher) {
+		this.studyCourseTeacher = studyCourseTeacher;
+	}
+
+
+	public int getVersion() {
+		return version;
+	}
+
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
 	
 	
 	

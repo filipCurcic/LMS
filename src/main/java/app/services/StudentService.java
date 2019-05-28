@@ -22,8 +22,8 @@ public class StudentService {
 		return stuRep.findAll();
 	}
 	
-	public Optional<Student> getOne(Long id){
-		return stuRep.findById(id);
+	public Student getOne(Long id){
+		return stuRep.findById(id).orElse(null);
 	}
 	
 	public void addStudent(Student student) {

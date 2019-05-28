@@ -69,6 +69,23 @@ public class StudentOnYear {
 	public void setStudyYear(StudyYear studyYear) {
 		this.studyYear = studyYear;
 	}
+
+	public String getIndeks() {
+		return indeks;
+	}
+
+	public void setIndeks(String indeks) {
+		this.indeks = indeks;
+	}
+
+	public Student getStudent() {
+		return student;
+	}
+
+	public void setStudent(Student student) {
+		this.student = student;
+	}
+	
 	
 	
 	

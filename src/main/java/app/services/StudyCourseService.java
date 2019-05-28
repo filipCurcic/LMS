@@ -1,5 +1,6 @@
 package app.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,12 @@ public class StudyCourseService {
 	@Autowired
 	StudyCourseRepository stuCouRep;
 	
-	public Iterable<StudyCourse> getAll(){
+	public List<StudyCourse> getAll(){
 		return stuCouRep.findAll();
 	}
 	
-	public Optional<StudyCourse> getOne(Long id){
-		return stuCouRep.findById(id);
+	public StudyCourse getOne(Long id){
+		return stuCouRep.findById(id).orElse(null);
 	}
 	
 	public void addStudyCourse(StudyCourse stuCou) {

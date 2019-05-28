@@ -39,18 +39,12 @@ public class CountryController {
 		List<Country> country = countServ.getAll();
 		return ResponseEntity.ok(countryMapper.toDTO(country));
 
-
-		//return new ResponseEntity<Iterable<Country>>(countServ.getAll(), HttpStatus.OK);
 	}
 	
-	@JsonView(HideOptionalProperties.class)
 	@RequestMapping("/{id}")
-	public ResponseEntity<Country> getCountry(@PathVariable Long id) {
-		Optional<Country> count = countServ.getOne(id);
-		if (count.isPresent()) {
-			return new ResponseEntity<Country>(count.get(), HttpStatus.OK);
-		}
-		return new ResponseEntity<Country>(HttpStatus.NOT_FOUND);
+	public CountryDto getCountry(@PathVariable Long id) {
+		Country country = countServ.getOne(id);
+		return countryMapper.toDTO(country);
 	}
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST)

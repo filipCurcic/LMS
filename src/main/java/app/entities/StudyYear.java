@@ -61,6 +61,24 @@ public class StudyYear {
 	public void setStudentsOnYear(Set<StudentOnYear> studentsOnYear) {
 		this.studentsOnYear = studentsOnYear;
 	}
+
+	public Integer getStudyYear() {
+		return studyYear;
+	}
+
+	public void setStudyYear(Integer studyYear) {
+		this.studyYear = studyYear;
+	}
+
+	public Set<StudyCourse> getStudyCoures() {
+		return studyCoures;
+	}
+
+	public void setStudyCoures(Set<StudyCourse> studyCoures) {
+		this.studyCoures = studyCoures;
+	}
+	
+	
 	
 	
 	

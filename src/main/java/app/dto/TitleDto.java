@@ -5,6 +5,9 @@ import java.util.Date;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
+
+
+
 public class TitleDto {
 
 	@JacksonXmlProperty(isAttribute = true)
@@ -12,7 +15,11 @@ public class TitleDto {
 	private String name;
 	private Date DateOfSelection;
 	private Date DateOfCessation;
+	private TitleTypeDto titleTypeDto;
+	private ScientificFieldDto scientificFieldDto;
+	private TeacherDto teacherDto;
 	
+		
 	@JacksonXmlProperty(isAttribute = true)
 	private int version = 0;
 	
@@ -59,6 +66,32 @@ public class TitleDto {
 	public void setVersion(int version) {
 		this.version = version;
 	}
+
+	public TitleTypeDto getTitleTypeDto() {
+		return titleTypeDto;
+	}
+
+	public void setTitleTypeDto(TitleTypeDto titleTypeDto) {
+		this.titleTypeDto = titleTypeDto;
+	}
+
+	public ScientificFieldDto getScientificFieldDto() {
+		return scientificFieldDto;
+	}
+
+	public void setScientificFieldDto(ScientificFieldDto scientificFieldDto) {
+		this.scientificFieldDto = scientificFieldDto;
+	}
+
+	public TeacherDto getTeacherDto() {
+		return teacherDto;
+	}
+
+	public void setTeacherDto(TeacherDto teacherDto) {
+		this.teacherDto = teacherDto;
+	}
+	
+	
 	
 	
 	

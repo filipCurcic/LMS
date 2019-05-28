@@ -18,8 +18,8 @@ public class ScientificFieldService {
 		return scientificFieldRep.findAll();
 	}
 	
-	public Optional<ScientificField> getOne(Long id) {
-		return scientificFieldRep.findById(id);
+	public ScientificField getOne(Long id) {
+		return scientificFieldRep.findById(id).orElse(null);
 	}
 	
 	public void addScientificField(ScientificField scientificField) {

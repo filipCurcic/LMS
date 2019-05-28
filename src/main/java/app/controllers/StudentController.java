@@ -44,16 +44,12 @@ public class StudentController {
 	public ResponseEntity<Iterable<StudentDto>> getStudent(){
 		List<Student> student= stuSer.getAll();
 		return ResponseEntity.ok(studentMapper.toDTO(student));	
-		//return new ResponseEntity<Iterable<Student>>(stuSer.getAll(), HttpStatus.OK);
 	}
 	
 	@RequestMapping("/{id}")
-	public ResponseEntity<Student> getStudent(@PathVariable Long id) {
-		Optional<Student> uni = stuSer.getOne(id);
-		if (uni.isPresent()) {
-			return new ResponseEntity<Student>(uni.get(), HttpStatus.OK);
-		}
-		return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
+	public StudentDto getStudent(@PathVariable Long id) {
+		Student student = stuSer.getOne(id);
+		return studentMapper.toDTO(student);
 	}
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

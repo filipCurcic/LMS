@@ -1,6 +1,7 @@
 package app.controllers;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -19,7 +19,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import app.dto.TeacherDto;
 import app.entities.Teacher;
+import app.mappers.TeacherMapper;
 import app.services.FileService;
 import app.services.TeacherService;
 
@@ -32,21 +34,23 @@ public class TeacherController {
 	TeacherService teacherService;
 	
 	@Autowired
+	TeacherMapper teacherMapper;
+	
+	@Autowired
 	FileService fileService;
 
 	@RequestMapping("/all")
-	public ResponseEntity<Iterable<Teacher>> getTeachers() {
-		return new ResponseEntity<Iterable<Teacher>>(teacherService.getTeachers(), HttpStatus.OK);
+	public ResponseEntity<Iterable<TeacherDto>> getTeachers() {
+		List<Teacher> teacher = teacherService.getTeachers();
+		return ResponseEntity.ok(teacherMapper.toDTO(teacher));
+
 	}
 
 
 	@RequestMapping("/{id}")
-	public ResponseEntity<Teacher> getOne(@PathVariable Long id) {
-		Optional<Teacher> teacher = teacherService.getOne(id);
-		if (teacher.isPresent()) {
-			return new ResponseEntity<Teacher>(teacher.get(), HttpStatus.OK);
-		}
-		return new ResponseEntity<Teacher>(HttpStatus.NOT_FOUND);
+	public TeacherDto getOne(@PathVariable Long id) {
+		Teacher teacher = teacherService.getOne(id);
+		return teacherMapper.toDTO(teacher);
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

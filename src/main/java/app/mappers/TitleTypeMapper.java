@@ -23,7 +23,6 @@ public class TitleTypeMapper implements Mapper<TitleType, TitleTypeDto> {
 			for (Title title: titleType.getTitle()) {
 				retVal.getTitle().add("/title/"+title.getId());
 			}
-			//retVal.setCity(CityMapper.toDTO(country.g));
 			return retVal;
 
 	}

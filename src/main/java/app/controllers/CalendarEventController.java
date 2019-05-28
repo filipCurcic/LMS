@@ -21,7 +21,7 @@ import app.services.CalendarEventService;
 
 @CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
-@RequestMapping("/citcalendar-event")
+@RequestMapping("/calendar-event")
 public class CalendarEventController {
 
 	@Autowired
@@ -41,12 +41,9 @@ public class CalendarEventController {
 
 	
 	@RequestMapping("/{id}")
-	public ResponseEntity<CalendarEvent> getCalendarEvent(@PathVariable Long id) {
-		Optional<CalendarEvent> calendarEvent= calendarEventService.getOneEvent(id);
-		if (calendarEvent.isPresent()) {
-			return new ResponseEntity<CalendarEvent>(calendarEvent.get(), HttpStatus.OK);
-		}
-		return new ResponseEntity<CalendarEvent>(HttpStatus.NOT_FOUND);
+	public CalendarEventDto getCalendarEvent(@PathVariable Long id) {
+		CalendarEvent calendarEvent = calendarEventService.getOneEvent(id);
+		return calendarEventMapper.toDTO(calendarEvent);
 	}
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST)

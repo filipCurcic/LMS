@@ -1,5 +1,6 @@
 package app.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,23 +13,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import app.dto.TeachingTypeDto;
 import app.entities.TeachingType;
+import app.mappers.TeachingTypeMapper;
 import app.services.TeachingTypeService;
 
 @CrossOrigin(origins= {"http://localhost:4200"} ) 
 @RestController 
-@RequestMapping( "/teachingtype" ) 
+@RequestMapping( "/teaching-type" ) 
 public class TeachingTypeController {
 	
 	@Autowired
 	TeachingTypeService ts;
+	
+	@Autowired
+	TeachingTypeMapper teachingTypeMapper;
 
 	@RequestMapping("/all")
-	public ResponseEntity<Iterable<TeachingType>> getTeachers() {
-		return new ResponseEntity<Iterable<TeachingType>>(ts.getTeachingTypes(), HttpStatus.OK);
+	public ResponseEntity<Iterable<TeachingTypeDto>> getTeachers() {
+		List<TeachingType> teachingType = ts.getTeachingTypes();
+		return ResponseEntity.ok(teachingTypeMapper.toDTO(teachingType));
 	}
 
-	@RequestMapping(value="/", method=RequestMethod.POST)
+	@RequestMapping(value="/add", method=RequestMethod.POST)
 	public ResponseEntity<TeachingType> addTeachingType(@RequestBody TeachingType teachingType) {
 		ts.addTeachingType(teachingType);
 		return new ResponseEntity<TeachingType>(teachingType, HttpStatus.OK);
@@ -36,12 +43,9 @@ public class TeachingTypeController {
 
 
 	@RequestMapping("/{id}")
-	public ResponseEntity<TeachingType> getOne(@PathVariable Long id) {
-		Optional<TeachingType> teachingType = ts.getOne(id);
-		if (teachingType.isPresent()) {
-			return new ResponseEntity<TeachingType>(teachingType.get(), HttpStatus.OK);
-		}
-		return new ResponseEntity<TeachingType>(HttpStatus.NOT_FOUND);
+	public TeachingTypeDto getOne(@PathVariable Long id) {
+		TeachingType teachingType = ts.getOne(id);
+		return teachingTypeMapper.toDTO(teachingType);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

@@ -1,5 +1,7 @@
 package app.dto;
 
+import java.util.Collection;
+
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 public class ScientificFieldDto {
@@ -7,6 +9,7 @@ public class ScientificFieldDto {
 	@JacksonXmlProperty(isAttribute = true)
 	private Long id;
 	private String name;
+	private Collection<String> title;
 	@JacksonXmlProperty(isAttribute = true)
 	private int version = 0;
 	
@@ -28,6 +31,15 @@ public class ScientificFieldDto {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+
+	public Collection<String> getTitle() {
+		return title;
+	}
+
+	public void setTitle(Collection<String> title) {
+		this.title = title;
 	}
 
 	public int getVersion() {

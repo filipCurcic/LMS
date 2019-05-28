@@ -19,6 +19,14 @@ public class CountryDto {
 		
 	}
 	
+	
+	
+	public CountryDto(String name) {
+		this.name = name;
+	}
+
+
+
 	public Long getId() {
 		return id;
 	}

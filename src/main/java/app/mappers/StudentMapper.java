@@ -3,15 +3,22 @@ package app.mappers;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import app.dto.RegisteredUserDto;
 import app.dto.StudentDto;
-import app.entities.City;
 import app.entities.Student;
+import app.entities.StudentOnYear;
 
 @Component
 public class StudentMapper implements Mapper<Student, StudentDto> {
+
+	@Autowired
+	RegisteredUserMapper registeredUserMapper;
 	
+	@Autowired
+	AddressMapper addressMapper;
 
 	public StudentDto toDTO(Student student) {
 		StudentDto retVal = new StudentDto();
@@ -20,12 +27,14 @@ public class StudentMapper implements Mapper<Student, StudentDto> {
 			retVal.setLastName(student.getLastName());
 			retVal.setJmbg(student.getJmbg());
 			retVal.setProfilePicturePath(student.getProfilePicturePath());
-		/*	retVal.setCity(new ArrayList<>());
-			for (City city: country.getCity()) {
-				retVal.getCity().add("/city/"+city.getId());
-			}*/
-			//retVal.setCity(CityMapper.toDTO(country.g));
-			return retVal;
+			retVal.setRegisteredUserDto(new RegisteredUserDto());
+			retVal.setRegisteredUserDto(registeredUserMapper.toDTO(student.getRegisteredUser()));
+			retVal.setAddressDto(addressMapper.toDTO(student.getAddress()));
+			retVal.setStudentYear(new ArrayList<>());
+			for(StudentOnYear studentOnYear: student.getStudentYears()) {
+				retVal.getStudentYear().add("/address/" + studentOnYear.getId());
+			}
+		return retVal;
 
 	}
 	

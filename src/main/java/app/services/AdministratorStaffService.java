@@ -1,5 +1,6 @@
 package app.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +18,12 @@ public class AdministratorStaffService {
 	@Autowired
 	LoginService loginService;
 	
-	public Iterable<AdministratorStaff> getAdministratorStaff() {
+	public List<AdministratorStaff> getAdministratorStaff() {
 		return administratorStaffRepository.findAll();
 	}
 	
-	public Optional<AdministratorStaff> getOne(Long id) {
-		return administratorStaffRepository.findById(id);
+	public AdministratorStaff getOne(Long id) {
+		return administratorStaffRepository.findById(id).orElse(null);
 	}
 	
 	public void addAdministratorStaff(AdministratorStaff adminStaff) {

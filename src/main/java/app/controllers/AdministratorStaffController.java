@@ -1,6 +1,7 @@
 package app.controllers;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import app.dto.AdministratorStaffDto;
 import app.entities.AdministratorStaff;
+import app.mappers.AdministratorStaffMapper;
 import app.services.AdministratorStaffService;
 import app.services.FileService;
 import app.utils.View.HideOptionalProperties;
@@ -36,21 +39,20 @@ public class AdministratorStaffController {
 	@Autowired
     FileService fileService;
     
+	@Autowired
+	AdministratorStaffMapper administratorStaffMapper;
 	
-	@JsonView(HideOptionalProperties.class)
 	@RequestMapping("/all")
-	public ResponseEntity<Iterable<AdministratorStaff>> getAll(){
-		return new ResponseEntity<Iterable<AdministratorStaff>>(adminStaffService.getAdministratorStaff(), HttpStatus.OK);
+	public ResponseEntity<Iterable<AdministratorStaffDto>> getAll(){
+		List<AdministratorStaff> administratorStaff = adminStaffService.getAdministratorStaff();
+		return ResponseEntity.ok(administratorStaffMapper.toDTO(administratorStaff));
 	}
 	
-	@JsonView(HideOptionalProperties.class)
+	
 	@RequestMapping("/{id}")
-	public ResponseEntity<AdministratorStaff> getAdministratorStaff(@PathVariable Long id) {
-		Optional<AdministratorStaff> adminStaff = adminStaffService.getOne(id);
-		if (adminStaff.isPresent()) {
-			return new ResponseEntity<AdministratorStaff>(adminStaff.get(), HttpStatus.OK);
-		}
-		return new ResponseEntity<AdministratorStaff>(HttpStatus.NOT_FOUND);
+	public AdministratorStaffDto getAdministratorStaff(@PathVariable Long id) {
+		AdministratorStaff administratorStaff = adminStaffService.getOne(id);
+		return administratorStaffMapper.toDTO(administratorStaff);
 	}
 	
 	

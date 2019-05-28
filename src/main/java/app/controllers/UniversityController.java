@@ -1,5 +1,6 @@
 package app.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import app.dto.UniversityDto;
 import app.entities.University;
+import app.mappers.UniversityMapper;
 import app.services.UniversityService;
 
 @Controller
@@ -21,18 +24,19 @@ public class UniversityController {
 	@Autowired
 	UniversityService uniSer;
 	
+	@Autowired
+	UniversityMapper universityMapper;
+	
 	@RequestMapping("/all")
-	public ResponseEntity<Iterable<University>> getUniversities(){
-		return new ResponseEntity<Iterable<University>>(uniSer.getAll(), HttpStatus.OK);
+	public ResponseEntity<Iterable<UniversityDto>> getUniversities(){
+		List<University> university = uniSer.getAll();
+		return ResponseEntity.ok(universityMapper.toDTO(university));
 	}
 	
 	@RequestMapping("/{id}")
-	public ResponseEntity<University> getUniversity(@PathVariable Long id) {
-		Optional<University> uni = uniSer.getOne(id);
-		if (uni.isPresent()) {
-			return new ResponseEntity<University>(uni.get(), HttpStatus.OK);
-		}
-		return new ResponseEntity<University>(HttpStatus.NOT_FOUND);
+	public UniversityDto getUniversity(@PathVariable Long id) {
+		University university = uniSer.getOne(id);
+		return universityMapper.toDTO(university);
 	}
 	
 	@RequestMapping(value = "/", method = RequestMethod.POST)

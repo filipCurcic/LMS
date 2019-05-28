@@ -41,19 +41,13 @@ public class CityController {
 	public ResponseEntity<Iterable<CityDto>> getAll(){
 		List<City> city= cityService.getAll();
 		return ResponseEntity.ok(cityMapper.toDTO(city));
-
-
-		//return new ResponseEntity<Iterable<Country>>(countServ.getAll(), HttpStatus.OK);
 	}
 
 	
 	@RequestMapping("/{id}")
-	public ResponseEntity<City> getCity(@PathVariable Long id) {
-		Optional<City> city = cityService.getOne(id);
-		if (city.isPresent()) {
-			return new ResponseEntity<City>(city.get(), HttpStatus.OK);
-		}
-		return new ResponseEntity<City>(HttpStatus.NOT_FOUND);
+	public CityDto getCity(@PathVariable Long id) {
+		City city = cityService.getOne(id);
+		return cityMapper.toDTO(city);
 	}
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST)

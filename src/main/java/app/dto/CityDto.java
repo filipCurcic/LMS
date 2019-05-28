@@ -2,6 +2,9 @@ package app.dto;
 
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
+import javax.persistence.ManyToOne;
+
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 public class CityDto {
@@ -12,6 +15,7 @@ public class CityDto {
 	@JacksonXmlProperty(isAttribute = true)
 	private int version = 0;
 	private Collection<String> address;
+	private CountryDto countryDto;
 	
 	
 	public CityDto() {
@@ -52,6 +56,19 @@ public class CityDto {
 	public void setAddress(Collection<String> address) {
 		this.address = address;
 	}
+
+
+	public CountryDto getCountryDto() {
+		return countryDto;
+	}
+
+
+	public void setCountryDto(CountryDto countryDto) {
+		this.countryDto = countryDto;
+	}
+
+
+
 	
 	
 

@@ -1,6 +1,8 @@
 package app.controllers;
 
+import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,19 +12,26 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import app.dto.CourseAttendingDto;
 import app.entities.CourseAttending;
+import app.mappers.CourseAttendingMapper;
 import app.services.CourseAttendingService;
 
 @CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
-@RequestMapping("/courseattending")
+@RequestMapping("/course-attending")
 public class CourseAttendingController {
 	@Autowired
 	CourseAttendingService cs;
+	
+	@Autowired
+	CourseAttendingMapper courseAttendingMapepr;
 
 	@RequestMapping("/all")
-	public ResponseEntity<Iterable<CourseAttending>> getCourseAttendings() {
-		return new ResponseEntity<Iterable<CourseAttending>>(cs.getCourseAttendings(), HttpStatus.OK);
+	public ResponseEntity<Iterable<CourseAttendingDto>> getCourseAttendings() {
+		List<CourseAttending> courseAttending = cs.getCourseAttendings();
+		return ResponseEntity.ok(courseAttendingMapepr.toDTO(courseAttending));
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
@@ -32,12 +41,9 @@ public class CourseAttendingController {
 	}
 
 	@RequestMapping("/{id}")
-	public ResponseEntity<CourseAttending> getCourseAttending(@PathVariable Long id) {
-		Optional<CourseAttending> courseattending = cs.getCourseAttending(id);
-		if (courseattending.isPresent()) {
-			return new ResponseEntity<CourseAttending>(courseattending.get(), HttpStatus.OK);
-		}
-		return new ResponseEntity<CourseAttending>(HttpStatus.NOT_FOUND);
+	public CourseAttendingDto getCourseAttending(@PathVariable Long id) {
+		CourseAttending courseAttending = cs.getCourseAttending(id);
+		return courseAttendingMapepr.toDTO(courseAttending);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

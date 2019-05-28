@@ -21,7 +21,7 @@ import app.services.TitleTypeService;
 
 @CrossOrigin(origins= {"http://localhost:4200"} ) 
 @RestController 
-@RequestMapping( "/titletype" ) 
+@RequestMapping( "/title-type" ) 
 public class TitleTypeController {
 	
 	@Autowired
@@ -44,13 +44,11 @@ public class TitleTypeController {
 
 
 	@RequestMapping("/{id}")
-	public ResponseEntity<TitleType> getOne(@PathVariable Long id) {
-		Optional<TitleType> titleType = ts.getOne(id);
-		if (titleType.isPresent()) {
-			return new ResponseEntity<TitleType>(titleType.get(), HttpStatus.OK);
-		}
-		return new ResponseEntity<TitleType>(HttpStatus.NOT_FOUND);
+	public TitleTypeDto getOne(@PathVariable Long id) {
+		TitleType titleType = ts.getOne(id);
+		return titleTypeMapper.toDTO(titleType);
 	}
+	
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<TitleType> removeTitleType(@PathVariable Long id) {

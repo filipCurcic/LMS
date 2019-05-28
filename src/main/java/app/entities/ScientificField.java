@@ -1,13 +1,12 @@
 package app.entities;
 
-import javax.persistence.Entity;
+import java.util.Set;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
@@ -20,16 +19,15 @@ public class ScientificField {
 	@NotNull
 	private String name;
 	
-	@OneToOne
-	@JoinColumn(name="titleId")
-	private Title title;
+	@OneToMany(mappedBy = "scientificField")
+	private Set<Title> title;
 	
 	@Version
 	private int version = 0;
 	
 	public ScientificField() {}
 
-	public ScientificField(Long id, String name, Title title) {
+	public ScientificField(Long id, String name, Set<Title> title) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -52,11 +50,12 @@ public class ScientificField {
 		this.name = name;
 	}
 
-	public Title getTitle() {
+
+	public Set<Title> getTitle() {
 		return title;
 	}
 
-	public void setTitle(Title title) {
+	public void setTitle(Set<Title> title) {
 		this.title = title;
 	}
 

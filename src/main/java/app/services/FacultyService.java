@@ -1,5 +1,6 @@
 package app.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +16,12 @@ public class FacultyService {
 	FacultyRepository facRep;
 	
 	
-	public Iterable<Faculty> getAll(){
+	public List<Faculty> getAll(){
 		return facRep.findAll();
 	}
 	
-	public Optional<Faculty> getOne(Long id){
-		return facRep.findById(id);
+	public Faculty getOne(Long id){
+		return facRep.findById(id).orElse(null);
 	}
 	
 	public void addFaculty(Faculty fac) {

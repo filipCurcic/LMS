@@ -46,7 +46,7 @@ public class AddressTest {
 	CountryRepository countryRepository;
 	
 	@Before
-	public void setupAddress() {
+	/*public void setupAddress() {
 		countryService.addCountry(new Country(1l, "Serbia"));
 		countryService.addCountry(new Country(2l, "USA"));
 		countryService.addCountry(new Country(3l, "France"));
@@ -63,7 +63,7 @@ public class AddressTest {
 		addressRepository.save(new Address(4l, "Corso Venezia", "168", cityService.getOne(4l).get()));
 		addressRepository.save(new Address(5l, " Calle Fuencarral", "111", cityService.getOne(5l).get()));
 	}
-	
+	*/
 	@Test
 	public void getAddress() throws Exception {
 		

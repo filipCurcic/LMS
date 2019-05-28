@@ -42,7 +42,6 @@ public class Faculty {
 	private University university;
 	
 	@OneToOne
-	@JoinColumn(name="addressId")
 	private Address address;
 	
 	@OneToMany(mappedBy="faculty")
