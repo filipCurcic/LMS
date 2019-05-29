@@ -1,6 +1,7 @@
 package app.mappers;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,11 @@ public class AdministratorMapper implements Mapper<Administrator, AdministratorD
 	RegisteredUserMapper registeredUserMapper;
 	
 	public AdministratorDto toDTO(Administrator administrator) {
+		
+		if(administrator == null) {
+			return null;
+		}
+		
 		AdministratorDto retVal = new AdministratorDto();
 			retVal.setId(administrator.getId());
 			retVal.setRegisteredUserDto(new RegisteredUserDto());
@@ -25,11 +31,25 @@ public class AdministratorMapper implements Mapper<Administrator, AdministratorD
 
 	}
 	
-	public Administrator toEntity(AdministratorDto administratorDto) {
-		return null;		
+	public Collection<Administrator> toEntity(Collection<AdministratorDto> administratorDto) {
+		if(administratorDto == null) {
+			return null;		
+		}
+		
+		Collection<Administrator> administrator = new ArrayList<Administrator>(administratorDto.size());
+		for(AdministratorDto aDto: administratorDto) {
+			administrator.add(toEntity(aDto));
+		}
+		
+		return administrator;
 	}
 	
 	public List<AdministratorDto> toDTO(List<Administrator> administrator){
+		
+		if(administrator == null) {
+			return null;
+		}
+		
 		List<AdministratorDto > retVal = new ArrayList<AdministratorDto >();
 		for (Administrator administrators: administrator) {
 			retVal.add(toDTO(administrators));
@@ -37,8 +57,16 @@ public class AdministratorMapper implements Mapper<Administrator, AdministratorD
 		return retVal;
 	}
 
-	public List<Administrator> toEntity(List<AdministratorDto > administratorDto){
-		return null;
+	
+	public Administrator toEntity(AdministratorDto administratorDto) {
+		if(administratorDto == null) {
+			return null;
+		}
+		
+		Administrator administrator = new Administrator();
+		administrator.setId(administratorDto.getId());
+		administrator.setRegisteredUser(registeredUserMapper.toEntity(administratorDto.getRegisteredUserDto()));
+		return administrator;
 	}
 
 }

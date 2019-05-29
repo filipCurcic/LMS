@@ -1,12 +1,13 @@
 package app.mappers;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface Mapper<E, EDTO> {
 
 	EDTO toDTO(E e);
-	E toEntity(EDTO edto);
+	Collection<E> toEntity(Collection<EDTO> edto);
 	List<EDTO> toDTO(List<E> es);
-	List<E> toEntity(List<EDTO> edtos);
+	E toEntity(EDTO edtos);
 
 }

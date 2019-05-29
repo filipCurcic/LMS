@@ -1,6 +1,9 @@
 package app.mappers;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,11 @@ public class StudentOnYearMapper implements Mapper<StudentOnYear, StudentOnYearD
 	StudyYearMapper studyYearMapper;
 
 	public StudentOnYearDto toDTO(StudentOnYear studentOnYear) {
+		
+		if(studentOnYear == null) {
+			return null;
+		}
+		
 		StudentOnYearDto retVal = new StudentOnYearDto();
 			retVal.setId(studentOnYear.getId());
 			retVal.setIndeks(studentOnYear.geIndeks());
@@ -32,10 +40,26 @@ public class StudentOnYearMapper implements Mapper<StudentOnYear, StudentOnYearD
 	}
 	
 	public StudentOnYear toEntity(StudentOnYearDto studentOnYearDto) {
-		return null;		
+		if(studentOnYearDto == null) {
+			return null;		
+		}
+		
+		StudentOnYear studentOnYear = new StudentOnYear();
+		
+		studentOnYear.setId(studentOnYearDto.getId());
+		studentOnYear.setEnrollmentDate(studentOnYearDto.getEnrollmentDate());
+		studentOnYear.setIndeks(studentOnYearDto.getIndeks());
+		studentOnYear.setStudent(studentMapper.toEntity(studentOnYearDto.getStudentDto()));
+		studentOnYear.setStudyYear(studyYearMapper.toEntity(studentOnYearDto.getStudyYearDto()));
+		return studentOnYear;
 	}
 	
 	public List<StudentOnYearDto> toDTO(List<StudentOnYear> studentOnYear){
+		
+		if(studentOnYear == null) {
+			return null;
+		}
+		
 		List<StudentOnYearDto > retVal = new ArrayList<StudentOnYearDto >();
 		for (StudentOnYear studentOnYears: studentOnYear) {
 			retVal.add(toDTO(studentOnYears));
@@ -43,8 +67,17 @@ public class StudentOnYearMapper implements Mapper<StudentOnYear, StudentOnYearD
 		return retVal;
 	}
 
-	public List<StudentOnYear> toEntity(List<StudentOnYearDto > studentOnYearDto){
-		return null;
+	public Collection<StudentOnYear> toEntity(Collection<StudentOnYearDto > studentOnYearDto){
+		if(studentOnYearDto == null) {
+			return null;
+		}
+		
+		Collection<StudentOnYear> studentOnYear = new ArrayList<StudentOnYear>(studentOnYearDto.size());
+		for(StudentOnYearDto sDto: studentOnYearDto) {
+			studentOnYear.add(toEntity(sDto));
+		}
+		
+		return studentOnYear;
 	}
 
 	

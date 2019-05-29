@@ -1,6 +1,7 @@
 package app.mappers;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,11 @@ public class StudentMapper implements Mapper<Student, StudentDto> {
 	AddressMapper addressMapper;
 
 	public StudentDto toDTO(Student student) {
+		
+		if(student == null) {
+			return null;
+		}
+		
 		StudentDto retVal = new StudentDto();
 			retVal.setId(student.getId());
 			retVal.setName(student.getName());
@@ -39,10 +45,28 @@ public class StudentMapper implements Mapper<Student, StudentDto> {
 	}
 	
 	public Student toEntity(StudentDto studentDto) {
-		return null;		
+		if(studentDto == null) {
+			return null;		
+		}
+		
+		Student student = new Student();
+		
+		student.setId(studentDto.getId());
+		student.setAddress(addressMapper.toEntity(studentDto.getAddressDto()));
+		student.setJmbg(studentDto.getJmbg());
+		student.setName(studentDto.getName());
+		student.setLastName(studentDto.getLastName());
+		student.setProfilePicturePath(studentDto.getProfilePicturePath());
+		student.setRegisteredUser(registeredUserMapper.toEntity(studentDto.getRegisteredUserDto()));
+		return student;
 	}
 	
 	public List<StudentDto> toDTO(List<Student> student){
+		
+		if(student == null) {
+			return null;
+		}
+		
 		List<StudentDto > retVal = new ArrayList<StudentDto >();
 		for (Student students: student) {
 			retVal.add(toDTO(students));
@@ -50,9 +74,17 @@ public class StudentMapper implements Mapper<Student, StudentDto> {
 		return retVal;
 	}
 
-	public List<Student> toEntity(List<StudentDto > studentDto){
-		// TODO implementirati logiku konverzije
-		return null;
+	public Collection<Student> toEntity(Collection<StudentDto > studentDto){
+		if(studentDto == null) {
+			return null;
+		}
+		
+		Collection<Student> student = new ArrayList<Student>(studentDto.size());
+		for(StudentDto sDto: studentDto) {
+			student.add(toEntity(sDto));
+		}
+		
+		return student;
 	}
 
 

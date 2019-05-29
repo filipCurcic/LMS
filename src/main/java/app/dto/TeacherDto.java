@@ -17,6 +17,7 @@ public class TeacherDto {
 	private Collection<String> teachersOnRealization;
 	private Collection<String> studyCourseTeacher;
 	private Collection<String> titles;
+	private AddressDto addressDto;
 	private UniversityDto universityDto;
 	private FacultyDto facultyDto;
 	private RegisteredUserDto registeredUserDto;
@@ -95,6 +96,16 @@ public class TeacherDto {
 
 	public void setStudyCourseTeacher(Collection<String> studyCourseTeacher) {
 		this.studyCourseTeacher = studyCourseTeacher;
+	}
+	
+	
+
+	public AddressDto getAddressDto() {
+		return addressDto;
+	}
+
+	public void setAddressDto(AddressDto addressDto) {
+		this.addressDto = addressDto;
 	}
 
 	public Collection<String> getTitles() {

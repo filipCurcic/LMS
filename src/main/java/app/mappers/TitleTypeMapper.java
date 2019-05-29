@@ -1,13 +1,12 @@
 package app.mappers;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import app.dto.CountryDto;
 import app.dto.TitleTypeDto;
-import app.entities.Country;
 import app.entities.Title;
 import app.entities.TitleType;
 
@@ -15,6 +14,11 @@ import app.entities.TitleType;
 public class TitleTypeMapper implements Mapper<TitleType, TitleTypeDto> {
 	
 	public TitleTypeDto toDTO(TitleType titleType) {
+		
+		if(titleType == null) {
+			return null;
+		}
+		
 		TitleTypeDto retVal = new TitleTypeDto();
 			retVal.setId(titleType.getId());
 			retVal.setName(titleType.getName());
@@ -28,10 +32,25 @@ public class TitleTypeMapper implements Mapper<TitleType, TitleTypeDto> {
 	}
 	
 	public TitleType toEntity(TitleTypeDto titleTypeDto) {
-		return null;		
+		if(titleTypeDto == null) {
+			return null;		
+		}
+		
+		TitleType titleType = new TitleType();
+		
+		titleType.setId(titleTypeDto.getId());
+		titleType.setName(titleTypeDto.getName());
+		titleType.setVersion(titleTypeDto.getVersion());
+		
+		return titleType;
 	}
 	
 	public List<TitleTypeDto> toDTO(List<TitleType> titleType){
+		
+		if(titleType == null) {
+			return null;
+		}
+		
 		List<TitleTypeDto > retVal = new ArrayList<TitleTypeDto >();
 		for (TitleType titles: titleType) {
 			retVal.add(toDTO(titles));
@@ -39,8 +58,17 @@ public class TitleTypeMapper implements Mapper<TitleType, TitleTypeDto> {
 		return retVal;
 	}
 
-	public List<TitleType> toEntity(List<TitleTypeDto > titleTypeDto){
-		return null;
+	public Collection<TitleType> toEntity(Collection<TitleTypeDto > titleTypeDto){
+		if(titleTypeDto == null) {
+			return null;
+		}
+		
+		Collection<TitleType> titleType = new ArrayList<TitleType>(titleTypeDto.size());
+		for(TitleTypeDto tDto: titleTypeDto) {
+			titleType.add(toEntity(tDto));
+		}
+		
+		return titleType;
 	}
 
 }

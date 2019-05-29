@@ -1,6 +1,7 @@
 package app.mappers;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,11 @@ public class AddressMapper implements Mapper<Address, AddressDto> {
 
 	
 	public AddressDto toDTO(Address address) {
+		
+		if(address == null) {
+			return null;
+		}
+		
 		AddressDto retVal = new AddressDto();
 			retVal.setId(address.getId());
 			retVal.setStreet(address.getStreet());
@@ -38,11 +44,25 @@ public class AddressMapper implements Mapper<Address, AddressDto> {
 	}
 
 	
-	public Address toEntity(AddressDto addressDto) {
-		return null;		
+	public Collection<Address> toEntity(Collection<AddressDto> addressDto) {
+		if ( addressDto == null ) {
+            return null;
+        }	
+		
+		Collection<Address> address = new ArrayList<>(addressDto.size());
+		for(AddressDto aDto : addressDto) {
+			address.add( toEntity(aDto));
+		}
+		
+		return address;
 	}
 	
 	public List<AddressDto> toDTO(List<Address> address){
+		
+		if(address == null) {
+			return null;
+		}
+		
 		List<AddressDto > retVal = new ArrayList<AddressDto >();
 		for (Address addresses: address) {
 			retVal.add(toDTO(addresses));
@@ -50,8 +70,17 @@ public class AddressMapper implements Mapper<Address, AddressDto> {
 		return retVal;
 	}
 
-	public List<Address> toEntity(List<AddressDto > addressDto){
-		return null;
+	public Address toEntity(AddressDto addressDto){
+		if ( addressDto == null ) {
+            return null;
+        }	
+		
+		Address address = new Address();
+		
+		address.setId(addressDto.getId());
+		address.setStreet(addressDto.getStreet());
+		address.setStreetNumber(address.getStreetNumber());
+		return address;
 	}
 
 }

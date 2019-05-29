@@ -1,6 +1,7 @@
 package app.mappers;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,11 @@ public class AdministratorStaffMapper implements Mapper<AdministratorStaff, Admi
 	RegisteredUserMapper registeredUserMapper;
 	
 	public AdministratorStaffDto toDTO(AdministratorStaff administratorStaff) {
+		
+		if(administratorStaff == null) {
+			return null;
+		}
+		
 		AdministratorStaffDto retVal = new AdministratorStaffDto();
 			retVal.setId(administratorStaff.getId());
 			retVal.setName(administratorStaff.getName());
@@ -31,10 +37,28 @@ public class AdministratorStaffMapper implements Mapper<AdministratorStaff, Admi
 	}
 	
 	public AdministratorStaff toEntity(AdministratorStaffDto administratorStaffDto) {
-		return null;		
+		if(administratorStaffDto == null) {
+			return null;		
+		}
+		
+		AdministratorStaff administratorStaff = new AdministratorStaff();
+		
+		administratorStaff.setId(administratorStaffDto.getId());
+		administratorStaff.setJmbg(administratorStaffDto.getJmbg());
+		administratorStaff.setName(administratorStaffDto.getName());
+		administratorStaff.setProfilePicturePath(administratorStaffDto.getProfilePicturePath());
+		administratorStaff.setSurname(administratorStaffDto.getSurname());
+		administratorStaff.setRegisteredUser(registeredUserMapper.toEntity(administratorStaffDto.getRegisteredUserDto()));
+		
+		return administratorStaff;
 	}
 	
 	public List<AdministratorStaffDto> toDTO(List<AdministratorStaff> administratorStaff){
+		
+		if(administratorStaff == null) {
+			return null;
+		}
+		
 		List<AdministratorStaffDto > retVal = new ArrayList<AdministratorStaffDto >();
 		for (AdministratorStaff administratorStaffs: administratorStaff) {
 			retVal.add(toDTO(administratorStaffs));
@@ -42,8 +66,19 @@ public class AdministratorStaffMapper implements Mapper<AdministratorStaff, Admi
 		return retVal;
 	}
 
-	public List<AdministratorStaff> toEntity(List<AdministratorStaffDto > administratorStaffDto){
-		return null;
+	@Override
+	public Collection<AdministratorStaff> toEntity(Collection<AdministratorStaffDto> administratorStaff) {
+		if(administratorStaff == null) {
+			return null;
+		}
+		
+		Collection<AdministratorStaff> administrator = new ArrayList<AdministratorStaff>(administratorStaff.size());
+		for(AdministratorStaffDto aDto: administratorStaff) {
+			administrator.add(toEntity(aDto));
+		}
+		
+		return administrator;
 	}
+
 
 }

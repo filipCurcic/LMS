@@ -1,6 +1,7 @@
 package app.mappers;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -15,6 +16,11 @@ public class ScientificFieldMapper implements Mapper<ScientificField, Scientific
 
 
 	public ScientificFieldDto toDTO(ScientificField scientificField) {
+		
+		if(scientificField == null) {
+			return null;
+		}
+		
 		ScientificFieldDto retVal = new ScientificFieldDto();
 			retVal.setId(scientificField.getId());
 			retVal.setName(scientificField.getName());
@@ -28,10 +34,24 @@ public class ScientificFieldMapper implements Mapper<ScientificField, Scientific
 	}
 	
 	public ScientificField toEntity(ScientificFieldDto scientificFieldDto) {
-		return null;		
+		if(scientificFieldDto == null) {
+			return null;		
+		}
+		
+		ScientificField scientificField = new ScientificField();
+		
+		scientificField.setId(scientificFieldDto.getId());
+		scientificField.setName(scientificFieldDto.getName());
+		scientificField.setVersion(scientificFieldDto.getVersion());
+		return scientificField;
 	}
 	
 	public List<ScientificFieldDto> toDTO(List<ScientificField> scientificField){
+		
+		if(scientificField == null) {
+			return null;
+		}
+		
 		List<ScientificFieldDto > retVal = new ArrayList<ScientificFieldDto >();
 		for (ScientificField scientificFields: scientificField) {
 			retVal.add(toDTO(scientificFields));
@@ -39,8 +59,18 @@ public class ScientificFieldMapper implements Mapper<ScientificField, Scientific
 		return retVal;
 	}
 
-	public List<ScientificField> toEntity(List<ScientificFieldDto > scientificFieldDto){
-		return null;
+	public Collection<ScientificField> toEntity(Collection<ScientificFieldDto > scientificFieldDto){
+		if(scientificFieldDto == null) {
+			return null;
+		}
+		
+		Collection<ScientificField> scientificField = new ArrayList<ScientificField>(scientificFieldDto.size());
+		for(ScientificFieldDto sDto: scientificFieldDto) {
+			scientificField.add(toEntity(sDto));
+		}
+		
+		return scientificField;
+		
 	}
 
 }

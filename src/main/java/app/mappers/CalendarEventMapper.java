@@ -1,6 +1,7 @@
 package app.mappers;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -36,6 +37,13 @@ public class CalendarEventMapper implements Mapper<CalendarEvent, CalendarEventD
 	}
 
 	public List<CalendarEvent> toEntity(List<CalendarEventDto > calendarEventDto){
+		// TODO implementirati logiku konverzije
+		return null;
+	}
+
+	@Override
+	public Collection<CalendarEvent> toEntity(Collection<CalendarEventDto> edto) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
