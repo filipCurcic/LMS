@@ -3,6 +3,7 @@ package app.dto;
 import java.util.Collection;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 public class UniversityDto {
@@ -12,6 +13,7 @@ public class UniversityDto {
 	@JacksonXmlProperty(isAttribute = true)
 	private int version = 0;
 	private String name;
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date establishmentDate;
 	private String contact;
 	private String email;
