@@ -20,7 +20,15 @@ public class TeacherDto {
 	private UniversityDto universityDto;
 	private FacultyDto facultyDto;
 	private RegisteredUserDto registeredUserDto;
-	
+	private AddressDto addressDto;
+	public AddressDto getAddressDto() {
+		return addressDto;
+	}
+
+	public void setAddressDto(AddressDto addressDto) {
+		this.addressDto = addressDto;
+	}
+
 	public TeacherDto() {
 		
 	}

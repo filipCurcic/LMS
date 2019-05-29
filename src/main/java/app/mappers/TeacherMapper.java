@@ -27,6 +27,9 @@ public class TeacherMapper implements Mapper<Teacher, TeacherDto> {
 	@Autowired
 	RegisteredUserMapper registeredUserMapper;
 	
+	@Autowired
+	AddressMapper addressMapper;
+	
 	public TeacherDto toDTO(Teacher teacher) {
 		TeacherDto retVal = new TeacherDto();
 			retVal.setId(teacher.getId());
@@ -35,6 +38,7 @@ public class TeacherMapper implements Mapper<Teacher, TeacherDto> {
 			retVal.setBiography(teacher.getBiography());
 			retVal.setProfilePicturePath(teacher.getProfilePicturePath());
 			retVal.setUmcn(teacher.getUmcn());
+			retVal.setAddressDto(addressMapper.toDTO(teacher.getAddress()));
 			retVal.setUniversityDto(universityMapper.toDTO(teacher.getUniversity()));
 			retVal.setFacultyDto(facultyMaper.toDTO(teacher.getFaculty()));
 			retVal.setRegisteredUserDto(registeredUserMapper.toDTO(teacher.getRegisteredUser()));
