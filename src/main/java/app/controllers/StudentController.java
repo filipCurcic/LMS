@@ -47,9 +47,9 @@ public class StudentController {
 	}
 	
 	@RequestMapping("/{id}")
-	public StudentDto getStudent(@PathVariable Long id) {
+	public ResponseEntity<StudentDto> getStudent(@PathVariable Long id) {
 		Student student = stuSer.getOne(id);
-		return studentMapper.toDTO(student);
+		return new ResponseEntity<StudentDto>(studentMapper.toDTO(student), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

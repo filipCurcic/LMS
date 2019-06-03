@@ -23,8 +23,10 @@ public class StudyYear {
 	private Integer studyYear; // (1, 2, 3, 4)
 	@OneToMany(mappedBy="studyYear")
 	private Set<StudentOnYear> studentsOnYear;
-	@OneToMany
+	@OneToMany(mappedBy="studyYear")
 	private Set<StudyCourse> studyCoures;
+	@OneToMany(mappedBy="yearsOfStudy")
+	private Set<Course> courses;
 	
 	public StudyYear() {}
 

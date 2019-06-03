@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -34,8 +35,8 @@ public class Course {
 	@OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private Set<CourseRealization> courseRealizations;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
-	private Set<StudyYear> yearsOfStudy;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private StudyYear yearsOfStudy;
 	
 	@OneToMany(mappedBy = "course" ,fetch = FetchType.LAZY)
 	private Set<CourseOutcome> syllabus;
@@ -49,10 +50,9 @@ public class Course {
 	
 	public Course() {}
 
-
-	public Course(Long id, @Size(max = 50) @NotNull String name, @NotNull int espb, @NotNull boolean mandatory,
+	public Course(Long id, @Size(max = 50) @NotNull String name, @NotNull int espb, boolean mandatory,
 			int numberOfLectures, int numberOfExercises, int otherTypesOfTeachings, int researchWork, int otherClasses,
-			Set<CourseRealization> courseRealizations, Set<StudyYear> yearsOfStudy, Set<CourseOutcome> syllabus,
+			Set<CourseRealization> courseRealizations, StudyYear yearsOfStudy, Set<CourseOutcome> syllabus,
 			Set<Course> precondition, Set<Course> preconditionFor) {
 		super();
 		this.id = id;
@@ -70,6 +70,9 @@ public class Course {
 		this.precondition = precondition;
 		this.preconditionFor = preconditionFor;
 	}
+
+
+
 
 
 	@Override
@@ -250,18 +253,13 @@ public class Course {
 	}
 
 
-
-	public Set<StudyYear> getYearsOfStudy() {
+	public StudyYear getYearsOfStudy() {
 		return yearsOfStudy;
 	}
 
-
-
-	public void setYearsOfStudy(Set<StudyYear> yearsOfStudy) {
+	public void setYearsOfStudy(StudyYear yearsOfStudy) {
 		this.yearsOfStudy = yearsOfStudy;
 	}
-
-
 
 	public Set<CourseOutcome> getSyllabus() {
 		return syllabus;

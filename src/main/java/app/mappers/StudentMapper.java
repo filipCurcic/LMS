@@ -27,6 +27,7 @@ public class StudentMapper implements Mapper<Student, StudentDto> {
 			return null;
 		}
 		
+		
 		StudentDto retVal = new StudentDto();
 			retVal.setId(student.getId());
 			retVal.setName(student.getName());
@@ -37,6 +38,7 @@ public class StudentMapper implements Mapper<Student, StudentDto> {
 			retVal.setRegisteredUserDto(registeredUserMapper.toDTO(student.getRegisteredUser()));
 			retVal.setAddressDto(addressMapper.toDTO(student.getAddress()));
 			retVal.setStudentYear(new ArrayList<>());
+			System.out.println("ASD");
 			for(StudentOnYear studentOnYear: student.getStudentYears()) {
 				retVal.getStudentYear().add("/address/" + studentOnYear.getId());
 			}
@@ -69,6 +71,7 @@ public class StudentMapper implements Mapper<Student, StudentDto> {
 		
 		List<StudentDto > retVal = new ArrayList<StudentDto >();
 		for (Student students: student) {
+			System.out.println(students.getId());
 			retVal.add(toDTO(students));
 		}
 		return retVal;

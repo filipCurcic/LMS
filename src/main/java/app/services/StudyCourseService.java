@@ -19,6 +19,12 @@ public class StudyCourseService {
 		return stuCouRep.findAll();
 	}
 	
+	//Get course by Faculty id
+	public List<StudyCourse> getCourseOnFaculty(Long id){
+		return stuCouRep.getCourseOnFaculty(id);
+	}
+	
+	
 	public StudyCourse getOne(Long id){
 		return stuCouRep.findById(id).orElse(null);
 	}

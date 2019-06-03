@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import app.entities.AdministratorStaff;
 import app.entities.Student;
+import app.entities.StudyCourse;
 import app.entities.Teacher;
 
 @Service
@@ -26,6 +27,19 @@ public class FileService {
 			fout.close();
 			adminStaff.setProfilePicturePath(convertFile.getPath());
 			
+		}
+	}
+	
+	public void addStudyCourseImage(MultipartFile file, String fileName, StudyCourse studyCourse) throws IOException {
+	    Tika tika = new Tika();
+	    String mimeType = tika.detect(file.getBytes());
+		if(file != null && (mimeType.equals("image/png")|| mimeType.equals("image/jpeg"))) {
+			File convertFile = new File("resources\\images\\courseImages\\" + fileName + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")));
+			convertFile.createNewFile();
+			FileOutputStream fout = new FileOutputStream(convertFile);
+			fout.write(file.getBytes());
+			fout.close();
+			studyCourse.setImgPath(convertFile.getPath());
 		}
 	}
 	

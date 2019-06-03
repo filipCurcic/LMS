@@ -33,10 +33,17 @@ public class FacultyController {
 		return ResponseEntity.ok(facultyMapper.toDTO(faculty));
 	}
 	
+	// Faculties for specific University
+	@RequestMapping("/uni/{id}")
+	public ResponseEntity<Iterable<FacultyDto>> getFacultiesOnUni(@PathVariable Long id){
+		List<Faculty> faculty = facSer.getFacultiesOnUni(id);
+		return new ResponseEntity<Iterable<FacultyDto>>(facultyMapper.toDTO(faculty), HttpStatus.OK);
+	}
+	
 	@RequestMapping("/{id}")
-	public FacultyDto getFaculty(@PathVariable Long id) {
+	public ResponseEntity<FacultyDto> getFaculty(@PathVariable Long id) {
 		Faculty faculty = facSer.getOne(id);
-		return facultyMapper.toDTO(faculty);
+		return new ResponseEntity<FacultyDto>(facultyMapper.toDTO(faculty), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/", method = RequestMethod.POST)
