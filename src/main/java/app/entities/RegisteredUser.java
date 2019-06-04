@@ -32,6 +32,9 @@ public class RegisteredUser {
 	@OneToMany(mappedBy="registeredUser", cascade = CascadeType.ALL)
 	private Set<UserPermission> userPermission;
 	
+	@OneToMany(mappedBy = "registeredUser")
+	private Set<ForumUser> forumUser;
+	
 	public RegisteredUser() {
 		
 	}
