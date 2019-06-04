@@ -1,11 +1,14 @@
 package app.services;
 
 import java.util.List;
+
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import app.entities.Student;
 import app.entities.StudentOnYear;
 import app.repositories.StudentOnYearRepository;
 
@@ -30,6 +33,10 @@ public class StudentOnYearService {
 	public void removeStudentOnYear(Long id) {
 		Optional<StudentOnYear> is = stuOnYRep.findById(id);
 		stuOnYRep.delete(is.get());
+	}
+	
+	public List<StudentOnYear> getIndex(Long id) {
+		return stuOnYRep.findIndeksByStudentId(id);
 	}
 	
 	

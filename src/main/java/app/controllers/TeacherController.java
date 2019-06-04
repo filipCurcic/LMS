@@ -2,7 +2,6 @@ package app.controllers;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import app.dto.EditTeacherDto;
 import app.dto.TeacherDto;
 import app.entities.Teacher;
 import app.mappers.TeacherMapper;
@@ -60,6 +61,19 @@ public class TeacherController {
 		fileService.addProfileImageTeacher(file, "teacher_" + teacher.getRegisteredUser().getUsername(), teacher);
 		teacherService.addTeacher(teacher);
 		return new ResponseEntity<Teacher>(teacher, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value=("/{id}"), method=RequestMethod.PUT)
+	public ResponseEntity<Teacher> updateTeacher(@PathVariable Long id, @RequestBody EditTeacherDto teacher) {
+		if(teacher.getTeacher()==null) {
+			System.out.println("teacher je null");
+		}
+		System.out.println(teacher.getTeacher());
+		System.out.println("~~~~~~");
+		System.out.println(teacher.getRegUser());
+		///teacherService.updateTeacher(id, teacher);
+		///return new ResponseEntity<Teacher>(teacher, HttpStatus.OK);
+		return null;
 	}
 
 	

@@ -16,7 +16,18 @@ public class TeacherService {
 	TeacherRepository teacherRep;
 	
 	@Autowired
+	RegisteredUserService registeredUserService;
+	
+	@Autowired
+	UniversityService universityService;
+	
+	@Autowired
+	FacultyService facultyService;
+	
+	@Autowired
 	LoginService loginService;
+	
+	
 	
 	public List<Teacher> getTeachers() {
 		return teacherRep.findAll();
@@ -42,6 +53,7 @@ public class TeacherService {
 		Optional<Teacher> teach = teacherRep.findById(id);
 		if(teach.isPresent()) {
 			teacher.setId(teach.get().getId());
+			registeredUserService.updateUser(teacher.getRegisteredUser().getId(), teacher.getRegisteredUser());
 			teacherRep.save(teacher);
 		}
 	}
