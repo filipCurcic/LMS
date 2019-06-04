@@ -3,11 +3,13 @@ package app.entities;
 import java.util.Date;
 import java.util.Set;
 
-import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
@@ -18,23 +20,24 @@ public class StudyYear {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	@NotNull
-	private Date year;
+	private Date startDate;
+	@NotNull
+	private Date endDate;
 	@NotNull
 	private Integer studyYear; // (1, 2, 3, 4)
 	@OneToMany(mappedBy="studyYear")
 	private Set<StudentOnYear> studentsOnYear;
-	@OneToMany(mappedBy="studyYear")
-	private Set<StudyCourse> studyCoures;
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private StudyCourse studyCoures;
 	@OneToMany(mappedBy="yearsOfStudy")
 	private Set<Course> courses;
 	
 	public StudyYear() {}
 
-	public StudyYear(Long id, @NotNull Date year, @NotNull Integer studyYear, Set<StudentOnYear> studentsOnYear,
-			Set<StudyCourse> studyCoures) {
+	public StudyYear(Long id,  @NotNull Integer studyYear, Set<StudentOnYear> studentsOnYear,
+			StudyCourse studyCoures) {
 		super();
 		this.id = id;
-		this.year = year;
 		this.studyYear = studyYear;
 		this.studentsOnYear = studentsOnYear;
 		this.studyCoures = studyCoures;
@@ -47,13 +50,31 @@ public class StudyYear {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
+	
 
-	public Date getYear() {
-		return year;
+	public Date getStartDate() {
+		return startDate;
 	}
 
-	public void setYear(Date year) {
-		this.year = year;
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
+	public Set<Course> getCourses() {
+		return courses;
+	}
+
+	public void setCourses(Set<Course> courses) {
+		this.courses = courses;
 	}
 
 	public Set<StudentOnYear> getStudentsOnYear() {
@@ -72,11 +93,11 @@ public class StudyYear {
 		this.studyYear = studyYear;
 	}
 
-	public Set<StudyCourse> getStudyCoures() {
+	public StudyCourse getStudyCoures() {
 		return studyCoures;
 	}
 
-	public void setStudyCoures(Set<StudyCourse> studyCoures) {
+	public void setStudyCoures(StudyCourse studyCoures) {
 		this.studyCoures = studyCoures;
 	}
 	

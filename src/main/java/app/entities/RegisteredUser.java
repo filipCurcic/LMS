@@ -29,7 +29,6 @@ public class RegisteredUser {
 	@NotNull
 	private String email;
 	
-	@JsonIgnore
 	@OneToMany(mappedBy="registeredUser", cascade = CascadeType.ALL)
 	private Set<UserPermission> userPermission;
 	

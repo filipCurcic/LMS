@@ -24,6 +24,9 @@ public class StudyYearService {
 		return stuYRep.findById(id).orElse(null);
 	}
 	
+	public Optional<StudyYear> getYearOfStudyById(Long id) {
+	    return stuYRep.findById(id);
+	    }
 	public void addStudyYear(StudyYear stuY) {
 		stuYRep.save(stuY);
 	}
@@ -32,5 +35,18 @@ public class StudyYearService {
 		Optional<StudyYear> is = stuYRep.findById(id);
 		stuYRep.delete(is.get());
 	}
+	
+	/*public Optional<StudyYear> getNextYearOfStudyByStudyProgram(Long id) {
+    	Optional<StudyYear> sy = stuYRep.get
+    	if(sy.isPresent()) {
+    		StudyYear studyYear = sy.get();
+    		int year = studyYear.getStudyYear();
+    		year = year+1;
+    		Optional<StudyYear> nextYearOfStudy = stuYRep.getNextYear(year, studyYear.getStudyCoures().getId());
+    		return nextYearOfStudy;
+    	}
+        return sy;
+    }
+    */
 	
 }

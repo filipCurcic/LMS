@@ -30,8 +30,8 @@ public class StudyCourse {
 	@OneToMany(mappedBy="studyCourse")
 	private Set<StudyCourseTeacher> studyCourseTeacher;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
-	private StudyYear studyYear;
+	@OneToMany(mappedBy= "studyCoures")
+	private Set<StudyYear> studyYear;
 	
 	@Version
 	private int version = 0;
@@ -105,6 +105,16 @@ public class StudyCourse {
 
 	public void setImgPath(String imgPath) {
 		this.imgPath = imgPath;
+	}
+
+
+	public Set<StudyYear> getStudyYear() {
+		return studyYear;
+	}
+
+
+	public void setStudyYear(Set<StudyYear> studyYear) {
+		this.studyYear = studyYear;
 	}
 	
 	

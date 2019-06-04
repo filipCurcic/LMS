@@ -27,7 +27,7 @@ public class StudentService {
 	}
 	
 	public void addStudent(Student student) {
-		loginService.addPermssion(student.getRegisteredUser(), "ROLE_sTUDENT");
+		loginService.addPermssion(student.getRegisteredUser(), "ROLE_STUDENT");
 		stuRep.save(student);
 	}
 	

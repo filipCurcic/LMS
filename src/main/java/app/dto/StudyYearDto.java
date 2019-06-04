@@ -9,10 +9,11 @@ public class StudyYearDto {
 
 	@JacksonXmlProperty(isAttribute = true)
 	private Long id;
-	private Date year;
+	private Date startDate;
+	private Date endDate;
 	private Integer studyYear;
 	private Collection<String> studentOnYear;
-	private Collection<String> studyCourse;
+	private StudyCourseDto studyCourse;
 	
 	public StudyYearDto() {
 		
@@ -31,13 +32,25 @@ public class StudyYearDto {
 		this.studyYear = studyYear;
 	}
 
-	public Date getYear() {
-		return year;
+	
+	
+
+	public Date getStartDate() {
+		return startDate;
 	}
 
-	public void setYear(Date year) {
-		this.year = year;
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
 	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
 
 	public Integer getStudyYear() {
 		return studyYear;
@@ -51,15 +64,15 @@ public class StudyYearDto {
 		this.studentOnYear = studentOnYear;
 	}
 
-	public Collection<String> getStudyCourse() {
+	public StudyCourseDto getStudyCourse() {
 		return studyCourse;
 	}
 
-	public void setStudyCourse(Collection<String> studyCourse) {
+	public void setStudyCourse(StudyCourseDto studyCourse) {
 		this.studyCourse = studyCourse;
 	}
 
-	
+
 	
 	
 }
