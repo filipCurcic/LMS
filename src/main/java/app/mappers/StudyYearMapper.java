@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import app.dto.StudyYearDto;
@@ -14,6 +15,8 @@ import app.entities.StudyYear;
 @Component
 public class StudyYearMapper implements Mapper<StudyYear, StudyYearDto> {
 
+	@Autowired
+	StudyCoureseMapper studyCourseMapper;
 	public StudyYearDto toDTO(StudyYear studyYear) {
 		
 		if(studyYear == null) {
@@ -22,16 +25,14 @@ public class StudyYearMapper implements Mapper<StudyYear, StudyYearDto> {
 		
 		StudyYearDto retVal = new StudyYearDto();
 			retVal.setId(studyYear.getId());
-			retVal.setYear(studyYear.getYear());
+			retVal.setStartDate(studyYear.getStartDate());
+			retVal.setEndDate(studyYear.getEndDate());
 			retVal.setStudyYear(studyYear.getStudyYear());
 			retVal.setStudentOnYear(new ArrayList<>());
 			for(StudentOnYear studentOnYear: studyYear.getStudentsOnYear()) {
 				retVal.getStudentOnYear().add("/student-on-year/" + studentOnYear.getId());
 			}
-			retVal.setStudyCourse(new ArrayList<>());
-			for(StudyCourse studyCourse: studyYear.getStudyCoures()) {
-				retVal.getStudyCourse().add("/study-course/" + studyCourse.getId());
-			}
+			retVal.setStudyCourse(studyCourseMapper.toDTO(studyYear.getStudyCoures()));
 			return retVal;
 
 	}
@@ -44,7 +45,8 @@ public class StudyYearMapper implements Mapper<StudyYear, StudyYearDto> {
 		StudyYear studyYear = new StudyYear();
 		
 		studyYear.setId(studyYearDto.getId());
-		studyYear.setYear(studyYearDto.getYear());
+		studyYear.setStartDate(studyYearDto.getStartDate());
+		studyYear.setEndDate(studyYearDto.getEndDate());
 		studyYear.setStudyYear(studyYearDto.getStudyYear());
 		
 		return studyYear;

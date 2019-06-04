@@ -21,6 +21,12 @@ public class FacultyService {
 		return facRep.findAll();
 	}
 	
+	public List<Faculty> getFacultiesOnUni(Long id){
+		System.out.println(id);
+		return facRep.getFacultiesOnUni(id);
+	}
+	
+	
 	public Faculty getOne(Long id){
 		return facRep.findById(id).orElse(null);
 	}

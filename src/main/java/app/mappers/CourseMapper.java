@@ -36,10 +36,10 @@ public class CourseMapper implements Mapper<Course, CourseDto>{
 				retVal.getCourseRealizations().add("/course-realization/" + courseRealization.getId());
 			}
 			retVal.setYearsOfStudy(new ArrayList<>());
-			for(StudyYear studyYear: course.getYearsOfStudy()) {
-				retVal.getYearsOfStudy().add("/study-year" + studyYear.getId());
-			}
-			retVal.setSyllabus(new ArrayList<>());
+//			for(StudyYear studyYear: course.getYearsOfStudy()) {
+//				retVal.getYearsOfStudy().add("/study-year" + studyYear.getId());
+//			}
+//			retVal.setSyllabus(new ArrayList<>());
 			for(CourseOutcome courseoutcome: course.getSyllabus()) {
 				retVal.getSyllabus().add("/course-outcome/" + courseoutcome.getId());
 			}

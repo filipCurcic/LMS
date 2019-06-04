@@ -38,7 +38,7 @@ public class Faculty {
 	@OneToMany(mappedBy="faculty")
 	private Set<StudyCourse> studyCourse;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private University university;
 	
 	@OneToOne

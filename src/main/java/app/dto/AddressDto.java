@@ -15,7 +15,7 @@ public class AddressDto {
 	private Collection<String> teacher;
 	
 	public AddressDto() {
-		System.out.println("DTO konsstruktor");
+
 	}
 
 	public Long getId() {

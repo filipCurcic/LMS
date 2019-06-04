@@ -34,9 +34,9 @@ public class UniversityController {
 	}
 	
 	@RequestMapping("/{id}")
-	public UniversityDto getUniversity(@PathVariable Long id) {
+	public ResponseEntity<UniversityDto> getUniversity(@PathVariable Long id) {
 		University university = uniSer.getOne(id);
-		return universityMapper.toDTO(university);
+		return new ResponseEntity<UniversityDto>(universityMapper.toDTO(university), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/", method = RequestMethod.POST)

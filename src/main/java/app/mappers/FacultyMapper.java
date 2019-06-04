@@ -35,7 +35,7 @@ public class FacultyMapper implements Mapper<Faculty, FacultyDto> {
 			retVal.setEmail(faculty.getEmail());
 			retVal.setAddress(addressMapper.toDTO(faculty.getAddress()));
 			retVal.setUniversity(universityMapper.toDTO(faculty.getUniversity()));
-			retVal.setTeachers(new ArrayList());
+			retVal.setTeachers(new ArrayList<>());
 			for(Teacher teacher: faculty.getTeachers()) {
 				retVal.getTeachers().add("/teacher/" + teacher.getId());
 			}
