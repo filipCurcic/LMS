@@ -32,15 +32,6 @@ public class UniversityService {
 		uniRep.delete(is.get());
 	}
 	
-	public void updateUniversity(Long id, University uni) {
-		Optional<University> university = uniRep.findById(id);
-		if(university.isPresent()) {
-			uni.setId(university.get().getId());
-			uniRep.save(uni);
-		}
-		
-	}
-	
 	
 	
 }

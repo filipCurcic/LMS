@@ -25,22 +25,25 @@ public class StudyYear {
 	private Date endDate;
 	@NotNull
 	private Integer studyYear; // (1, 2, 3, 4)
+	
 	@OneToMany(mappedBy="studyYear")
 	private Set<StudentOnYear> studentsOnYear;
+	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private StudyCourse studyCoures;
+	private StudyCourse studyCourse;
+	
 	@OneToMany(mappedBy="yearsOfStudy")
 	private Set<Course> courses;
 	
 	public StudyYear() {}
 
 	public StudyYear(Long id,  @NotNull Integer studyYear, Set<StudentOnYear> studentsOnYear,
-			StudyCourse studyCoures) {
+			StudyCourse studyCourse) {
 		super();
 		this.id = id;
 		this.studyYear = studyYear;
 		this.studentsOnYear = studentsOnYear;
-		this.studyCoures = studyCoures;
+		this.studyCourse = studyCourse;
 	}
 
 	public Long getId() {
@@ -93,14 +96,15 @@ public class StudyYear {
 		this.studyYear = studyYear;
 	}
 
-	public StudyCourse getStudyCoures() {
-		return studyCoures;
+	public StudyCourse getStudyCourse() {
+		return studyCourse;
 	}
 
-	public void setStudyCoures(StudyCourse studyCoures) {
-		this.studyCoures = studyCoures;
+	public void setStudyCourse(StudyCourse studyCourse) {
+		this.studyCourse = studyCourse;
 	}
-	
+
+
 	
 	
 	

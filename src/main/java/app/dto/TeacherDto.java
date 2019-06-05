@@ -21,7 +21,7 @@ public class TeacherDto {
 	private UniversityDto universityDto;
 	private FacultyDto facultyDto;
 	private RegisteredUserDto registeredUserDto;
-
+	
 	public TeacherDto() {
 		
 	}

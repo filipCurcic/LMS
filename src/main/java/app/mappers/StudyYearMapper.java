@@ -32,7 +32,7 @@ public class StudyYearMapper implements Mapper<StudyYear, StudyYearDto> {
 			for(StudentOnYear studentOnYear: studyYear.getStudentsOnYear()) {
 				retVal.getStudentOnYear().add("/student-on-year/" + studentOnYear.getId());
 			}
-			retVal.setStudyCourse(studyCourseMapper.toDTO(studyYear.getStudyCoures()));
+			retVal.setStudyCourse(studyCourseMapper.toDTO(studyYear.getStudyCourse()));
 			return retVal;
 
 	}

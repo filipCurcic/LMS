@@ -31,6 +31,13 @@ public class CourseRealization {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Course course;
 	
+	@ManyToOne(cascade=CascadeType.ALL)
+	private StudyYear studyYear;
+	
+	@OneToMany(mappedBy="studyYear")
+	private Set<CourseRealization> courseRealizations;
+
+
 	public CourseRealization() {
 		
 	}

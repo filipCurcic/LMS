@@ -2,6 +2,7 @@ package app.entities;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -20,9 +21,9 @@ public class StudentOnYear {
 	private String indeks;
 	@NotNull
 	private Date enrollmentDate;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(cascade= CascadeType.ALL)
 	private StudyYear studyYear;
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(cascade= CascadeType.ALL)
 	private Student student;
 	
 	public StudentOnYear() {}

@@ -1,10 +1,9 @@
 
 package app.repositories;
 
-import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import app.entities.StudentOnYear;
@@ -12,8 +11,6 @@ import app.entities.StudentOnYear;
 @Repository
 public interface StudentOnYearRepository extends JpaRepository<StudentOnYear, Long> {
 	
-	
-	@Query("SELECT i FROM StudentOnYear i WHERE i.id=?1")
-	public List<StudentOnYear> findIndeksByStudentId(Long id);
-	
+	//Optional<StudentOnYear> findStudentByYearOfStudyId(Long id);
+
 }

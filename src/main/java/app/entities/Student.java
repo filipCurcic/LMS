@@ -38,22 +38,27 @@ public class Student{
 	private Address address;
 	
 	@OneToMany(mappedBy="student")
-	private Set<StudentOnYear> studentYears;
+	private Set<StudentOnYear> studentOnYear;
+	
+	@OneToMany(mappedBy= "student")
+	private Set<CourseAttending> courseAttending;
 	
 	@ManyToOne(cascade=CascadeType.ALL)
 	private RegisteredUser registeredUser;
+
+	private int studyYear;
 	
 	public Student() {}
 
 	public Student(Long id, String name, String lastName, String jmbg, String profilePicturePath, Address address,
-			Set<StudentOnYear> studentYears, RegisteredUser registeredUser) {
+			Set<StudentOnYear> studentOnYear, RegisteredUser registeredUser) {
 		this.id = id;
 		this.name = name;
 		this.lastName = lastName;
 		this.jmbg = jmbg;
 		this.profilePicturePath = profilePicturePath;
 		this.address = address;
-		this.studentYears = studentYears;
+		this.studentOnYear = studentOnYear;
 		this.registeredUser = registeredUser;
 	}
 	
@@ -115,13 +120,24 @@ public class Student{
 		this.profilePicturePath = profilePicturePath;
 	}
 
-	public Set<StudentOnYear> getStudentYears() {
-		return studentYears;
+
+	public Set<StudentOnYear> getStudentOnYear() {
+		return studentOnYear;
 	}
 
-	public void setStudentYears(Set<StudentOnYear> studentYears) {
-		this.studentYears = studentYears;
+	public void setStudentOnYear(Set<StudentOnYear> studentOnYear) {
+		this.studentOnYear = studentOnYear;
 	}
+
+	public Set<CourseAttending> getCourseAttending() {
+		return courseAttending;
+	}
+
+	public void setCourseAttending(Set<CourseAttending> courseAttending) {
+		this.courseAttending = courseAttending;
+	}
+
+
 
 	public RegisteredUser getRegisteredUser() {
 		return registeredUser;
@@ -129,6 +145,14 @@ public class Student{
 
 	public void setRegisteredUser(RegisteredUser registeredUser) {
 		this.registeredUser = registeredUser;
+	}
+
+	public int getStudyYear() {
+		return studyYear;
+	}
+
+	public void setStudyYear(int studyYear) {
+		this.studyYear = studyYear;
 	}
 	
 	

@@ -30,7 +30,7 @@ public class StudyCourse {
 	@OneToMany(mappedBy="studyCourse")
 	private Set<StudyCourseTeacher> studyCourseTeacher;
 	
-	@OneToMany(mappedBy= "studyCoures")
+	@OneToMany(mappedBy= "studyCourse")
 	private Set<StudyYear> studyYear;
 	
 	@Version

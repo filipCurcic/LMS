@@ -2,6 +2,7 @@ package app.controllers;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,10 +20,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import app.dto.StudentDto;
 import app.entities.Student;
-import app.entities.StudentOnYear;
 import app.mappers.StudentMapper;
 import app.services.FileService;
-import app.services.StudentOnYearService;
 import app.services.StudentService;
 
 @Controller
@@ -31,9 +30,6 @@ public class StudentController {
 	
 	@Autowired
 	StudentService stuSer;
-	
-	@Autowired
-	StudentOnYearService onYearService;
 	
 	@Autowired
 	StudentMapper studentMapper;
@@ -47,20 +43,37 @@ public class StudentController {
 		return ResponseEntity.ok(studentMapper.toDTO(student));	
 	}
 	
-	
-	//Indeksi
-	@RequestMapping("/indeks/{id}")
-	public ResponseEntity<List<StudentOnYear>> getStudentIndeks(@PathVariable Long id) {
-		List<StudentOnYear> indexes = onYearService.getIndex(id);
-		return ResponseEntity.ok(indexes);	
-	}
-	
 	@RequestMapping("/{id}")
 	public ResponseEntity<StudentDto> getStudent(@PathVariable Long id) {
 		Student student = stuSer.getOne(id);
 		return new ResponseEntity<StudentDto>(studentMapper.toDTO(student), HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/findByName/{name}", method=RequestMethod.GET)
+    public ResponseEntity<Iterable<Optional<Student>>> getStudentsByFirstName(@PathVariable String firstName) {
+		Iterable<Optional<Student>> students = stuSer.getStudentsByFirstName(firstName);
+	    return new ResponseEntity<Iterable<Optional<Student>>>(students, HttpStatus.OK);
+    }
+	    
+	@RequestMapping(value="/findByJmbg/{jmbg}", method=RequestMethod.GET)
+	public ResponseEntity<Student> getStudentByJmbg(@PathVariable String jmbg) {
+	    Optional<Student> student = stuSer.getStudentByJmbg(jmbg);
+	       if(student.isPresent()) {
+	           return new ResponseEntity<Student>(student.get(), HttpStatus.OK);
+	       }
+	       return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
+	}
+	
+	@RequestMapping(value="/username/{username}", method=RequestMethod.GET)
+    public ResponseEntity<Student> getStudentByUsername(@PathVariable String username) {
+        Optional<Student> student = stuSer.getStudentByUsername(username);
+        if(student.isPresent()) {
+            return new ResponseEntity<Student>(student.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
+    }
+
+	    
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR_STAFF','ROLE_ADMINISTRATOR')")
@@ -71,6 +84,15 @@ public class StudentController {
 		return new ResponseEntity<Student>(student, HttpStatus.OK);
 	}
 
+	@RequestMapping(value="/{username}", method=RequestMethod.PUT, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Student> updateStudent(@PathVariable String username, @RequestPart("profileImage") Optional<MultipartFile> file, @RequestPart("data") String student) throws IOException {
+    	Student s = new ObjectMapper().readValue(student, Student.class);
+		if(file.isPresent()) {
+			fileService.addProfileImageStudent(file.get(), "teacher" + s.getRegisteredUser().getUsername(), s);
+		}
+    	stuSer.updateStudent(username, s);
+        return new ResponseEntity<Student>(s, HttpStatus.OK);
+    }
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Student> deleteStudent(@PathVariable Long id){
