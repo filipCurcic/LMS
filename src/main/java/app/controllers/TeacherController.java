@@ -52,6 +52,15 @@ public class TeacherController {
 		Teacher teacher = teacherService.getOne(id);
 		return teacherMapper.toDTO(teacher);
 	}
+	
+	@RequestMapping(value="/username/{username}", method=RequestMethod.GET)
+    public ResponseEntity<Teacher> getTeacherByUsername(@PathVariable String username) {
+        Optional<Teacher> teacher = teacherService.getStudentByUsername(username);
+        if(teacher.isPresent()) {
+            return new ResponseEntity<Teacher>(teacher.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<Teacher>(HttpStatus.NOT_FOUND);
+    }
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@Secured("ROLE_ADMINISTRATOR")
@@ -72,4 +81,14 @@ public class TeacherController {
 		}
 		return new ResponseEntity<Teacher>(HttpStatus.NO_CONTENT);
 	}
+	
+	@RequestMapping(value="/{username}", method=RequestMethod.PUT, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Teacher> updateTeacher(@PathVariable String username, @RequestPart("profileImage") Optional<MultipartFile> file, @RequestPart("data") String teacher) throws IOException {
+    	Teacher t = new ObjectMapper().readValue(teacher, Teacher.class);
+		if(file.isPresent()) {
+			fileService.addProfileImageTeacher(file.get(), "teacher" + t.getRegisteredUser().getUsername(), t);
+		}
+    	teacherService.updateTeacher(username, t);
+        return new ResponseEntity<Teacher>(t, HttpStatus.OK);
+    }
 }

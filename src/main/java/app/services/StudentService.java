@@ -18,10 +18,15 @@ public class StudentService {
 	
 	@Autowired
 	LoginService loginService;
+	@Autowired
+	RegisteredUserService registeredUserService;
+	
+	@Autowired
+	AddressService addressService;
 	
 	@Autowired
 	PasswordEncoder passwordEncoder;
-	
+    
 	public List<Student> getAll(){
 		return stuRep.findAll();
 	}
@@ -47,6 +52,17 @@ public class StudentService {
 	public void removeStudent(Long id) {
 		Optional<Student> is = stuRep.findById(id);
 		stuRep.delete(is.get());
+	}
+	
+	public void updateStudent (String username, Student student) {
+		 Optional<Student> st = stuRep.getByUsername(username);
+	        if(st.isPresent()) {
+	            student.setId(st.get().getId());
+	            student.getRegisteredUser().setPassword(passwordEncoder.encode(student.getRegisteredUser().getPassword()));
+	            registeredUserService.updateUser(student.getRegisteredUser().getId(), student.getRegisteredUser());
+	            addressService.updateAddress(student.getAddress().getId(), student.getAddress());
+	           
+	        }
 	}
 	
 	public Iterable<Optional<Student>> getStudentsByFirstName(String name){

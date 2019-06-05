@@ -52,6 +52,7 @@ public class AdministratorStaffService {
 	
 	public void addAdministratorStaff(AdministratorStaff adminStaff) {
 		loginService.addPermssion(adminStaff.getRegisteredUser(), "ROLE_ADMINISTRATION_STAFF");
+		adminStaff.getRegisteredUser().setPassword(passwordEncoder.encode(adminStaff.getRegisteredUser().getPassword()));
 		administratorStaffRepository.save(adminStaff);
 	}
 	

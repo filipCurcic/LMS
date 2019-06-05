@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import app.entities.Teacher;
@@ -18,6 +19,16 @@ public class TeacherService {
 	@Autowired
 	LoginService loginService;
 	
+	@Autowired
+	RegisteredUserService registeredUserService;
+	
+	@Autowired
+	AddressService addressService;
+	
+	@Autowired
+	PasswordEncoder passwordEncoder;
+    
+	
 	public List<Teacher> getTeachers() {
 		return teacherRep.findAll();
 	}
@@ -26,8 +37,15 @@ public class TeacherService {
 		return teacherRep.findById(id).orElse(null);
 	}
 	
+	public Optional<Teacher> getStudentByUsername(String username) {
+        return teacherRep.getByUsername(username);
+    }
+	
+	
+	
 	public void addTeacher(Teacher teacher) {
 		loginService.addPermssion(teacher.getRegisteredUser(), "ROLE_PROFESSOR");
+		teacher.getRegisteredUser().setPassword(passwordEncoder.encode(teacher.getRegisteredUser().getPassword()));
 		teacherRep.save(teacher);
 	}
 	
@@ -38,12 +56,15 @@ public class TeacherService {
 		}
 	}
 	
-	public void updateTeacher(Long id, Teacher teacher) {
-		Optional<Teacher> teach = teacherRep.findById(id);
-		if(teach.isPresent()) {
-			teacher.setId(teach.get().getId());
-			teacherRep.save(teacher);
-		}
+	public void updateTeacher (String username, Teacher teacher) {
+		 Optional<Teacher> t = teacherRep.getByUsername(username);
+	        if(t.isPresent()) {
+	            teacher.setId(t.get().getId());
+	            teacher.getRegisteredUser().setPassword(passwordEncoder.encode(teacher.getRegisteredUser().getPassword()));
+	            registeredUserService.updateUser(teacher.getRegisteredUser().getId(), teacher.getRegisteredUser());
+	            addressService.updateAddress(teacher.getAddress().getId(), teacher.getAddress());
+	           
+	        }
 	}
 
 }

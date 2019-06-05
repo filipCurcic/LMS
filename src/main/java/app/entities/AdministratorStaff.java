@@ -24,8 +24,10 @@ public class AdministratorStaff {
 	private boolean deleted = false;
 	
 	private String profilePicturePath;
-	@ManyToOne
+	
+	@ManyToOne(cascade = CascadeType.ALL)
 	private RegisteredUser registeredUser;
+	
 	@ManyToOne(cascade = CascadeType.ALL)
 	private Address address;
 	

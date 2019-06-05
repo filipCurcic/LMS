@@ -16,16 +16,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import app.dto.StudentDto;
-import app.entities.Address;
 import app.entities.Student;
 import app.mappers.StudentMapper;
 import app.services.FileService;
 import app.services.StudentService;
-import app.utils.View.HideOptionalProperties;
 
 @Controller
 @RequestMapping("/student")
@@ -87,6 +84,15 @@ public class StudentController {
 		return new ResponseEntity<Student>(student, HttpStatus.OK);
 	}
 
+	@RequestMapping(value="/{username}", method=RequestMethod.PUT, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Student> updateStudent(@PathVariable String username, @RequestPart("profileImage") Optional<MultipartFile> file, @RequestPart("data") String student) throws IOException {
+    	Student s = new ObjectMapper().readValue(student, Student.class);
+		if(file.isPresent()) {
+			fileService.addProfileImageStudent(file.get(), "teacher" + s.getRegisteredUser().getUsername(), s);
+		}
+    	stuSer.updateStudent(username, s);
+        return new ResponseEntity<Student>(s, HttpStatus.OK);
+    }
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Student> deleteStudent(@PathVariable Long id){
