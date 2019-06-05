@@ -52,6 +52,32 @@ public class StudentController {
 		return new ResponseEntity<StudentDto>(studentMapper.toDTO(student), HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/findByName/{name}", method=RequestMethod.GET)
+    public ResponseEntity<Iterable<Optional<Student>>> getStudentsByFirstName(@PathVariable String firstName) {
+		Iterable<Optional<Student>> students = stuSer.getStudentsByFirstName(firstName);
+	    return new ResponseEntity<Iterable<Optional<Student>>>(students, HttpStatus.OK);
+    }
+	    
+	@RequestMapping(value="/findByJmbg/{jmbg}", method=RequestMethod.GET)
+	public ResponseEntity<Student> getStudentByJmbg(@PathVariable String jmbg) {
+	    Optional<Student> student = stuSer.getStudentByJmbg(jmbg);
+	       if(student.isPresent()) {
+	           return new ResponseEntity<Student>(student.get(), HttpStatus.OK);
+	       }
+	       return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
+	}
+	
+	@RequestMapping(value="/username/{username}", method=RequestMethod.GET)
+    public ResponseEntity<Student> getStudentByUsername(@PathVariable String username) {
+        Optional<Student> student = stuSer.getStudentByUsername(username);
+        if(student.isPresent()) {
+            return new ResponseEntity<Student>(student.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
+    }
+
+	    
+	
 	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR_STAFF','ROLE_ADMINISTRATOR')")
 	public ResponseEntity<Student> addStudent(@RequestPart("profileImage") MultipartFile file, @RequestPart("data") String studentStr) throws IOException {

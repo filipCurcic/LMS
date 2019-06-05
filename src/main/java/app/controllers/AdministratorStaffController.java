@@ -1,6 +1,7 @@
 package app.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,15 +19,14 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import app.dto.AdministratorStaffDto;
 import app.entities.AdministratorStaff;
+import app.entities.Student;
 import app.mappers.AdministratorStaffMapper;
 import app.services.AdministratorStaffService;
 import app.services.FileService;
-import app.utils.View.HideOptionalProperties;
 
 @CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
@@ -76,11 +76,26 @@ public class AdministratorStaffController {
 		return new ResponseEntity<AdministratorStaff>(HttpStatus.NO_CONTENT);
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<AdministratorStaff> editAdministrator(@PathVariable Long id, @RequestBody AdministratorStaff administratorStaff){
-		adminStaffService.updateAdministrationStaff(id, administratorStaff);
-		return new ResponseEntity<AdministratorStaff>(administratorStaff, HttpStatus.OK);
-	}
+	@RequestMapping(value="/{username}", method=RequestMethod.PUT, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<AdministratorStaff> updateAdministratorStaff(@PathVariable String username, @RequestPart("profileImage") Optional<MultipartFile> file, @RequestPart("data") String adminStaff) throws IOException {
+    	AdministratorStaff adm = new ObjectMapper().readValue(adminStaff, AdministratorStaff.class);
+		if(file.isPresent()) {
+			fileService.addProfileImageAdministratorStaff(file.get(), "administrative_staff_" + adm.getRegisteredUser().getUsername(), adm);
+		}
+    	adminStaffService.updateAdministrationStaff(username, adm);
+        return new ResponseEntity<AdministratorStaff>(adm, HttpStatus.OK);
+    }
+	
+    @RequestMapping(value="/enrollment/{studyProgram}/{yearOfStudy}", method=RequestMethod.GET)
+    public ResponseEntity<Iterable<Student>> getStudentsForEnrollmentToTheNextYear(@PathVariable String studyCourse, @PathVariable int studyYear) {
+        return new ResponseEntity<Iterable<Student>>(adminStaffService.getStudentsForEnrollmentToTheNextYear(studyCourse, studyYear), HttpStatus.OK);
+    }
+    
+    @RequestMapping(value="/enrollment", method=RequestMethod.POST)
+    public ResponseEntity<Boolean> enrollmentStudentToTheNextYear(@RequestBody ArrayList<String> ids) {
+        return new ResponseEntity<Boolean>(adminStaffService.enrollmentStudentToTheNextYear(ids), HttpStatus.OK);
+    }
+
 
 
 }

@@ -1,6 +1,7 @@
 
 package app.repositories;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,7 +13,8 @@ import app.entities.StudyYear;
 @Repository
 public interface StudyYearRepository extends JpaRepository<StudyYear, Long> {
 	
-	@Query("SELECT s from StudyYear s WHERE s.studyYear=?1 and s.studyCoures.id=?2")
+	//ArrayList<StudyYear> findByStudyCourseIdEquals(Long studyCourseId);
+	@Query("SELECT s from StudyYear s WHERE s.studyYear=?1 and s.studyCourse.id=?2")
 	Optional<StudyYear> getNextYear(int studyYear, Long id);
 	
 }

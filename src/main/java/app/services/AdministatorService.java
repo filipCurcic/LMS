@@ -18,6 +18,7 @@ public class AdministatorService {
 	@Autowired
 	LoginService loginService;
 	
+	
 	public AdministatorService() {
 		
 	}

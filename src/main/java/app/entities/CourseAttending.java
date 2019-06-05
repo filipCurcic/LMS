@@ -1,5 +1,6 @@
 package app.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,7 +13,10 @@ public class CourseAttending {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@ManyToOne(fetch = FetchType.LAZY)
+	
+	private Integer grade;
+	
+	@ManyToOne(cascade=CascadeType.ALL)
 	private Student student;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -70,6 +74,19 @@ public class CourseAttending {
 	public Student getStudent() {
 		return student;
 	}
+	
+	
+
+
+	public Integer getGrade() {
+		return grade;
+	}
+
+
+	public void setGrade(Integer grade) {
+		this.grade = grade;
+	}
+
 
 	public void setStudent(Student student) {
 		this.student = student;

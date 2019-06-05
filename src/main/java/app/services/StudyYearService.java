@@ -1,12 +1,15 @@
 package app.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import app.entities.Course;
 import app.entities.StudyYear;
+import app.repositories.CourseRepository;
 import app.repositories.StudyYearRepository;
 
 @Service
@@ -15,6 +18,11 @@ public class StudyYearService {
 	@Autowired
 	StudyYearRepository stuYRep;
 	
+	@Autowired
+	StudyYearService studyYearService;
+	
+	@Autowired
+	CourseRepository courseRepository;
 	
 	public List<StudyYear> getAll(){
 		return stuYRep.findAll();
@@ -36,17 +44,22 @@ public class StudyYearService {
 		stuYRep.delete(is.get());
 	}
 	
-	/*public Optional<StudyYear> getNextYearOfStudyByStudyProgram(Long id) {
-    	Optional<StudyYear> sy = stuYRep.get
+//	public ArrayList<Course> getCourse(Long studyYearId) {
+//    	return courseRepository.findByStudyYearIdEquals(studyYearId);
+//    }
+    
+	
+	public Optional<StudyYear> getNextYearOfStudyByStudyProgram(Long id) {
+    	Optional<StudyYear> sy = studyYearService.getYearOfStudyById(id);
     	if(sy.isPresent()) {
     		StudyYear studyYear = sy.get();
     		int year = studyYear.getStudyYear();
     		year = year+1;
-    		Optional<StudyYear> nextYearOfStudy = stuYRep.getNextYear(year, studyYear.getStudyCoures().getId());
+    		Optional<StudyYear> nextYearOfStudy = stuYRep.getNextYear(year, studyYear.getStudyCourse().getId());
     		return nextYearOfStudy;
     	}
         return sy;
     }
-    */
+    
 	
 }

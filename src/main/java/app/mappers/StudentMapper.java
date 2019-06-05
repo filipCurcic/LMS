@@ -38,10 +38,7 @@ public class StudentMapper implements Mapper<Student, StudentDto> {
 			retVal.setRegisteredUserDto(registeredUserMapper.toDTO(student.getRegisteredUser()));
 			retVal.setAddressDto(addressMapper.toDTO(student.getAddress()));
 			retVal.setStudentYear(new ArrayList<>());
-			System.out.println("ASD");
-			for(StudentOnYear studentOnYear: student.getStudentYears()) {
-				retVal.getStudentYear().add("/address/" + studentOnYear.getId());
-			}
+			
 		return retVal;
 
 	}

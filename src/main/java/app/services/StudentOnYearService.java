@@ -32,5 +32,17 @@ public class StudentOnYearService {
 		stuOnYRep.delete(is.get());
 	}
 	
+	 public void updateStudentOnYear(Long id, StudentOnYear studentOnYear) {
+	        Optional<StudentOnYear> stu = stuOnYRep.findById(id);
+	        if(stu.isPresent()) {
+	            studentOnYear.setId(stu.get().getId());
+	            stuOnYRep.save(studentOnYear);
+	        }
+	    }
+	 
+     public Optional<StudentOnYear> getStudentYearByYearOfStudyId(Long id) {
+        return stuOnYRep.findById(id);
+	    }
+
 	
 }

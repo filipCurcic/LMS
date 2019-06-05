@@ -1,5 +1,6 @@
 package app.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,6 +26,8 @@ public class AdministratorStaff {
 	private String profilePicturePath;
 	@ManyToOne
 	private RegisteredUser registeredUser;
+	@ManyToOne(cascade = CascadeType.ALL)
+	private Address address;
 	
 	public AdministratorStaff() {
 		
@@ -96,6 +99,14 @@ public class AdministratorStaff {
 
 	public void setRegisteredUser(RegisteredUser registeredUser) {
 		this.registeredUser = registeredUser;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 	
 	
