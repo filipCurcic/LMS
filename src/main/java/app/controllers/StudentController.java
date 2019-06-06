@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -49,6 +51,12 @@ public class StudentController {
 		return new ResponseEntity<StudentDto>(studentMapper.toDTO(student), HttpStatus.OK);
 	}
 	
+//	@RequestMapping("/{username}")
+//	public ResponseEntity<StudentDto> getStudentUsername(@PathVariable String username) {
+//		Student student = stuSer.getStudentByUsername(username);
+//		return new ResponseEntity<StudentDto>(studentMapper.toDTO(student), HttpStatus.OK);
+//	}
+	
 	@RequestMapping(value="/findByName/{name}", method=RequestMethod.GET)
     public ResponseEntity<Iterable<Optional<Student>>> getStudentsByFirstName(@PathVariable String firstName) {
 		Iterable<Optional<Student>> students = stuSer.getStudentsByFirstName(firstName);
@@ -74,7 +82,7 @@ public class StudentController {
     }
 
 	    
-	
+	@Transactional
 	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR_STAFF','ROLE_ADMINISTRATOR')")
 	public ResponseEntity<Student> addStudent(@RequestPart("profileImage") MultipartFile file, @RequestPart("data") String studentStr) throws IOException {

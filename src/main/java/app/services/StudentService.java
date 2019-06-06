@@ -3,12 +3,17 @@ package app.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import app.entities.Student;
+import app.entities.StudentOnYear;
+import app.entities.StudyYear;
 import app.repositories.StudentRepository;
+import app.repositories.StudyYearRepository;
 
 @Service
 public class StudentService {
@@ -26,6 +31,9 @@ public class StudentService {
 	
 	@Autowired
 	PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	StudyYearRepository studyYearRepository;
     
 	public List<Student> getAll(){
 		return stuRep.findAll();
@@ -43,9 +51,14 @@ public class StudentService {
         return stuRep.getByUsername(username);
     }
 	
+	@Transactional
 	public void addStudent(Student student) {
 		loginService.addPermssion(student.getRegisteredUser(), "ROLE_STUDENT");
 		student.getRegisteredUser().setPassword(passwordEncoder.encode(student.getRegisteredUser().getPassword()));
+//		StudyYear studyYear = studyYearRepository.findFirstByStudyYear(1);
+//		StudentOnYear studentOnYear = new StudentOnYear();
+//		studentOnYear.setStudyYear(studyYear);
+//		student.getStudentOnYear().add(studentOnYear);
         stuRep.save(student);
 	}
 	

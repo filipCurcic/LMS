@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -13,11 +12,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-
 @Component
-public class Token {
-	
-	
+public class TokenUtils {
 	@Value("${token.secret}")
 	private String secret;
 	
@@ -81,9 +77,7 @@ public class Token {
 		claims.put("created", new Date(System.currentTimeMillis()));
 		claims.put("role", userDetails.getAuthorities());
 		
-		
 		return Jwts.builder().setClaims(claims).setExpiration(new Date(System.currentTimeMillis() + expiration * 1000))
 				.signWith(SignatureAlgorithm.HS512, this.secret).compact();
 	}
-
 }
