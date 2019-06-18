@@ -23,6 +23,7 @@ public class StudentService {
 	
 	@Autowired
 	LoginService loginService;
+	
 	@Autowired
 	RegisteredUserService registeredUserService;
 	
@@ -51,20 +52,33 @@ public class StudentService {
         return stuRep.getByUsername(username);
     }
 	
+	public Student getStudentByUsernamee(String username) {
+        return stuRep.getByUsername(username).orElse(null);
+    }
+	
 	@Transactional
 	public void addStudent(Student student) {
 		loginService.addPermssion(student.getRegisteredUser(), "ROLE_STUDENT");
 		student.getRegisteredUser().setPassword(passwordEncoder.encode(student.getRegisteredUser().getPassword()));
+		System.out.println("service");
 //		StudyYear studyYear = studyYearRepository.findFirstByStudyYear(1);
 //		StudentOnYear studentOnYear = new StudentOnYear();
 //		studentOnYear.setStudyYear(studyYear);
 //		student.getStudentOnYear().add(studentOnYear);
         stuRep.save(student);
+        System.out.println("service saved");
 	}
 	
 	public void removeStudent(Long id) {
 		Optional<Student> is = stuRep.findById(id);
 		stuRep.delete(is.get());
+	}
+	
+	public void deleteStudent(Long id) {
+		Optional<Student> student = stuRep.findById(id);
+		Student s = student.get();
+		s.setDeleted(true);
+		stuRep.save(s);
 	}
 	
 	public void updateStudent (String username, Student student) {
@@ -73,8 +87,8 @@ public class StudentService {
 	            student.setId(st.get().getId());
 	            student.getRegisteredUser().setPassword(passwordEncoder.encode(student.getRegisteredUser().getPassword()));
 	            registeredUserService.updateUser(student.getRegisteredUser().getId(), student.getRegisteredUser());
-	            addressService.updateAddress(student.getAddress().getId(), student.getAddress());
-	           
+//	            addressService.updateAddress(student.getAddress().getId(), student.getAddress());
+	            stuRep.save(student);
 	        }
 	}
 	

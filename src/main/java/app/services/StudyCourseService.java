@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import app.entities.Address;
 import app.entities.StudyCourse;
 import app.repositories.StudyCourseRepository;
 
@@ -38,5 +39,11 @@ public class StudyCourseService {
 		stuCouRep.delete(is.get());
 	}
 	
-	
+	public void updateStudyCourse(Long id, StudyCourse studyCourse) {
+		Optional<StudyCourse> sc= stuCouRep.findById(id);
+		if(sc.isPresent()) {
+			studyCourse.setId(sc.get().getId());
+			stuCouRep.save(studyCourse);
+		}
+	}
 }

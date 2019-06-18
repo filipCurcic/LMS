@@ -30,16 +30,7 @@ public class AddressMapper implements Mapper<Address, AddressDto> {
 			retVal.setId(address.getId());
 			retVal.setStreet(address.getStreet());
 			retVal.setStreetNumber(address.getStreetNumber());
-			retVal.setCityDto(new CityDto());
-			retVal.setCityDto(cityMapper.toDTO(address.getCity()));
-			retVal.setStudent(new ArrayList<>());
-			for(Student student: address.getStudent()) {
-				retVal.getStudent().add("/student/" + student.getId());
-			}
-			retVal.setTeacher(new ArrayList<>());
-			for(Teacher teacher: address.getTeacher()) {
-				retVal.getTeacher().add("/teacher/" + teacher.getId());
-			}
+			retVal.setCity(cityMapper.toDTO(address.getCity()));
 			return retVal;
 	}
 

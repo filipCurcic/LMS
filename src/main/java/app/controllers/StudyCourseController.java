@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -66,8 +67,8 @@ public class StudyCourseController {
 	}
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR_STAFF','ROLE_ADMINISTRATOR')")
-	public ResponseEntity<StudyCourse> addStudyCoourse(@RequestPart("profileImage") MultipartFile file, @RequestPart("data") String studyCourseStr) throws IOException {
+    @Secured("ROLE_ADMINISTRATOR")
+	public ResponseEntity<StudyCourse> addStudyCoourse(@RequestPart("courseImages") MultipartFile file, @RequestPart("data") String studyCourseStr) throws IOException {
 		StudyCourse studyCourse = new ObjectMapper().readValue(studyCourseStr, StudyCourse.class);
 		fileService.addStudyCourseImage(file, "studyCourse_img", studyCourse);
 		stuCouSer.addStudyCourse(studyCourse);
@@ -83,5 +84,15 @@ public class StudyCourseController {
 		}
 		return new ResponseEntity<StudyCourse>(HttpStatus.NO_CONTENT);
 	}
+	
+	@RequestMapping(value="/edit/{id}", method=RequestMethod.PUT, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<StudyCourse> updateStudent(@PathVariable Long id, @RequestPart("courseImages") Optional<MultipartFile> file, @RequestPart("data") String studyCourse) throws IOException {
+    	StudyCourse sc = new ObjectMapper().readValue(studyCourse, StudyCourse.class);
+		if(file.isPresent()) {
+			fileService.addStudyCourseImage(file.get(), "teacher" + sc.getId(), sc);
+		}
+    	stuCouSer.updateStudyCourse(id, sc);
+        return new ResponseEntity<StudyCourse>(sc, HttpStatus.OK);
+    }
 
 }

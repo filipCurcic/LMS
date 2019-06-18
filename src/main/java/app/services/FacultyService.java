@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import app.entities.Faculty;
 import app.repositories.FacultyRepository;
 
@@ -37,6 +36,14 @@ public class FacultyService {
 	public void removeFaculty(Long id) {
 		Optional<Faculty> is = facRep.findById(id);
 		facRep.delete(is.get());
+	}
+	
+	public void updateFaculty(Long id, Faculty faculty) {
+		Optional<Faculty> fac = facRep.findById(id);
+		if(fac.isPresent()) {
+			faculty.setId(fac.get().getId());
+			facRep.save(faculty);
+		}
 	}
 	
 }

@@ -22,7 +22,7 @@ public class Address {
 	private String street;
 	@NotNull
 	private String streetNumber;
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade= { CascadeType.DETACH ,CascadeType.MERGE})
 	private City city;
 	
 	@OneToMany(mappedBy = "address")
@@ -31,9 +31,7 @@ public class Address {
 	@OneToMany(mappedBy = "address")
 	private Set<Student> student;
 	
-	@Version
-	private int version = 0;
-	
+
 	
 	public Address() {
 		
@@ -87,13 +85,6 @@ public class Address {
 		this.student = student;
 	}
 
-	public int getVersion() {
-		return version;
-	}
-
-	public void setVersion(int version) {
-		this.version = version;
-	}
 
 	public City getCity() {
 		return city;

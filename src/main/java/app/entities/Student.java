@@ -31,10 +31,13 @@ public class Student{
 	@NotNull
 	private String jmbg;
 	
+	@NotNull
+	private boolean deleted = false;
+	
 	@Column(length=128)
 	private String profilePicturePath;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.REMOVE})
 	private Address address;
 	
 	@OneToMany(mappedBy="student")
@@ -50,13 +53,14 @@ public class Student{
 	
 	public Student() {}
 
-	public Student(Long id, String name, String lastName, String jmbg, String profilePicturePath, Address address,
+	public Student(Long id, String name, String lastName, String jmbg, String profilePicturePath, boolean deleted, Address address,
 			Set<StudentOnYear> studentOnYear, RegisteredUser registeredUser) {
 		this.id = id;
 		this.name = name;
 		this.lastName = lastName;
 		this.jmbg = jmbg;
 		this.profilePicturePath = profilePicturePath;
+		this.deleted = deleted;
 		this.address = address;
 		this.studentOnYear = studentOnYear;
 		this.registeredUser = registeredUser;
@@ -102,6 +106,15 @@ public class Student{
 
 	public void setJmbg(String jmbg) {
 		this.jmbg = jmbg;
+	}
+
+	
+	public boolean deleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 
 	public Address getAddress() {

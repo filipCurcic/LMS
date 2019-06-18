@@ -28,8 +28,7 @@ public class StudyCoureseMapper implements Mapper<StudyCourse, StudyCourseDto> {
 			retVal.setId(studyCourse.getId());
 			retVal.setName(studyCourse.getName());
 			retVal.setVersion(studyCourse.getVersion());
-			retVal.setFacultyDto(new FacultyDto());
-			retVal.setFacultyDto(facultyMapper.toDTO(studyCourse.getFaculty()));
+			retVal.setFaculty(facultyMapper.toDTO(studyCourse.getFaculty()));
 			retVal.setStudyCourseTeacher(new ArrayList<>());
 			for (StudyCourseTeacher studyCourseTeacher: studyCourse.getStudyCourseTeacher()) {
 				retVal.getStudyCourseTeacher().add("/study-course-teacher/"+studyCourseTeacher.getId());
@@ -48,7 +47,7 @@ public class StudyCoureseMapper implements Mapper<StudyCourse, StudyCourseDto> {
 		studyCourse.setId(studyCourseDto.getId());
 		studyCourse.setName(studyCourseDto.getName());
 		studyCourse.setVersion(studyCourseDto.getVersion());
-		studyCourse.setFaculty(facultyMapper.toEntity(studyCourseDto.getFacultyDto()));
+		studyCourse.setFaculty(facultyMapper.toEntity(studyCourseDto.getFaculty()));
 		return studyCourse;
 	}
 	

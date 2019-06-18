@@ -63,7 +63,7 @@ public class AddressController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Address> editAddress(@PathVariable Long id, @RequestBody Address address){
 		addressService.updateAddress(id, address);
-		return new ResponseEntity<Address>(address, HttpStatus.OK);
+		return new ResponseEntity<Address>(address, HttpStatus.CREATED);
 	}
 
 }

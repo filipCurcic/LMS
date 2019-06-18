@@ -9,5 +9,7 @@ import app.entities.Administrator;
 
 public interface AdministatorRepository extends JpaRepository<Administrator, Long> {
 
+	@Query("SELECT a FROM Administrator a WHERE a.registeredUser.username = ?1")
+	Optional<Administrator> getByUsername(String username);
 	
 }

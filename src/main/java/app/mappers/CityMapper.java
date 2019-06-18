@@ -31,13 +31,9 @@ public class CityMapper implements Mapper<City, CityDto> {
 		CityDto retVal = new CityDto();
 			retVal.setId(city.getId());
 			retVal.setName(city.getName());
-			retVal.setVersion(city.getVersion());
-			retVal.setCountryDto(new CountryDto());
-			retVal.setCountryDto(countryMapper.toDTO(city.getCountry()));
-			retVal.setAddress(new ArrayList<>());
-			for (Address address: city.getAddress()) {
-				retVal.getAddress().add("/address/"+address.getId());
-			}
+			retVal.setCountry(countryMapper.toDTO(city.getCountry()));
+			
+			
 			return retVal;
 
 	}
@@ -77,8 +73,7 @@ public class CityMapper implements Mapper<City, CityDto> {
 		
 		city.setId(cityDto.getId());
 		city.setName(cityDto.getName());
-		city.setVersion(cityDto.getVersion());
-		city.setCountry(countryMapper.toEntity(cityDto.getCountryDto()));
+		city.setCountry(countryMapper.toEntity(cityDto.getCountry()));
 		return city;
 	}
 	

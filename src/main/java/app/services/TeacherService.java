@@ -37,8 +37,8 @@ public class TeacherService {
 		return teacherRep.findById(id).orElse(null);
 	}
 	
-	public Optional<Teacher> getStudentByUsername(String username) {
-        return teacherRep.getByUsername(username);
+	public Teacher getTeacherByUsername(String username) {
+        return teacherRep.getByUsername(username).orElse(null);
     }
 	
 	

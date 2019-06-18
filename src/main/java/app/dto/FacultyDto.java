@@ -12,7 +12,6 @@ public class FacultyDto {
 	private String contact;
 	private String email;
 	private String description;
-	private Collection<String> studyCourse;
 	private UniversityDto university;
 	private AddressDto address;
 	private Collection<String> teachers;
@@ -76,15 +75,7 @@ public class FacultyDto {
 	}
 
 
-	public Collection<String> getStudyCourse() {
-		return studyCourse;
-	}
-
-
-	public void setStudyCourse(Collection<String> studyCourse) {
-		this.studyCourse = studyCourse;
-	}
-
+	
 
 	public UniversityDto getUniversity() {
 		return university;

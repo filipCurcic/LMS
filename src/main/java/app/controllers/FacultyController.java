@@ -46,7 +46,7 @@ public class FacultyController {
 		return new ResponseEntity<FacultyDto>(facultyMapper.toDTO(faculty), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/", method = RequestMethod.POST)
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ResponseEntity<Faculty> addFaculty(@RequestBody Faculty faculty){
 		facSer.addFaculty(faculty);
 		return new ResponseEntity<Faculty>(faculty, HttpStatus.OK);
@@ -61,5 +61,12 @@ public class FacultyController {
 		}
 		return new ResponseEntity<Faculty>(HttpStatus.NO_CONTENT);
 	}
+	
+	@RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Faculty> editFaculty(@PathVariable Long id, @RequestBody Faculty faculty){
+		facSer.updateFaculty(id, faculty);
+		return new ResponseEntity<Faculty>(faculty, HttpStatus.CREATED);
+	}
+
 
 }

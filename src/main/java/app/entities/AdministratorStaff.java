@@ -28,7 +28,7 @@ public class AdministratorStaff {
 	@ManyToOne(cascade = CascadeType.ALL)
 	private RegisteredUser registeredUser;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.REMOVE})
 	private Address address;
 	
 	public AdministratorStaff() {

@@ -20,6 +20,11 @@ public class CountryService {
 		return couRep.findAll();
 	}
 	
+	public Iterable<Country> getAllCountry() {
+		return couRep.findAll();
+	}
+	
+	
 	public Country getOne(Long id) {
 		return couRep.findById(id).orElse(null);
 	}

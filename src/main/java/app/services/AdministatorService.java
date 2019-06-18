@@ -31,6 +31,11 @@ public class AdministatorService {
 		return adminRepository.findById(id).orElse(null);
 	}
 	
+	public Administrator getByUsername(String username) {
+		return adminRepository.getByUsername(username).orElse(null);
+	}
+	
+	
 	public void addAdministrator(Administrator admin) {
 		loginService.addPermssion(admin.getRegisteredUser(), "ROLE_ADMINISTRATOR");
 		adminRepository.save(admin);

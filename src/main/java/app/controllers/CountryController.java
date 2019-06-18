@@ -41,11 +41,14 @@ public class CountryController {
 
 	}
 	
+	
 	@RequestMapping("/{id}")
 	public CountryDto getCountry(@PathVariable Long id) {
 		Country country = countServ.getOne(id);
 		return countryMapper.toDTO(country);
 	}
+	
+	
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ResponseEntity<Country> addCountry(@RequestBody Country country){
@@ -66,7 +69,7 @@ public class CountryController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Country> editCountry(@PathVariable Long id, @RequestBody Country country){
 		countServ.edit(id, country);
-		return new ResponseEntity<Country>(country, HttpStatus.OK);
+		return new ResponseEntity<Country>(country, HttpStatus.CREATED);
 	}
 
 

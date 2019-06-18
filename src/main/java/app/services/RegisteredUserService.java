@@ -42,6 +42,8 @@ public class RegisteredUserService {
 		Optional<RegisteredUser> reg = registeredUserRepository.findById(id);
 		if(reg.isPresent()) {
 			registeredUser.setId(reg.get().getId());
+			registeredUser.setUsername(reg.get().getUsername());
+			registeredUser.setPassword(reg.get().getPassword());
 			registeredUserRepository.save(registeredUser);
 		}
 	}

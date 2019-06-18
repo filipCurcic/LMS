@@ -12,7 +12,7 @@ import app.entities.Teacher;
 @Repository
 public interface TeacherRepository extends JpaRepository<Teacher, Long> {
 	
-	@Query("SELECT s FROM Student s WHERE s.registeredUser.username = ?1")
+	@Query("SELECT t FROM Teacher t WHERE t.registeredUser.username = ?1")
 	Optional<Teacher> getByUsername(String username);
 	
 }

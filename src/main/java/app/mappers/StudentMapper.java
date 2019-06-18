@@ -34,10 +34,8 @@ public class StudentMapper implements Mapper<Student, StudentDto> {
 			retVal.setLastName(student.getLastName());
 			retVal.setJmbg(student.getJmbg());
 			retVal.setProfilePicturePath(student.getProfilePicturePath());
-			retVal.setRegisteredUserDto(new RegisteredUserDto());
-			retVal.setRegisteredUserDto(registeredUserMapper.toDTO(student.getRegisteredUser()));
-			retVal.setAddressDto(addressMapper.toDTO(student.getAddress()));
-			retVal.setStudentYear(new ArrayList<>());
+			retVal.setRegisteredUser(registeredUserMapper.toDTO(student.getRegisteredUser()));
+			retVal.setAddress(addressMapper.toDTO(student.getAddress()));
 			
 		return retVal;
 
@@ -51,12 +49,12 @@ public class StudentMapper implements Mapper<Student, StudentDto> {
 		Student student = new Student();
 		
 		student.setId(studentDto.getId());
-		student.setAddress(addressMapper.toEntity(studentDto.getAddressDto()));
+		student.setAddress(addressMapper.toEntity(studentDto.getAddress()));
 		student.setJmbg(studentDto.getJmbg());
 		student.setName(studentDto.getName());
 		student.setLastName(studentDto.getLastName());
 		student.setProfilePicturePath(studentDto.getProfilePicturePath());
-		student.setRegisteredUser(registeredUserMapper.toEntity(studentDto.getRegisteredUserDto()));
+		student.setRegisteredUser(registeredUserMapper.toEntity(studentDto.getRegisteredUser()));
 		return student;
 	}
 	

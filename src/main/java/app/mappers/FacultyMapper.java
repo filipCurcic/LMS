@@ -39,10 +39,7 @@ public class FacultyMapper implements Mapper<Faculty, FacultyDto> {
 			for(Teacher teacher: faculty.getTeachers()) {
 				retVal.getTeachers().add("/teacher/" + teacher.getId());
 			}
-			retVal.setStudyCourse(new ArrayList<>());
-			for(StudyCourse studyCourse: faculty.getStudyCourse()) {
-				retVal.getStudyCourse().add("study-course/" + studyCourse.getId());
-			}
+			
 			return retVal;
 
 	}

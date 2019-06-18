@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,16 +56,15 @@ public class TeacherController {
 	}
 	
 	@RequestMapping(value="/username/{username}", method=RequestMethod.GET)
-    public ResponseEntity<Teacher> getTeacherByUsername(@PathVariable String username) {
-        Optional<Teacher> teacher = teacherService.getStudentByUsername(username);
-        if(teacher.isPresent()) {
-            return new ResponseEntity<Teacher>(teacher.get(), HttpStatus.OK);
-        }
-        return new ResponseEntity<Teacher>(HttpStatus.NOT_FOUND);
-    }
-
+	public ResponseEntity<TeacherDto> getOneByUsername (@PathVariable String username) {
+		Teacher teacher = teacherService.getTeacherByUsername(username);
+		return new ResponseEntity<TeacherDto>(teacherMapper.toDTO(teacher), HttpStatus.OK);
+	}
+	
+	
 	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	@Secured("ROLE_ADMINISTRATOR")
+	@Transactional
+	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR_STAFF','ROLE_ADMINISTRATOR')")
 	public ResponseEntity<Teacher> uploadFile(@RequestPart("profileImage") MultipartFile file, @RequestPart("data") String teacherStr) throws IOException {
 		Teacher teacher = new ObjectMapper().readValue(teacherStr, Teacher.class);
 		fileService.addProfileImageTeacher(file, "teacher_" + teacher.getRegisteredUser().getUsername(), teacher);
