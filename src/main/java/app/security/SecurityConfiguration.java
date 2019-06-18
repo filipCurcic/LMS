@@ -21,9 +21,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-	
 	@Autowired
 	private UserDetailsService userDetailsService;
 	
@@ -38,11 +37,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	    return passworEncoder;
 	}
 	
-	@Bean
-	public UserDetailsService userDetailsService() {
-	    return super.userDetailsService();
-	}
-	
 	@Autowired
 	public void configureAuthentication(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
 		authenticationManagerBuilder.userDetailsService(this.userDetailsService).passwordEncoder(this.getPasswordEncoder()).and().jdbcAuthentication();
@@ -55,8 +49,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	}
 	
 	@Bean
-	public TokenFilter authenticationTokenFilterBean() throws Exception {
-		TokenFilter authenticationTokenFilter = new TokenFilter();
+	public AuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
+		AuthenticationTokenFilter authenticationTokenFilter = new AuthenticationTokenFilter();
 		authenticationTokenFilter.setAuthenticationManager(this.authenticationManagerBean());
 		return authenticationTokenFilter;
 	}

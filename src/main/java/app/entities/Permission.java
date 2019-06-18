@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Permission {
 
@@ -21,6 +23,7 @@ public class Permission {
 	@Column(unique = true)
 	private String title;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="permission")
 	private Set<UserPermission> userPermission; 
 	

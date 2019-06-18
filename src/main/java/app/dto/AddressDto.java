@@ -10,9 +10,7 @@ public class AddressDto {
 	private Long id;
 	private String street;
 	private String streetNumber;
-	private CityDto cityDto;
-	private Collection<String> student;
-	private Collection<String> teacher;
+	private CityDto city;
 	
 	public AddressDto() {
 
@@ -42,29 +40,15 @@ public class AddressDto {
 		this.streetNumber = streetNumber;
 	}
 
-	public CityDto getCityDto() {
-		return cityDto;
+
+	public CityDto getCity() {
+		return city;
 	}
 
-	public void setCityDto(CityDto cityDto) {
-		this.cityDto = cityDto;
+	public void setCity(CityDto city) {
+		this.city = city;
 	}
 
-	public Collection<String> getStudent() {
-		return student;
-	}
-
-	public void setStudent(Collection<String> student) {
-		this.student = student;
-	}
-
-	public Collection<String> getTeacher() {
-		return teacher;
-	}
-
-	public void setTeacher(Collection<String> teacher) {
-		this.teacher = teacher;
-	}
-	
+		
 	
 }

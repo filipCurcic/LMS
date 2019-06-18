@@ -17,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import app.dto.CityDto;
 import app.dto.CountryDto;
+import app.dto.StudentDto;
 import app.entities.City;
 import app.entities.Country;
 import app.mappers.CityMapper;
@@ -56,6 +57,14 @@ public class CityController {
 		return new ResponseEntity<City>(city, HttpStatus.OK);
 	}
 	
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping(value="/country/{countryId}", method=RequestMethod.GET)
+    public ResponseEntity<Iterable<Optional<City>>> getCityByCountry(@PathVariable Long countryId) {
+        return new ResponseEntity<Iterable<Optional<City>>>(cityService.getCityByCountry(countryId), HttpStatus.OK);
+    }
+	
+	
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<City> deleteCity(@PathVariable Long id){
 		try {
@@ -69,7 +78,7 @@ public class CityController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<City> editCity(@PathVariable Long id, @RequestBody City city){
 		cityService.updateCity(id, city);
-		return new ResponseEntity<City>(city, HttpStatus.OK);
+		return new ResponseEntity<City>(city, HttpStatus.CREATED);
 	}
 
 }

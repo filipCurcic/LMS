@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
+import app.utils.View.ShowCity;
 import app.utils.View.ShowCountry;
 
 @Entity
@@ -23,12 +24,10 @@ public class Country {
 	private Long id;
 	@NotNull
 	private String name;
-	@OneToMany(mappedBy="country", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="country")
 	private Set<City> city;
 	
-	@Version
-	public int version = 0;
-	
+
 	public Country() {
 		
 	}
@@ -58,14 +57,6 @@ public class Country {
 	}
 
 	
-	public int getVersion() {
-		return version;
-	}
-
-	public void setVersion(int version) {
-		this.version = version;
-	}
-
 	public Set<City> getCity() {
 		return city;
 	}

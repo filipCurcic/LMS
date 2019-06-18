@@ -3,6 +3,7 @@ package app.entities;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,13 +27,10 @@ public class City {
 	private Long id;
 	@NotNull
 	private String name;
-	@ManyToOne(cascade=CascadeType.ALL)
-	private Country country;
-	@OneToMany(mappedBy="city", cascade=CascadeType.ALL)
-	private Set<Address> address;
 	
-	@Version
-	private int version = 0;
+	@ManyToOne(cascade= { CascadeType.REFRESH, CascadeType.MERGE})
+	private Country country;
+	
 	
 	
 	public City() {
@@ -77,24 +75,7 @@ public class City {
 
 	
 
-	public int getVersion() {
-		return version;
-	}
-
-
-	public void setVersion(int version) {
-		this.version = version;
-	}
-
-
-	public Set<Address> getAddress() {
-		return address;
-	}
-
-
-	public void setAddress(Set<Address> address) {
-		this.address = address;
-	}
+	
 
 
 	

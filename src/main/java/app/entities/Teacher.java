@@ -48,7 +48,7 @@ public class Teacher {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Faculty faculty;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.REMOVE})
 	private Address address;
 	
 	@ManyToOne

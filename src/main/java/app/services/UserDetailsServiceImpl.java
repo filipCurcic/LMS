@@ -3,38 +3,38 @@ package app.services;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import app.entities.RegisteredUser;
 import app.entities.UserPermission;
 
-@Component
-public class UserDetailsServiceImp implements UserDetailsService {
 
+@Service
+public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	@Autowired
 	RegisteredUserService registeredUserService;
 	
+	
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Optional<RegisteredUser> registeredUser= registeredUserService.getRegisteredUserByUserName(username);
+		Optional<RegisteredUser> regUser = registeredUserService.getRegisteredUserByUserName(username);
 		
-		if(registeredUser.isPresent()) {
+		if(regUser.isPresent()) {
 			ArrayList<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
-			for(UserPermission userPermission : registeredUser.get().getUserPermission()) {
+			for(UserPermission userPermission : regUser.get().getUserPermission()) {
 				grantedAuthorities.add(new SimpleGrantedAuthority(userPermission.getPermission().getTitle()));
 			}
 			
-			return new org.springframework.security.core.userdetails.User(registeredUser.get().getUsername(), registeredUser.get().getPassword(), grantedAuthorities);
+			return new org.springframework.security.core.userdetails.User(regUser.get().getUsername(), regUser.get().getPassword(), grantedAuthorities);
 		}
 		
 		return null;

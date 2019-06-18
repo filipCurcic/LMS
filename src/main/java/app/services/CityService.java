@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.entities.City;
+import app.entities.Country;
 import app.repositories.CityRepository;
 
 @Service
@@ -15,6 +16,8 @@ public class CityService {
 	@Autowired
 	CityRepository cityRep;
 	
+	@Autowired
+	CountryService countryService;
 
 	public List<City> getAll() {
 		return cityRep.findAll();
@@ -23,6 +26,11 @@ public class CityService {
 	public City getOne(Long id) {
 		return cityRep.findById(id).orElse(null);
 	}
+	
+	public Iterable<Optional<City>> getCityByCountry(Long countryId) {
+		return cityRep.getAllByCountry(countryId);
+	}
+		
 	
 	public void addCity(City city) {
 		cityRep.save(city);

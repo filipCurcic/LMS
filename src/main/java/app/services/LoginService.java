@@ -1,6 +1,5 @@
 package app.services;
 
-
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -13,49 +12,44 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import app.entities.RegisteredUser;
 import app.entities.UserPermission;
 import app.repositories.PermissionRepository;
 import app.repositories.RegisteredUserRepository;
-import app.utils.Token;
+import app.utils.TokenUtils;
+
 
 @Service
 public class LoginService {
 	
 	@Autowired
-	private RegisteredUserService registeredUserService;
-	
+	RegisteredUserService registeredUserService;
+
 	@Autowired
-	private RegisteredUserRepository registeredUserRepository;
-	
+	RegisteredUserRepository registeredUserRepository;
+
 	@Autowired
-	private PermissionRepository permissionRepository;
+	PermissionRepository permissionRepository;
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
 	@Autowired
-	private UserDetailsServiceImp userDetailsService;
+	private UserDetailsService userDetailsService;
 	
 	@Autowired
-	private Token tokenUtils;
-	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+	private TokenUtils tokenUtils;
 	
 	public ResponseEntity<HashMap<String, String>> login(RegisteredUser registeredUser) {
 		try {
-			
-			
 			UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(registeredUser.getUsername(),
 					registeredUser.getPassword());
 			
-			//Authentication authentication = authenticationManager.authenticate(token);
-			//SecurityContextHolder.getContext().setAuthentication(authentication);
-			
+			Authentication authentication = authenticationManager.authenticate(token);
+			SecurityContextHolder.getContext().setAuthentication(authentication);
+
 			UserDetails details = userDetailsService.loadUserByUsername(registeredUser.getUsername());
 			String userToken = tokenUtils.generateToken(details);
 			
@@ -65,19 +59,15 @@ public class LoginService {
 			return new ResponseEntity<HashMap<String, String>>(data, HttpStatus.OK);
 			
 		} catch (Exception e) {
-			//e.printStackTrace();
 			return new ResponseEntity<HashMap<String, String>>(HttpStatus.UNAUTHORIZED);
 		}
-	
 	}
-
-	public void addPermssion(RegisteredUser regUser, String role) {
-		regUser.setPassword(passwordEncoder.encode(regUser.getPassword()));
-
-		regUser = registeredUserRepository.save(regUser);
-		regUser.setUserPermission(new HashSet<UserPermission>());
-		regUser.getUserPermission().add(new UserPermission(null, regUser, permissionRepository.findByTitle(role).get()));
-		registeredUserRepository.save(regUser);
+	
+	public void addPermssion(RegisteredUser registeredUser, String role) {
+		registeredUser = registeredUserRepository.save(registeredUser);
+		registeredUser.setUserPermission(new HashSet<UserPermission>());
+		registeredUser.getUserPermission().add(new UserPermission(null, registeredUser, permissionRepository.findByTitle(role).get()));
+		registeredUserRepository.save(registeredUser);
 	}
 	
 }

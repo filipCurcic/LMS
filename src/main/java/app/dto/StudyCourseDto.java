@@ -9,7 +9,7 @@ public class StudyCourseDto {
 	@JacksonXmlProperty(isAttribute = true)
 	private Long id;
 	private String name;
-	private FacultyDto facultyDto;
+	private FacultyDto faculty;
 	private Collection<String> studyCourseTeacher;
 	@JacksonXmlProperty(isAttribute = true)
 	private int version;
@@ -34,12 +34,13 @@ public class StudyCourseDto {
 		this.name = name;
 	}
 
-	public FacultyDto getFacultyDto() {
-		return facultyDto;
+	
+	public FacultyDto getFaculty() {
+		return faculty;
 	}
 
-	public void setFacultyDto(FacultyDto facultyDto) {
-		this.facultyDto = facultyDto;
+	public void setFaculty(FacultyDto faculty) {
+		this.faculty = faculty;
 	}
 
 	public Collection<String> getStudyCourseTeacher() {

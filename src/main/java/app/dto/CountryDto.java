@@ -9,9 +9,6 @@ public class CountryDto {
 	@JacksonXmlProperty(isAttribute = true)
 	private Long id;
 	private String name;
-	@JacksonXmlProperty(isAttribute = true)
-	private int version = 0;
-	private Collection<String> city;
 	
 	
 	
@@ -43,21 +40,9 @@ public class CountryDto {
 		this.name = name;
 	}
 	
-	public int getVersion() {
-		return version;
-	}
 	
-	public void setVersion(int version) {
-		this.version = version;
-	}
 	
-	public Collection<String> getCity() {
-		return city;
-	}
 	
-	public void setCity(Collection<String> city) {
-		this.city = city;
-	}
 	
 	
 

@@ -12,8 +12,8 @@ public class StudentDto {
 	private String lastName;
 	private String jmbg;
 	private String profilePicturePath;
-	private RegisteredUserDto registeredUserDto;
-	private AddressDto addressDto;
+	private RegisteredUserDto registeredUser;
+	private AddressDto address;
 	private Collection<String> studentYear;
 	
 	public StudentDto() {
@@ -60,20 +60,21 @@ public class StudentDto {
 		this.profilePicturePath = profilePicturePath;
 	}
 
-	public RegisteredUserDto getRegisteredUserDto() {
-		return registeredUserDto;
+	
+	public RegisteredUserDto getRegisteredUser() {
+		return registeredUser;
 	}
 
-	public void setRegisteredUserDto(RegisteredUserDto registeredUserDto) {
-		this.registeredUserDto = registeredUserDto;
+	public void setRegisteredUser(RegisteredUserDto registeredUser) {
+		this.registeredUser = registeredUser;
 	}
 
-	public AddressDto getAddressDto() {
-		return addressDto;
+	public AddressDto getAddress() {
+		return address;
 	}
 
-	public void setAddressDto(AddressDto addressDto) {
-		this.addressDto = addressDto;
+	public void setAddress(AddressDto address) {
+		this.address = address;
 	}
 
 	public Collection<String> getStudentYear() {

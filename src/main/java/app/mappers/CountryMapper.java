@@ -28,11 +28,6 @@ public class CountryMapper implements Mapper<Country, CountryDto> {
 		CountryDto retVal = new CountryDto();
 			retVal.setId(country.getId());
 			retVal.setName(country.getName());
-			retVal.setVersion(country.getVersion());
-			retVal.setCity(new ArrayList<>());
-			for (City city: country.getCity()) {
-				retVal.getCity().add("/city/"+city.getId());
-			}
 			return retVal;
 
 	}
@@ -73,9 +68,7 @@ public class CountryMapper implements Mapper<Country, CountryDto> {
 
         country.setId( countryDto.getId());
         country.setName( countryDto.getName());
-        country.setVersion( countryDto.getVersion());
-        //country.setCity();
-
+        
 		return country;
 	}
 

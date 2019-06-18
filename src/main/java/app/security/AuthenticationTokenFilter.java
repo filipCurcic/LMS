@@ -16,11 +16,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 
-import app.utils.Token;
+import app.utils.TokenUtils;
 
-public class TokenFilter extends UsernamePasswordAuthenticationFilter {
+public class AuthenticationTokenFilter extends UsernamePasswordAuthenticationFilter {
 	@Autowired
-	private Token token;
+	private TokenUtils tokenUtils;
 	
 	@Autowired
 	private UserDetailsService userDetailsService;
@@ -30,12 +30,12 @@ public class TokenFilter extends UsernamePasswordAuthenticationFilter {
 			throws IOException, ServletException {
 		HttpServletRequest httpRequest = (HttpServletRequest)req;
 		String authToken = httpRequest.getHeader("Authorization");
-		String username = token.getUsername(authToken);
+		String username = tokenUtils.getUsername(authToken);
 		
 		if((username != null) && (SecurityContextHolder.getContext().getAuthentication() == null)) {
 			UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
 			
-			if(token.validateToken(authToken, userDetails)) {
+			if(tokenUtils.validateToken(authToken, userDetails)) {
 				UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 				authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(httpRequest));
 				SecurityContextHolder.getContext().setAuthentication(authentication);

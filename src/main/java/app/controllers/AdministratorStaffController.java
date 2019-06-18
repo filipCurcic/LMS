@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -55,8 +56,14 @@ public class AdministratorStaffController {
 		return administratorStaffMapper.toDTO(administratorStaff);
 	}
 	
+	@RequestMapping("/username/{username}")
+	public ResponseEntity<AdministratorStaffDto> getAdministratorStaffByUsername (@PathVariable String username) {
+		AdministratorStaff administratorStaff = adminStaffService.getOneByUsername(username);
+		return new ResponseEntity<AdministratorStaffDto>(administratorStaffMapper.toDTO(administratorStaff), HttpStatus.OK);
+	}
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@Transactional
 	@Secured("ROLE_ADMINISTRATOR")
 	public ResponseEntity<AdministratorStaff> addAdministrator(@RequestPart("profileImage") MultipartFile file, @RequestPart("data") String administratorStaffString) throws IOException {
 		AdministratorStaff administratorStaff= new ObjectMapper().readValue(administratorStaffString, AdministratorStaff.class);

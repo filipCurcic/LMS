@@ -14,8 +14,7 @@ public class CityDto {
 	private String name;
 	@JacksonXmlProperty(isAttribute = true)
 	private int version = 0;
-	private Collection<String> address;
-	private CountryDto countryDto;
+	private CountryDto country;
 	
 	
 	public CityDto() {
@@ -48,25 +47,18 @@ public class CityDto {
 	}
 
 
-	public Collection<String> getAddress() {
-		return address;
+
+	public CountryDto getCountry() {
+		return country;
 	}
 
 
-	public void setAddress(Collection<String> address) {
-		this.address = address;
+	public void setCountry(CountryDto country) {
+		this.country = country;
 	}
 
 
-	public CountryDto getCountryDto() {
-		return countryDto;
-	}
-
-
-	public void setCountryDto(CountryDto countryDto) {
-		this.countryDto = countryDto;
-	}
-
+	
 
 
 	

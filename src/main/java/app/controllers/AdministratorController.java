@@ -1,7 +1,6 @@
 package app.controllers;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,13 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.annotation.JsonView;
-
 import app.dto.AdministratorDto;
 import app.entities.Administrator;
 import app.mappers.AdministratorMapper;
 import app.services.AdministatorService;
-import app.utils.View.HideOptionalProperties;
 
 @CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
@@ -44,6 +40,11 @@ public class AdministratorController {
 		return administratorMapper.toDTO(administrator);
 	}
 	
+	@RequestMapping("/username/{username}")
+	public ResponseEntity<AdministratorDto> getAdministratorByUsername(@PathVariable String username) {
+		Administrator administrator = adminService.getByUsername(username);
+		return new ResponseEntity<AdministratorDto>(administratorMapper.toDTO(administrator), HttpStatus.OK);
+	}
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ResponseEntity<Administrator> addAddress(@RequestBody Administrator administrator){

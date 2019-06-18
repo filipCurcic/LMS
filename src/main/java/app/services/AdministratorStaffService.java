@@ -50,8 +50,12 @@ public class AdministratorStaffService {
 		return administratorStaffRepository.findById(id).orElse(null);
 	}
 	
+	public AdministratorStaff getOneByUsername(String username) {
+		return administratorStaffRepository.getByUsername(username).orElse(null);
+	}
+	
 	public void addAdministratorStaff(AdministratorStaff adminStaff) {
-		loginService.addPermssion(adminStaff.getRegisteredUser(), "ROLE_ADMINISTRATION_STAFF");
+		loginService.addPermssion(adminStaff.getRegisteredUser(), "ROLE_ADMINISTRATOR_STAFF");
 		adminStaff.getRegisteredUser().setPassword(passwordEncoder.encode(adminStaff.getRegisteredUser().getPassword()));
 		administratorStaffRepository.save(adminStaff);
 	}
