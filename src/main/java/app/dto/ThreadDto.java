@@ -2,6 +2,7 @@ package app.dto;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
@@ -12,9 +13,33 @@ public class ThreadDto {
 	private String content;
 	private ForumFileDto file;
 	private ForumUserDto author;
-	private Collection<String> replies;
+	private Collection<String> replyEndpoints;
+	private Set<ForumReplyDto> replies;
+	private SubForumDto subForum;
 	
 	
+	
+
+	public SubForumDto getSubForum() {
+		return subForum;
+	}
+
+
+	public void setSubForum(SubForumDto subForum) {
+		this.subForum = subForum;
+	}
+
+
+	public Set<ForumReplyDto> getReplies() {
+		return replies;
+	}
+
+
+	public void setReplies(Set<ForumReplyDto> replies) {
+		this.replies = replies;
+	}
+
+
 	public ThreadDto() {}
 
 
@@ -68,14 +93,17 @@ public class ThreadDto {
 	}
 
 
-	public Collection<String> getReplies() {
-		return replies;
+	public Collection<String> getReplyEndpoints() {
+		return replyEndpoints;
 	}
 
 
-	public void setReplies(Collection<String> replies) {
-		this.replies = replies;
+	public void setReplyEndpoints(Collection<String> replyEndpoints) {
+		this.replyEndpoints = replyEndpoints;
 	}
+
+
+	
 	
 	
 	

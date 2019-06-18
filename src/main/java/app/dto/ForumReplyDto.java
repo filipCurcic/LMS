@@ -13,6 +13,29 @@ public class ForumReplyDto {
 	
 	private ForumUserDto author;
 	
+	private Long ForumThreadId;
+	
+	private ThreadDto thread;
+	
+	
+	
+
+	public ThreadDto getThread() {
+		return thread;
+	}
+
+	public void setThread(ThreadDto thread) {
+		this.thread = thread;
+	}
+
+	public Long getForumThreadId() {
+		return ForumThreadId;
+	}
+
+	public void setForumThreadId(Long forumThreadId) {
+		ForumThreadId = forumThreadId;
+	}
+
 	public ForumReplyDto() {}
 
 	public Long getId() {

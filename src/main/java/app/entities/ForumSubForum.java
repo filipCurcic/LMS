@@ -19,7 +19,7 @@ public class ForumSubForum {
 	private String name;
 	
 	@OneToOne
-	private StudyCourse studyCourse;
+	private Long studyCourseId;
 	
 	@OneToMany(mappedBy = "subForum")
 	private Set<ForumThread> threads;
@@ -29,19 +29,19 @@ public class ForumSubForum {
 	
 	public ForumSubForum() {}
 
-	public ForumSubForum(Long id, String name, StudyCourse studyCourse) {
+	public ForumSubForum(Long id, String name, Long studyCourse) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.studyCourse = studyCourse;
+		this.studyCourseId = studyCourse;
 	}
 
-	public ForumSubForum(Long id, String name, StudyCourse studyCourse, Set<ForumThread> threads,
+	public ForumSubForum(Long id, String name, Long studyCourse, Set<ForumThread> threads,
 			ForumSubFacultyForum subFacultyForum) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.studyCourse = studyCourse;
+		this.studyCourseId = studyCourse;
 		this.threads = threads;
 		this.subFacultyForum = subFacultyForum;
 	}
@@ -62,12 +62,14 @@ public class ForumSubForum {
 		this.name = name;
 	}
 
-	public StudyCourse getStudyCourse() {
-		return studyCourse;
+	
+
+	public Long getStudyCourseId() {
+		return studyCourseId;
 	}
 
-	public void setStudyCourse(StudyCourse studyCourse) {
-		this.studyCourse = studyCourse;
+	public void setStudyCourseId(Long studyCourseId) {
+		this.studyCourseId = studyCourseId;
 	}
 
 	public Set<ForumThread> getThreads() {

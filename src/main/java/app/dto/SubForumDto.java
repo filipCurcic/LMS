@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
-import app.entities.ForumThread;
+import app.entities.ForumSubFacultyForum;
 
 public class SubForumDto {
 	
@@ -13,12 +13,60 @@ public class SubForumDto {
 	private Long id;
 	
 	private String name;
-	private StudyCourseDto studyCourse;
-	private Collection<ForumThread> threads;
+	private Long studyCourseId;
+	private Collection<ThreadDto> threads;
+	
+	private Collection<String> threadEndpoints;
+	
+	private Long SubFacultyForumId;
+	private SubFacultyForumDto subFacultyForumDto;
+	
 	
 	public SubForumDto() {}
 	
 	
+	
+	
+	
+
+
+
+	public SubFacultyForumDto getSubFacultyForumDto() {
+		return subFacultyForumDto;
+	}
+
+
+
+
+
+
+
+
+	public void setSubFacultyForumDto(SubFacultyForumDto subFacultyForumDto) {
+		this.subFacultyForumDto = subFacultyForumDto;
+	}
+
+
+
+
+
+
+
+
+	public Long getSubFacultyForumId() {
+		return SubFacultyForumId;
+	}
+
+
+
+
+	public void setSubFacultyForumId(Long subFacultyForumId) {
+		SubFacultyForumId = subFacultyForumId;
+	}
+
+
+
+
 	public Long getId() {
 		return id;
 	}
@@ -31,17 +79,31 @@ public class SubForumDto {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public StudyCourseDto getStudyCourse() {
-		return studyCourse;
+	public Long getStudyCourseId() {
+		return studyCourseId;
 	}
-	public void setStudyCourse(StudyCourseDto studyCourse) {
-		this.studyCourse = studyCourse;
+	public void setStudyCourseId(Long id) {
+		this.studyCourseId = id;
 	}
-	public Collection<ForumThread> getThreads() {
+	public Collection<ThreadDto> getThreads() {
 		return threads;
 	}
-	public void setThreads(Collection<ForumThread> threads) {
+	public void setThreads(Collection<ThreadDto> threads) {
 		this.threads = threads;
+	}
+
+
+
+
+	public Collection<String> getThreadEndpoints() {
+		return threadEndpoints;
+	}
+
+
+
+
+	public void setThreadEndpoints(Collection<String> threadEndpoints) {
+		this.threadEndpoints = threadEndpoints;
 	}
 	
 

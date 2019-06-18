@@ -1,6 +1,7 @@
 package app.dto;
 
 import java.util.Collection;
+import java.util.Set;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
@@ -11,7 +12,26 @@ public class ForumDto {
 	private Long id;
 	private boolean publicForum;
 	private Collection<String> subForums;
+	private Collection<String> users;
+	private Collection<ForumSubFacultyForum> SubForumsObjects;
 	
+	
+	public Collection<ForumSubFacultyForum> getSubForumsObjects() {
+		return SubForumsObjects;
+	}
+
+	public void setSubForumsObjects(Set<ForumSubFacultyForum> set) {
+		SubForumsObjects = set;
+	}
+
+	public Collection<String> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Collection<String> users) {
+		this.users = users;
+	}
+
 	public ForumDto() {}
 	
 	public Long getId() {

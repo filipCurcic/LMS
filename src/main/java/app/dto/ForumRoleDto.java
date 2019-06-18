@@ -1,6 +1,6 @@
 package app.dto;
 
-import java.util.Collection;
+
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
@@ -10,7 +10,6 @@ public class ForumRoleDto {
 	
 	private String name;
 	
-	private Collection<String> users;
 	
 	public ForumRoleDto() {}
 
@@ -30,13 +29,5 @@ public class ForumRoleDto {
 		this.name = name;
 	}
 
-	public Collection<String> getUsers() {
-		return users;
-	}
-
-	public void setUsers(Collection<String> users) {
-		this.users = users;
-	}
-	
 	
 }
