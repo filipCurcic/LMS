@@ -1,5 +1,6 @@
 package app.controllers;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -7,6 +8,8 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +28,7 @@ import app.entities.Student;
 import app.mappers.StudentMapper;
 import app.services.FileService;
 import app.services.StudentService;
+import app.utils.GeneratePDF;
 
 @Controller
 @RequestMapping("/student")
@@ -132,4 +136,21 @@ public class StudentController {
 		}
 		return new ResponseEntity<Student>(HttpStatus.NO_CONTENT);
 	}
+	
+	@RequestMapping(value = "/pdf", method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<InputStreamResource> exportStudentsToPDF() {
+
+        ByteArrayInputStream bis = GeneratePDF.students((List<Student>)stuSer.getAll());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=students.pdf");
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(bis));
+    }
+
 }

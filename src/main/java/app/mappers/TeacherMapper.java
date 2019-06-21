@@ -45,22 +45,11 @@ public class TeacherMapper implements Mapper<Teacher, TeacherDto> {
 			retVal.setBiography(teacher.getBiography());
 			retVal.setProfilePicturePath(teacher.getProfilePicturePath());
 			retVal.setUmcn(teacher.getUmcn());
-			retVal.setAddressDto(addressMapper.toDTO(teacher.getAddress()));
-			retVal.setUniversityDto(universityMapper.toDTO(teacher.getUniversity()));
-			retVal.setFacultyDto(facultyMaper.toDTO(teacher.getFaculty()));
-			retVal.setRegisteredUserDto(registeredUserMapper.toDTO(teacher.getRegisteredUser()));
-			retVal.setTeachersOnRealization(new ArrayList<>());
-			for (TeacherOnRealization teacherOnRealization: teacher.getTeachersOnRealization()) {
-				retVal.getTeachersOnRealization().add("/teacher-on-realization/"+ teacherOnRealization.getId());
-			}
-			retVal.setStudyCourseTeacher(new ArrayList<>());
-			for(StudyCourseTeacher studyCourseTeacher: teacher.getStudyCourseTeacher()) {
-				retVal.getStudyCourseTeacher().add("/study-course-teacher/" + studyCourseTeacher.getId());
-			}
-			retVal.setTitles(new ArrayList<>());
-			for (Title title: teacher.getTitles()) {
-				retVal.getTitles().add("/title/" + title.getId());
-			}
+			retVal.setAddress(addressMapper.toDTO(teacher.getAddress()));
+			retVal.setUniversity(universityMapper.toDTO(teacher.getUniversity()));
+			retVal.setFaculty(facultyMaper.toDTO(teacher.getFaculty()));
+			retVal.setRegisteredUser(registeredUserMapper.toDTO(teacher.getRegisteredUser()));
+			
 			return retVal;
 
 	}
@@ -73,15 +62,15 @@ public class TeacherMapper implements Mapper<Teacher, TeacherDto> {
 		Teacher teacher = new Teacher();
 		
 		teacher.setId(teacherDto.getId());
-		teacher.setAddress(addressMapper.toEntity(teacherDto.getAddressDto()));
+		teacher.setAddress(addressMapper.toEntity(teacherDto.getAddress()));
 		teacher.setBiography(teacherDto.getBiography());
 		teacher.setName(teacherDto.getName());
 		teacher.setLastName(teacherDto.getLastName());
 		teacher.setProfilePicturePath(teacherDto.getProfilePicturePath());
 		teacher.setUmcn(teacherDto.getUmcn());
-		teacher.setUniversity(universityMapper.toEntity(teacherDto.getUniversityDto()));
-		teacher.setRegisteredUser(registeredUserMapper.toEntity(teacherDto.getRegisteredUserDto()));
-		teacher.setFaculty(facultyMaper.toEntity(teacherDto.getFacultyDto()));
+		teacher.setUniversity(universityMapper.toEntity(teacherDto.getUniversity()));
+		teacher.setRegisteredUser(registeredUserMapper.toEntity(teacherDto.getRegisteredUser()));
+		teacher.setFaculty(facultyMaper.toEntity(teacherDto.getFaculty()));
 		return teacher;
 	}
 	

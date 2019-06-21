@@ -87,7 +87,7 @@ public class StudentService {
 	            student.setId(st.get().getId());
 	            student.getRegisteredUser().setPassword(passwordEncoder.encode(student.getRegisteredUser().getPassword()));
 	            registeredUserService.updateUser(student.getRegisteredUser().getId(), student.getRegisteredUser());
-//	            addressService.updateAddress(student.getAddress().getId(), student.getAddress());
+	            addressService.updateAddress(student.getAddress().getId(), student.getAddress());
 	            stuRep.save(student);
 	        }
 	}

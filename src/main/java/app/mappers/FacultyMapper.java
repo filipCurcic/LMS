@@ -30,15 +30,12 @@ public class FacultyMapper implements Mapper<Faculty, FacultyDto> {
 		FacultyDto retVal = new FacultyDto();
 			retVal.setId(faculty.getId());
 			retVal.setName(faculty.getName());
-			retVal.setDescription(faculty.getDescription());
-			retVal.setContact(faculty.getContact());
-			retVal.setEmail(faculty.getEmail());
-			retVal.setAddress(addressMapper.toDTO(faculty.getAddress()));
-			retVal.setUniversity(universityMapper.toDTO(faculty.getUniversity()));
-			retVal.setTeachers(new ArrayList<>());
-			for(Teacher teacher: faculty.getTeachers()) {
-				retVal.getTeachers().add("/teacher/" + teacher.getId());
-			}
+//			retVal.setDescription(faculty.getDescription());
+//			retVal.setContact(faculty.getContact());
+//			retVal.setEmail(faculty.getEmail());
+//			retVal.setAddress(addressMapper.toDTO(faculty.getAddress()));
+//			retVal.setUniversity(universityMapper.toDTO(faculty.getUniversity()));
+			
 			
 			return retVal;
 
@@ -52,14 +49,16 @@ public class FacultyMapper implements Mapper<Faculty, FacultyDto> {
 		Faculty faculty = new Faculty();
 		
 		faculty.setId(facultyDto.getId());
-		faculty.setAddress(addressMapper.toEntity(facultyDto.getAddress()));
-		faculty.setContact(facultyDto.getContact());
-		faculty.setDescription(facultyDto.getDescription());
-		faculty.setEmail(facultyDto.getDescription());
-		faculty.setUniversity(universityMapper.toEntity(facultyDto.getUniversity()));
 		faculty.setName(facultyDto.getName());
-		faculty.setVersion(facultyDto.getVersion());
-		return faculty;
+		/*
+		 * faculty.setAddress(addressMapper.toEntity(facultyDto.getAddress()));
+		 * faculty.setContact(facultyDto.getContact());
+		 * faculty.setDescription(facultyDto.getDescription());
+		 * faculty.setEmail(facultyDto.getDescription());
+		 * faculty.setUniversity(universityMapper.toEntity(facultyDto.getUniversity()));
+		 * 
+		 * faculty.setVersion(facultyDto.getVersion());
+		 */		return faculty;
 				
 	}
 	
