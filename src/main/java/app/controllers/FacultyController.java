@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,6 +48,7 @@ public class FacultyController {
 	}
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	@Secured("ROLE_ADMINISTRATOR")
 	public ResponseEntity<Faculty> addFaculty(@RequestBody Faculty faculty){
 		facSer.addFaculty(faculty);
 		return new ResponseEntity<Faculty>(faculty, HttpStatus.OK);

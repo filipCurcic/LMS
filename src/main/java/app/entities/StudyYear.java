@@ -19,12 +19,15 @@ public class StudyYear {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	
 	@NotNull
 	private Date startDate;
+	
 	@NotNull
 	private Date endDate;
+	
 	@NotNull
-	private Integer studyYear; // (1, 2, 3, 4)
+	private int studyYear; // (1, 2, 3, 4)
 	
 	@OneToMany(mappedBy="studyYear")
 	private Set<StudentOnYear> studentsOnYear;
@@ -37,7 +40,7 @@ public class StudyYear {
 	
 	public StudyYear() {}
 
-	public StudyYear(Long id,  @NotNull Integer studyYear, Set<StudentOnYear> studentsOnYear,
+	public StudyYear(Long id,  @NotNull int studyYear, Set<StudentOnYear> studentsOnYear,
 			StudyCourse studyCourse) {
 		super();
 		this.id = id;
@@ -88,10 +91,6 @@ public class StudyYear {
 		this.studentsOnYear = studentsOnYear;
 	}
 
-	public Integer getStudyYear() {
-		return studyYear;
-	}
-
 	public void setStudyYear(Integer studyYear) {
 		this.studyYear = studyYear;
 	}
@@ -102,6 +101,14 @@ public class StudyYear {
 
 	public void setStudyCourse(StudyCourse studyCourse) {
 		this.studyCourse = studyCourse;
+	}
+
+	public int getStudyYear() {
+		return studyYear;
+	}
+
+	public void setStudyYear(int studyYear) {
+		this.studyYear = studyYear;
 	}
 
 

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,7 +44,8 @@ public class StudyYearController {
 		return studyYearMapper.toDTO(uni);
 	}
 	
-	@RequestMapping(value = "/", method = RequestMethod.POST)
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	@Secured("ROLE_ADMINISTRATOR_STAFF")
 	public ResponseEntity<StudyYear> addStudyYear(@RequestBody StudyYear studyYear){
 		studyYearSer.addStudyYear(studyYear);
 		return new ResponseEntity<StudyYear>(studyYear, HttpStatus.OK);
