@@ -12,6 +12,6 @@ import app.entities.City;
 @Repository
 public interface CityRepository extends JpaRepository<City, Long> {
 	
-	@Query("SELECT ci FROM City ci WHERE ci.country.id = ?1")
+	@Query("SELECT ci.name FROM City ci WHERE ci.country.id = ?1")
 	Iterable<Optional<City>> getAllByCountry (Long countryId);
 }

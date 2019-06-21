@@ -56,6 +56,11 @@ public class StudentService {
         return stuRep.getByUsername(username).orElse(null);
     }
 	
+	public Student getLoggedStudent(String username) {
+        return stuRep.getLoggedStudent(username);
+    }
+	
+	
 	@Transactional
 	public void addStudent(Student student) {
 		loginService.addPermssion(student.getRegisteredUser(), "ROLE_STUDENT");
@@ -87,7 +92,7 @@ public class StudentService {
 	            student.setId(st.get().getId());
 	            student.getRegisteredUser().setPassword(passwordEncoder.encode(student.getRegisteredUser().getPassword()));
 	            registeredUserService.updateUser(student.getRegisteredUser().getId(), student.getRegisteredUser());
-	            addressService.updateAddress(student.getAddress().getId(), student.getAddress());
+//	            addressService.updateAddress(student.getAddress().getId(), student.getAddress());
 	            stuRep.save(student);
 	        }
 	}

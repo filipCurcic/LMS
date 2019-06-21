@@ -62,9 +62,9 @@ public class AdministratorStaffService {
 	
 	public void removeAdministratorStaff(Long id) {
 		Optional<AdministratorStaff> adminStaff = administratorStaffRepository.findById(id);
-		AdministratorStaff admin = adminStaff.get();
-		admin.setDeleted(true);
-		administratorStaffRepository.save(admin);
+		if(adminStaff.isPresent()) {
+			administratorStaffRepository.delete(adminStaff.get());
+		}
 	}
 	
 	public void updateAdministrationStaff(String username, AdministratorStaff adminStaff) {
@@ -74,7 +74,7 @@ public class AdministratorStaffService {
 	            adminStaff.getRegisteredUser().setPassword(passwordEncoder.encode(adminStaff.getRegisteredUser().getPassword()));
 	            registeredUserService.updateUser(adminStaff.getRegisteredUser().getId(), adminStaff.getRegisteredUser());
 	            addressService.updateAddress(adminStaff.getAddress().getId(), adminStaff.getAddress());
-	            administratorStaffRepository.save(adminStaff);
+	           
 	        }
 	}
 	

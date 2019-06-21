@@ -46,6 +46,9 @@ public class Student{
 	@OneToMany(mappedBy= "student")
 	private Set<CourseAttending> courseAttending;
 	
+	@OneToMany(mappedBy = "checkedStudent")
+	private Set<Checkin> checkins;
+	
 	@ManyToOne(cascade=CascadeType.ALL)
 	private RegisteredUser registeredUser;
 

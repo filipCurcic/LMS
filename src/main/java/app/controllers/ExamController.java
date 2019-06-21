@@ -24,6 +24,11 @@ public class ExamController {
 	public ResponseEntity<Iterable<Exam>> getExams() {
 		return new ResponseEntity<Iterable<Exam>>(exSer.getAll(), HttpStatus.OK);
 	}
+	
+	@RequestMapping("/all/student/{studentId}")
+	public ResponseEntity<Iterable<Exam>> getExamsForStudent(@PathVariable Long studentId) {
+		return new ResponseEntity<Iterable<Exam>>(exSer.getExamsForStudent(studentId), HttpStatus.OK);
+	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ResponseEntity<Exam> addExam(@RequestBody Exam exam) {

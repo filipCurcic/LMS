@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import app.dto.CourseAttendingDto;
 import app.entities.CourseAttending;
 import app.repositories.CourseAttendingRepository;
 
@@ -20,6 +21,10 @@ public class CourseAttendingService {
 
 	public List<CourseAttending> getCourseAttendings() {
 		return cr.findAll();
+	}
+	
+	public List<CourseAttending> getExamsForStudent(Long studentId) {
+		return cr.getExamsForStudent(studentId);
 	}
 
 	public CourseAttending getCourseAttending(Long id) {

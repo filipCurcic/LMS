@@ -51,9 +51,9 @@ public class TeacherService {
 	
 	public void removeTeacher(Long id) {
 		Optional<Teacher> teacher= teacherRep.findById(id);
-		Teacher t = teacher.get();
-		t.setDeleted(true);
-		teacherRep.save(t);
+		if(teacher.isPresent()) {
+			teacherRep.delete(teacher.get());
+		}
 	}
 	
 	public void updateTeacher (String username, Teacher teacher) {
@@ -63,7 +63,7 @@ public class TeacherService {
 	            teacher.getRegisteredUser().setPassword(passwordEncoder.encode(teacher.getRegisteredUser().getPassword()));
 	            registeredUserService.updateUser(teacher.getRegisteredUser().getId(), teacher.getRegisteredUser());
 	            addressService.updateAddress(teacher.getAddress().getId(), teacher.getAddress());
-	            teacherRep.save(teacher);
+	           
 	        }
 	}
 

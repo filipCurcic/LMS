@@ -14,10 +14,13 @@ public class TeacherDto {
 	private String biography;
 	private String umcn;
 	private String profilePicturePath;
-	private AddressDto address;
-	private UniversityDto university;
-	private FacultyDto faculty;
-	private RegisteredUserDto registeredUser;
+	private Collection<String> teachersOnRealization;
+	private Collection<String> studyCourseTeacher;
+	private Collection<String> titles;
+	private AddressDto addressDto;
+	private UniversityDto universityDto;
+	private FacultyDto facultyDto;
+	private RegisteredUserDto registeredUserDto;
 	
 	public TeacherDto() {
 		
@@ -71,41 +74,65 @@ public class TeacherDto {
 		this.profilePicturePath = profilePicturePath;
 	}
 
+	public Collection<String> getTeachersOnRealization() {
+		return teachersOnRealization;
+	}
+
+	public void setTeachersOnRealization(Collection<String> teachersOnRealization) {
+		this.teachersOnRealization = teachersOnRealization;
+	}
+
+	public Collection<String> getStudyCourseTeacher() {
+		return studyCourseTeacher;
+	}
+
+	public void setStudyCourseTeacher(Collection<String> studyCourseTeacher) {
+		this.studyCourseTeacher = studyCourseTeacher;
+	}
 	
 	
-	public AddressDto getAddress() {
-		return address;
+
+	public AddressDto getAddressDto() {
+		return addressDto;
 	}
 
-	public void setAddress(AddressDto address) {
-		this.address = address;
+	public void setAddressDto(AddressDto addressDto) {
+		this.addressDto = addressDto;
 	}
 
-	public UniversityDto getUniversity() {
-		return university;
+	public Collection<String> getTitles() {
+		return titles;
 	}
 
-	public void setUniversity(UniversityDto university) {
-		this.university = university;
+	public void setTitles(Collection<String> titles) {
+		this.titles = titles;
 	}
 
-	public FacultyDto getFaculty() {
-		return faculty;
+	public UniversityDto getUniversityDto() {
+		return universityDto;
 	}
 
-	public void setFaculty(FacultyDto faculty) {
-		this.faculty = faculty;
+	public void setUniversityDto(UniversityDto universityDto) {
+		this.universityDto = universityDto;
 	}
 
-	public RegisteredUserDto getRegisteredUser() {
-		return registeredUser;
+	public FacultyDto getFacultyDto() {
+		return facultyDto;
 	}
 
-	public void setRegisteredUser(RegisteredUserDto registeredUser) {
-		this.registeredUser = registeredUser;
+	public void setFacultyDto(FacultyDto facultyDto) {
+		this.facultyDto = facultyDto;
 	}
 
+	public RegisteredUserDto getRegisteredUserDto() {
+		return registeredUserDto;
+	}
 
+	public void setRegisteredUserDto(RegisteredUserDto registeredUserDto) {
+		this.registeredUserDto = registeredUserDto;
+	}
+	
+	
 	
 
 }

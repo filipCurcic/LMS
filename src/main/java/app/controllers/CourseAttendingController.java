@@ -33,6 +33,12 @@ public class CourseAttendingController {
 		List<CourseAttending> courseAttending = cs.getCourseAttendings();
 		return ResponseEntity.ok(courseAttendingMapepr.toDTO(courseAttending));
 	}
+	
+	@RequestMapping("/studentExams/{studentId}")
+	public ResponseEntity<Iterable<CourseAttendingDto>> getExamsForStudent(@PathVariable Long studentId) {
+		List<CourseAttending> studentExams = cs.getExamsForStudent(studentId);
+		return ResponseEntity.ok(courseAttendingMapepr.toDTO(studentExams));
+	}
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public ResponseEntity<CourseAttending> addCourseAttending(@RequestBody CourseAttending courseattending) {

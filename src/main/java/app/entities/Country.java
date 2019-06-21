@@ -11,7 +11,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import app.utils.View.ShowCity;
@@ -25,8 +24,6 @@ public class Country {
 	private Long id;
 	@NotNull
 	private String name;
-	
-	@JsonIgnore
 	@OneToMany(mappedBy="country")
 	private Set<City> city;
 	

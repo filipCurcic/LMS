@@ -20,12 +20,12 @@ public class FileService {
 	    Tika tika = new Tika();
 	    String mimeType = tika.detect(file.getBytes());
 		if(file != null && (mimeType.equals("image/png")|| mimeType.equals("image/jpeg"))) {
-			File convertFile = new File("src/main/resources/images/profile_images/" + fileName + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")));
+			File convertFile = new File("resources\\images\\profileImages\\" + fileName + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")));
 			convertFile.createNewFile();
 			FileOutputStream fout = new FileOutputStream(convertFile);
 			fout.write(file.getBytes());
 			fout.close();
-			adminStaff.setProfilePicturePath("images/profile_images/" + fileName + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")));
+			adminStaff.setProfilePicturePath(convertFile.getPath());
 			
 		}
 	}
@@ -34,12 +34,12 @@ public class FileService {
 	    Tika tika = new Tika();
 	    String mimeType = tika.detect(file.getBytes());
 		if(file != null && (mimeType.equals("image/png")|| mimeType.equals("image/jpeg"))) {
-			File convertFile = new File("src/main/resources/images/course_images/" + fileName + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")));
+			File convertFile = new File("resources\\images\\courseImages\\" + fileName + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")));
 			convertFile.createNewFile();
 			FileOutputStream fout = new FileOutputStream(convertFile);
 			fout.write(file.getBytes());
 			fout.close();
-			studyCourse.setImgPath("images/course_images/" + fileName + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")));
+			studyCourse.setImgPath(convertFile.getPath());
 		}
 	}
 	
@@ -47,12 +47,12 @@ public class FileService {
 	    Tika tika = new Tika();
 	    String mimeType = tika.detect(file.getBytes());
 	    if(file != null && (mimeType.equals("image/png")|| mimeType.equals("image/jpeg"))) {
-	    	File convertFile = new File("src/main/resources/images/profile_images/" + fileName + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")));
+	    	File convertFile = new File("resources\\images\\profileImages\\" + fileName + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")));
 			convertFile.createNewFile();
 			FileOutputStream fout = new FileOutputStream(convertFile);
 			fout.write(file.getBytes());
 			fout.close();
-			teacher.setProfilePicturePath("images/profile_images/" + fileName + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")));
+			teacher.setProfilePicturePath(convertFile.getPath());
 			
 		}
 	}
@@ -61,12 +61,12 @@ public class FileService {
 	    Tika tika = new Tika();
 	    String mimeType = tika.detect(file.getBytes());
 	    if(file != null && (mimeType.equals("image/png")|| mimeType.equals("image/jpeg"))) {
-			File convertFile = new File("src/main/resources/images/profile_images/" + fileName + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")));
+			File convertFile = new File("resources\\images\\profileImages\\" + fileName + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")));
 			convertFile.createNewFile();
 			FileOutputStream fout = new FileOutputStream(convertFile);
 			fout.write(file.getBytes());
 			fout.close();
-			student.setProfilePicturePath("images/profile_images/" + fileName + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")));
+			student.setProfilePicturePath(convertFile.getPath());
 			
 		}
 	}

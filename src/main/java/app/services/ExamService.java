@@ -22,6 +22,10 @@ public class ExamService {
 		return exRep.findAll();
 	}
 	
+	public List<Exam> getExamsForStudent(Long studentId){
+		return exRep.getExamsForStudent(studentId);
+	}
+	
 	public Exam getOne(Long id){
 		return exRep.findById(id).orElse(null);
 	}

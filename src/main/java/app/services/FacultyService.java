@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import app.entities.Faculty;
 import app.repositories.FacultyRepository;
-import app.repositories.UniversityRepository;
 
 @Service
 public class FacultyService {
@@ -15,8 +14,6 @@ public class FacultyService {
 	@Autowired
 	FacultyRepository facRep;
 	
-	@Autowired
-	UniversityRepository universityRepository;
 	
 	public List<Faculty> getAll(){
 		return facRep.findAll();
@@ -33,7 +30,6 @@ public class FacultyService {
 	}
 	
 	public void addFaculty(Faculty fac) {
-		fac.setUniversity(universityRepository.getOne(1l));
 		facRep.save(fac);
 	}
 	

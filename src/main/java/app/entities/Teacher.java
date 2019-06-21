@@ -28,8 +28,6 @@ public class Teacher {
 	@NotNull
 	private String umcn;
 	
-	private boolean deleted = false;
-	
 	@Column(length=128)
 	private String profilePicturePath;
 	
@@ -53,7 +51,7 @@ public class Teacher {
 	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.REMOVE})
 	private Address address;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne
 	private RegisteredUser registeredUser;
 	
 	
@@ -196,15 +194,6 @@ public class Teacher {
 	public void setRegisteredUser(RegisteredUser registeredUser) {
 		this.registeredUser = registeredUser;
 	}
-
-	public boolean isDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
-	}
-	
 	
 	
 
