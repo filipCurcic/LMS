@@ -2,6 +2,7 @@ package app.entities;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -24,7 +25,7 @@ public class StudyCourse {
 	@NotNull
 	private String name;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER,cascade= {CascadeType.MERGE, CascadeType.REMOVE})
 	private Faculty faculty;
 	
 	@OneToMany(mappedBy="studyCourse")

@@ -67,7 +67,7 @@ public class StudyCourseController {
 	}
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    @Secured("ROLE_ADMINISTRATOR")
+	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR_STAFF','ROLE_ADMINISTRATOR')")
 	public ResponseEntity<StudyCourse> addStudyCoourse(@RequestPart("courseImages") MultipartFile file, @RequestPart("data") String studyCourseStr) throws IOException {
 		StudyCourse studyCourse = new ObjectMapper().readValue(studyCourseStr, StudyCourse.class);
 		fileService.addStudyCourseImage(file, "studyCourse_img", studyCourse);

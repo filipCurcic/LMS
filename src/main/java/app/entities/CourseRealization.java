@@ -9,8 +9,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public class CourseRealization {
@@ -36,16 +38,26 @@ public class CourseRealization {
 	
 	@OneToMany(mappedBy="studyYear")
 	private Set<CourseRealization> courseRealizations;
+	
+	@OneToMany(mappedBy = "courseRealization")
+	private Set<Exam> exams;
+	
 
 
 	public CourseRealization() {
 		
 	}
-	
-	
+
+
+
+
+
+
+
 
 	public CourseRealization(Long id, Date startDate, Date endDate, TeacherOnRealization teacherOnRealization,
-			Set<CourseAttending> courseAttendings, Course course) {
+			Set<CourseAttending> courseAttendings, Course course, StudyYear studyYear,
+			Set<CourseRealization> courseRealizations, Set<Exam> exams) {
 		super();
 		this.id = id;
 		this.startDate = startDate;
@@ -53,7 +65,16 @@ public class CourseRealization {
 		this.teacherOnRealization = teacherOnRealization;
 		this.courseAttendings = courseAttendings;
 		this.course = course;
+		this.studyYear = studyYear;
+		this.courseRealizations = courseRealizations;
+		this.exams = exams;
 	}
+
+
+
+
+
+
 
 
 	public Long getId() {
@@ -103,6 +124,55 @@ public class CourseRealization {
 	public void setCourse(Course course) {
 		this.course = course;
 	}
+
+
+	public StudyYear getStudyYear() {
+		return studyYear;
+	}
+
+
+	public void setStudyYear(StudyYear studyYear) {
+		this.studyYear = studyYear;
+	}
+
+
+	public Set<CourseRealization> getCourseRealizations() {
+		return courseRealizations;
+	}
+
+
+	public void setCourseRealizations(Set<CourseRealization> courseRealizations) {
+		this.courseRealizations = courseRealizations;
+	}
+
+
+
+
+
+
+
+
+	public Set<Exam> getExams() {
+		return exams;
+	}
+
+
+
+
+
+
+
+
+	public void setExams(Set<Exam> exams) {
+		this.exams = exams;
+	}
+
+
+
+	
+	
+	
+	
 /*
 	@Override
 	public int hashCode() {

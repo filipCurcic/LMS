@@ -2,6 +2,7 @@ package app.entities;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -38,10 +39,10 @@ public class Faculty {
 	@OneToMany(mappedBy="faculty")
 	private Set<StudyCourse> studyCourse;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
 	private University university;
 	
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL)
 	private Address address;
 	
 	@OneToMany(mappedBy="faculty")
