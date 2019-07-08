@@ -83,7 +83,7 @@ public class ForumSubForumMapper implements Mapper<ForumSubForum, SubForumDto> {
 		
 		subForum.setId(subForumDto.getId());
 		subForum.setName(subForumDto.getName());
-		subForum.setStudyCourseId(subForum.getStudyCourseId());
+		subForum.setStudyCourse(subForum.getStudyCourse());
 		
 		
 		

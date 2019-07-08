@@ -3,14 +3,14 @@ package app.mappers;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import app.dto.SubFacultyForumDto;
-
 import app.entities.ForumSubFacultyForum;
 import app.entities.ForumSubForum;
+import app.services.ForumSubForumService;
 
 public class ForumFacultySubForumMapper implements Mapper<ForumSubFacultyForum, SubFacultyForumDto>  {
 	
@@ -19,6 +19,9 @@ public class ForumFacultySubForumMapper implements Mapper<ForumSubFacultyForum, 
 	
 	@Autowired
 	ForumMapper forumMapper;
+	
+	@Autowired
+	ForumSubForumService subService;
 
 	@Override
 	public SubFacultyForumDto toDTO(ForumSubFacultyForum e) {
@@ -80,6 +83,7 @@ public class ForumFacultySubForumMapper implements Mapper<ForumSubFacultyForum, 
 		subFacultyForum.setId(subForumDto.getId());
 		subFacultyForum.setForum(forumMapper.toEntity(subForumDto.getForum()));
 		subFacultyForum.setFaculty(facultyMaper.toEntity(subForumDto.getFaculty()));
+//		subFacultyForum.setSubForums(subForumDto.getSubForums().stream().map(id -> subService.getForumSubForum(id)).collect(Collectors.toSet()));
 		//subforumi	
 		return subFacultyForum;
 	}

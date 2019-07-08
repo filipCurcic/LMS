@@ -2,10 +2,13 @@ package app.entities;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -18,8 +21,12 @@ public class ForumSubForum {
 	
 	private String name;
 	
-	@OneToOne
-	private StudyCourse studyCourseId;
+	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinColumn(name="studyCourse_FK")
+	private StudyCourse studyCourse;
+	
+	
+	
 	
 	@OneToMany(mappedBy = "subForum")
 	private Set<ForumThread> threads;
@@ -33,7 +40,7 @@ public class ForumSubForum {
 		super();
 		this.id = id;
 		this.name = name;
-		this.studyCourseId = studyCourse;
+		this.studyCourse = studyCourse;
 	}
 
 	public ForumSubForum(Long id, String name, StudyCourse studyCourse, Set<ForumThread> threads,
@@ -41,7 +48,7 @@ public class ForumSubForum {
 		super();
 		this.id = id;
 		this.name = name;
-		this.studyCourseId = studyCourse;
+		this.studyCourse = studyCourse;
 		this.threads = threads;
 		this.subFacultyForum = subFacultyForum;
 	}
@@ -61,16 +68,16 @@ public class ForumSubForum {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public StudyCourse getStudyCourse() {
+		return studyCourse;
+	}
+
+	public void setStudyCourse(StudyCourse studyCourse) {
+		this.studyCourse = studyCourse;
+	}
 
 	
-
-	public StudyCourse getStudyCourseId() {
-		return studyCourseId;
-	}
-
-	public void setStudyCourseId(StudyCourse studyCourseId) {
-		this.studyCourseId = studyCourseId;
-	}
 
 	public Set<ForumThread> getThreads() {
 		return threads;
@@ -87,6 +94,11 @@ public class ForumSubForum {
 	public void setSubFacultyForum(ForumSubFacultyForum subFacultyForum) {
 		this.subFacultyForum = subFacultyForum;
 	}
+	
+	
+
+
+	
 	
 	
 	
