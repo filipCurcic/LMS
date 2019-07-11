@@ -109,7 +109,7 @@ public class StudentController {
 		return new ResponseEntity<Student>(student, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/addd", method = RequestMethod.POST)
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ResponseEntity<Student> add(@RequestBody Student student) {
 		stuSer.addStudent(student);
 		return new ResponseEntity<Student>(student, HttpStatus.OK);
