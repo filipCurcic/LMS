@@ -13,11 +13,11 @@ public class ForumService {
 	ForumRepository fr;
 
 	public ForumService() {
-	}
+    }
 
-	public Iterable<Forum> getForums() {
-		return fr.findAll();
-	}
+    public Iterable<Forum> getForums() {
+        return fr.findAll();
+    }
 
 	public Optional<Forum> getForum(Long id) {
 		return fr.findById(id);

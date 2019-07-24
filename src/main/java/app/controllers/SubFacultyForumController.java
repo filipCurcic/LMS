@@ -22,6 +22,7 @@ public class SubFacultyForumController {
 	@Autowired
 	ForumFacultySubForumService ss;
 
+	@JsonView(HideOptionalProperties.class)
 	@RequestMapping("/all")
 	public ResponseEntity<Iterable<ForumSubFacultyForum>> getSubFacultyForums() {
 		return new ResponseEntity<Iterable<ForumSubFacultyForum>>(ss.getForumFacultySubForums(), HttpStatus.OK);

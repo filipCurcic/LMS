@@ -23,6 +23,7 @@ public class SubForumController {
 	@Autowired
 	ForumSubForumService ss;
 
+	@JsonView(HideOptionalProperties.class)
 	@RequestMapping("/all")
 	public ResponseEntity<Iterable<ForumSubForum>> getSubForums() {
 		return new ResponseEntity<Iterable<ForumSubForum>>(ss.getForumSubForums(), HttpStatus.OK);

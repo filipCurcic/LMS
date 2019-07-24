@@ -2,12 +2,19 @@ package app.entities;
 
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonView;
+
+import app.utils.View.ShowForumReply;
+import app.utils.View.ShowForumThread;
+import app.utils.View.ShowForumUserRole;
 
 @Entity
 public class ForumUser {
@@ -16,18 +23,21 @@ public class ForumUser {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)	
 	private Long id;
 	
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	private Forum forum;
 	
 	@ManyToOne
 	private RegisteredUser registeredUser;
 	
+	@JsonView(ShowForumThread.class)
 	@OneToMany(mappedBy = "author")
 	private Set<ForumThread> startedThreads;
 	
+	@JsonView(ShowForumReply.class)
 	@OneToMany(mappedBy = "author")
 	private Set<ForumReply> replies;
 	
+	@JsonView(ShowForumUserRole.class)
 	@OneToMany(mappedBy = "user")
 	private Set<ForumUserRole> roles;
 

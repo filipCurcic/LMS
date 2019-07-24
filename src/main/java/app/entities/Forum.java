@@ -9,6 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import app.utils.View.ShowForumSubFacultyForum;
+import app.utils.View.ShowForumUser;
+
 @Entity
 public class Forum {
 	
@@ -19,10 +24,11 @@ public class Forum {
 	@NotNull
 	private boolean publicForum;
 	
+	@JsonView(ShowForumSubFacultyForum.class)
 	@OneToMany(mappedBy = "forum")
 	private Set<ForumSubFacultyForum> subForums;
 
-	
+	@JsonView(ShowForumUser.class)
 	@OneToMany(mappedBy = "forum")
 	private Set<ForumUser> users;
 	
