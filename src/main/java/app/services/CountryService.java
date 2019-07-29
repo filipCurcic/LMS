@@ -1,6 +1,5 @@
 package app.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +15,14 @@ public class CountryService {
 	@Autowired
 	CountryRepository couRep;
 	
-	public List<Country> getAll() {
-		return couRep.findAll();
-	}
 	
 	public Iterable<Country> getAllCountry() {
 		return couRep.findAll();
 	}
 	
 	
-	public Country getOne(Long id) {
-		return couRep.findById(id).orElse(null);
+	public Optional<Country> getOne(Long id) {
+		return couRep.findById(id);
 	}
 	
 	public void addCountry(Country country) {

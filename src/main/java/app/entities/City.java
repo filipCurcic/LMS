@@ -2,9 +2,8 @@ package app.entities;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,9 +14,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
-import app.utils.View.ShowCity;
-
-
+import app.utils.View.ShowAddress;
 
 @Entity
 public class City {
@@ -27,10 +24,15 @@ public class City {
 	private Long id;
 	@NotNull
 	private String name;
-	
-	@ManyToOne(cascade= { CascadeType.REFRESH, CascadeType.MERGE})
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Country country;
 	
+	@JsonView(ShowAddress.class)
+	@OneToMany(mappedBy="city")
+	private Set<Address> address;
+	
+	@Version
+	private int version = 0;
 	
 	
 	public City() {
@@ -38,10 +40,10 @@ public class City {
 	}
 
 
-	public City(Long id, String name, Country country) {
-		this.id = id;
+	public City(String name, Country country, Set<Address> address) {
 		this.name = name;
 		this.country = country;
+		this.address = address;
 	}
 
 
@@ -73,9 +75,15 @@ public class City {
 		this.country = country;
 	}
 
-	
 
-	
+	public Set<Address> getAddress() {
+		return address;
+	}
+
+
+	public void setAddress(Set<Address> address) {
+		this.address = address;
+	}
 
 
 	

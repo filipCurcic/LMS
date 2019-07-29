@@ -1,6 +1,5 @@
 package app.controllers;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import app.dto.TitleTypeDto;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import app.entities.TitleType;
-import app.mappers.TitleTypeMapper;
 import app.services.TitleTypeService;
+import app.utils.View.HideOptionalProperties;
 
 
 @CrossOrigin(origins= {"http://localhost:4200"} ) 
@@ -27,27 +27,28 @@ public class TitleTypeController {
 	@Autowired
 	TitleTypeService ts;
 	
-	@Autowired
-	TitleTypeMapper titleTypeMapper;
-
-	@RequestMapping("/all")
-	public ResponseEntity<Iterable<TitleTypeDto>> getCountries(){
-		List<TitleType> titleType= ts.getAll();
-		return ResponseEntity.ok(titleTypeMapper.toDTO(titleType));
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping("/all")
+	public ResponseEntity<Iterable<TitleType>> getCountries(){
+		return new ResponseEntity<Iterable<TitleType>>(ts.getAll(), HttpStatus.OK);
 	}
 
-	@RequestMapping(value="/", method=RequestMethod.POST)
+	@RequestMapping(value="/add", method=RequestMethod.POST)
 	public ResponseEntity<TitleType> addTitleType(@RequestBody TitleType titleType) {
 		ts.addTitleType(titleType);
 		return new ResponseEntity<TitleType>(titleType, HttpStatus.OK);
 	}
 
 
-	@RequestMapping("/{id}")
-	public TitleTypeDto getOne(@PathVariable Long id) {
-		TitleType titleType = ts.getOne(id);
-		return titleTypeMapper.toDTO(titleType);
-	}
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping(value="/{id}", method=RequestMethod.GET)
+    public ResponseEntity<TitleType> getTitleTypeById(@PathVariable Long id) {
+        Optional<TitleType> titleType = ts.getOne(id);
+        if(titleType.isPresent()) {
+            return new ResponseEntity<TitleType>(titleType.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<TitleType>(HttpStatus.NOT_FOUND);
+    }
 	
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

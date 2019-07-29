@@ -1,16 +1,10 @@
 package app.controllers;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Optional;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.apache.tika.io.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.AntPathMatcher;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

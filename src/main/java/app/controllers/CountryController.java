@@ -1,6 +1,5 @@
 package app.controllers;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
-import app.dto.CountryDto;
 import app.entities.Country;
-import app.mappers.CountryMapper;
 import app.services.CountryService;
 import app.utils.View.HideOptionalProperties;
 
@@ -31,23 +28,23 @@ public class CountryController {
 	@Autowired
 	CountryService countServ;
 	
-	@Autowired
-	CountryMapper countryMapper;
-	
-	@RequestMapping("/all")
-	public ResponseEntity<Iterable<CountryDto>> getCountries(){
-		List<Country> country = countServ.getAll();
-		return ResponseEntity.ok(countryMapper.toDTO(country));
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping("/all")
+	public ResponseEntity<Iterable<Country>> getCountries(){
+		return new ResponseEntity<Iterable<Country>>(countServ.getAllCountry(), HttpStatus.OK);
 
 	}
 	
 	
-	@RequestMapping("/{id}")
-	public CountryDto getCountry(@PathVariable Long id) {
-		Country country = countServ.getOne(id);
-		return countryMapper.toDTO(country);
-	}
-	
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping(value="/{id}", method=RequestMethod.GET)
+    public ResponseEntity<Country> getCountryById(@PathVariable Long id) {
+        Optional<Country> country= countServ.getOne(id);
+        if(country.isPresent()) {
+            return new ResponseEntity<Country>(country.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<Country>(HttpStatus.NOT_FOUND);
+    }
 	
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST)

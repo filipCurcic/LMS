@@ -22,14 +22,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import app.dto.StudentDto;
 import app.entities.Student;
-import app.mappers.StudentMapper;
 import app.services.FileService;
 import app.services.StudentService;
 import app.utils.GeneratePDF;
+import app.utils.View.HideOptionalProperties;
 
 @Controller
 @RequestMapping("/student")
@@ -38,36 +38,48 @@ public class StudentController {
 	@Autowired
 	StudentService stuSer;
 	
-	@Autowired
-	StudentMapper studentMapper;
 	
 	@Autowired
 	FileService fileService;
 	
+	@JsonView(HideOptionalProperties.class)
 	@RequestMapping("/all")
-	public ResponseEntity<Iterable<StudentDto>> getStudent(){
-		List<Student> student= stuSer.getAll();
-		return ResponseEntity.ok(studentMapper.toDTO(student));	
+	public ResponseEntity<Iterable<Student>> getStudent(){
+		return new ResponseEntity<Iterable<Student>>(stuSer.getAll(), HttpStatus.OK);
 	}
 	
-	@RequestMapping("/{id}")
-	public ResponseEntity<StudentDto> getStudent(@PathVariable Long id) {
-		Student student = stuSer.getOne(id);
-		return new ResponseEntity<StudentDto>(studentMapper.toDTO(student), HttpStatus.OK);
-	}
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping(value="/{id}", method=RequestMethod.GET)
+    public ResponseEntity<Student> getStudentById(@PathVariable Long id) {
+        Optional<Student> student= stuSer.getOne(id);
+        if(student.isPresent()) {
+            return new ResponseEntity<Student>(student.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
+    }
 	
-	@RequestMapping("/username/{username}")
-	public ResponseEntity<StudentDto> getStudentUsername(@PathVariable String username) {
-		Student student = stuSer.getStudentByUsernamee(username);
-		return new ResponseEntity<StudentDto>(studentMapper.toDTO(student), HttpStatus.OK);
-	}
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping(value="/username/{username}", method=RequestMethod.GET)
+    public ResponseEntity<Student> getStudentByUsername(@PathVariable String username) {
+        Optional<Student> student= stuSer.getStudentByUsername(username);
+        if(student.isPresent()) {
+            return new ResponseEntity<Student>(student.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
+    }
+	
+	
 	
 	//registered user(only for student)
-	@RequestMapping("/logged/{username}")
-	public ResponseEntity<StudentDto> getLoggedStudent(@PathVariable String username) {
-		Student student = stuSer.getLoggedStudent(username);
-		return new ResponseEntity<StudentDto>(studentMapper.toDTO(student), HttpStatus.OK);
-	}
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping(value="/logged/{username}", method=RequestMethod.GET)
+    public ResponseEntity<Student> getLoggedStudent(@PathVariable String username) {
+        Optional<Student> student= stuSer.getLoggedStudent(username);
+        if(student.isPresent()) {
+            return new ResponseEntity<Student>(student.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
+    }
 	
 	@RequestMapping(value="/findByName/{name}", method=RequestMethod.GET)
     public ResponseEntity<Iterable<Optional<Student>>> getStudentsByFirstName(@PathVariable String firstName) {
@@ -84,17 +96,8 @@ public class StudentController {
 	       return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
 	}
 	
-//	@RequestMapping(value="/username/{username}", method=RequestMethod.GET)
-//    public ResponseEntity<Student> getStudentByUsername(@PathVariable String username) {
-//        Optional<Student> student = stuSer.getStudentByUsername(username);
-//        if(student.isPresent()) {
-//            return new ResponseEntity<Student>(student.get(), HttpStatus.OK);
-//        }
-//        return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
-//    }
-
 	    
-	
+	@JsonView(HideOptionalProperties.class)
 	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@Transactional
     @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR_STAFF','ROLE_ADMINISTRATOR')")
@@ -109,7 +112,7 @@ public class StudentController {
 		return new ResponseEntity<Student>(student, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
+	@RequestMapping(value = "/addd", method = RequestMethod.POST)
 	public ResponseEntity<Student> add(@RequestBody Student student) {
 		stuSer.addStudent(student);
 		return new ResponseEntity<Student>(student, HttpStatus.OK);

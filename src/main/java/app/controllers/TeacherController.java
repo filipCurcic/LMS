@@ -21,14 +21,14 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import app.dto.TeacherDto;
 import app.entities.Teacher;
-import app.mappers.TeacherMapper;
 import app.services.FileService;
 import app.services.TeacherService;
 import app.utils.GeneratePDF;
+import app.utils.View.HideOptionalProperties;
 
 @CrossOrigin(origins= {"http://localhost:4200"} ) 
 @RestController 
@@ -38,31 +38,38 @@ public class TeacherController {
 	@Autowired
 	TeacherService teacherService;
 	
-	@Autowired
-	TeacherMapper teacherMapper;
 	
 	@Autowired
 	FileService fileService;
 
-	@RequestMapping("/all")
-	public ResponseEntity<Iterable<TeacherDto>> getTeachers() {
-		List<Teacher> teacher = teacherService.getTeachers();
-		return ResponseEntity.ok(teacherMapper.toDTO(teacher));
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping("/all")
+	public ResponseEntity<Iterable<Teacher>> getTeachers() {
+		return new ResponseEntity<Iterable<Teacher>>(teacherService.getTeachers(), HttpStatus.OK);
 
 	}
 
 
-	@RequestMapping("/{id}")
-	public TeacherDto getOne(@PathVariable Long id) {
-		Teacher teacher = teacherService.getOne(id);
-		return teacherMapper.toDTO(teacher);
-	}
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping(value="/{id}", method=RequestMethod.GET)
+    public ResponseEntity<Teacher> getTeacherById(@PathVariable Long id) {
+        Optional<Teacher> teacher = teacherService.getOne(id);
+        if(teacher.isPresent()) {
+            return new ResponseEntity<Teacher>(teacher.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<Teacher>(HttpStatus.NOT_FOUND);
+    }
 	
-	@RequestMapping(value="/username/{username}", method=RequestMethod.GET)
-	public ResponseEntity<TeacherDto> getOneByUsername (@PathVariable String username) {
-		Teacher teacher = teacherService.getTeacherByUsername(username);
-		return new ResponseEntity<TeacherDto>(teacherMapper.toDTO(teacher), HttpStatus.OK);
-	}
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping(value="/username/{username}", method=RequestMethod.GET)
+    public ResponseEntity<Teacher> getTeacherByUsername(@PathVariable String username) {
+        Optional<Teacher> teacher = teacherService.getTeacherByUsername(username);
+        if(teacher.isPresent()) {
+            return new ResponseEntity<Teacher>(teacher.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<Teacher>(HttpStatus.NOT_FOUND);
+    }
+	
 	
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

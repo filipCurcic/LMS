@@ -1,6 +1,5 @@
 package app.controllers;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import app.dto.FacultyDto;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import app.entities.Faculty;
-import app.mappers.FacultyMapper;
 import app.services.FacultyService;
+import app.utils.View.HideOptionalProperties;
 
 @Controller
 @RequestMapping("/faculty")
@@ -25,27 +25,29 @@ public class FacultyController {
 	@Autowired
 	FacultyService facSer;
 	
-	@Autowired
-	FacultyMapper facultyMapper;
-	
-	@RequestMapping("/all")
-	public ResponseEntity<Iterable<FacultyDto>> getUniversities(){
-		List<Faculty> faculty = facSer.getAll();
-		return ResponseEntity.ok(facultyMapper.toDTO(faculty));
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping("/all")
+	public ResponseEntity<Iterable<Faculty>> getUniversities(){
+		return new ResponseEntity<Iterable<Faculty>>(facSer.getAll(), HttpStatus.OK);
 	}
 	
 	// Faculties for specific University
-	@RequestMapping("/uni/{id}")
-	public ResponseEntity<Iterable<FacultyDto>> getFacultiesOnUni(@PathVariable Long id){
-		List<Faculty> faculty = facSer.getFacultiesOnUni(id);
-		return new ResponseEntity<Iterable<FacultyDto>>(facultyMapper.toDTO(faculty), HttpStatus.OK);
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping("/uni/{id}")
+	public ResponseEntity<Iterable<Faculty>> getFacultiesOnUni(@PathVariable Long id){
+		return new ResponseEntity<Iterable<Faculty>>(facSer.getFacultiesOnUni(id), HttpStatus.OK);
 	}
 	
-	@RequestMapping("/{id}")
-	public ResponseEntity<FacultyDto> getFaculty(@PathVariable Long id) {
-		Faculty faculty = facSer.getOne(id);
-		return new ResponseEntity<FacultyDto>(facultyMapper.toDTO(faculty), HttpStatus.OK);
-	}
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping(value="/{id}", method=RequestMethod.GET)
+    public ResponseEntity<Faculty> getFacultyById(@PathVariable Long id) {
+        Optional<Faculty> faculty= facSer.getOne(id);
+        if(faculty.isPresent()) {
+            return new ResponseEntity<Faculty>(faculty.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<Faculty>(HttpStatus.NOT_FOUND);
+    }
+
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@Secured("ROLE_ADMINISTRATOR")

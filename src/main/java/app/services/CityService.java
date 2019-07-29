@@ -1,13 +1,11 @@
 package app.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.entities.City;
-import app.entities.Country;
 import app.repositories.CityRepository;
 
 @Service
@@ -19,12 +17,12 @@ public class CityService {
 	@Autowired
 	CountryService countryService;
 
-	public List<City> getAll() {
+	public Iterable<City> getAll() {
 		return cityRep.findAll();
 	}
 	
-	public City getOne(Long id) {
-		return cityRep.findById(id).orElse(null);
+	public Optional<City> getOne(Long id) {
+		return cityRep.findById(id);
 	}
 	
 	public Iterable<Optional<City>> getCityByCountry(Long countryId) {

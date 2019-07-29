@@ -1,7 +1,6 @@
 package app.services;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,16 +41,16 @@ public class AdministratorStaffService {
 	PasswordEncoder passwordEncoder;
     
 	
-	public List<AdministratorStaff> getAdministratorStaff() {
+	public Iterable<AdministratorStaff> getAdministratorStaff() {
 		return administratorStaffRepository.findAll();
 	}
 	
-	public AdministratorStaff getOne(Long id) {
-		return administratorStaffRepository.findById(id).orElse(null);
+	public Optional<AdministratorStaff> getOne(Long id) {
+		return administratorStaffRepository.findById(id);
 	}
 	
-	public AdministratorStaff getOneByUsername(String username) {
-		return administratorStaffRepository.getByUsername(username).orElse(null);
+	public Optional<AdministratorStaff> getOneByUsername(String username) {
+		return administratorStaffRepository.getByUsername(username);
 	}
 	
 	public void addAdministratorStaff(AdministratorStaff adminStaff) {

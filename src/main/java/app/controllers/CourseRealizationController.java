@@ -1,7 +1,6 @@
 
 package app.controllers;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import app.dto.CourseRealizationDto;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import app.entities.CourseRealization;
-import app.mappers.CourseRealizationMapper;
 import app.services.CourseRealizationService;
+import app.utils.View.HideOptionalProperties;
 
 @CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
@@ -27,13 +27,10 @@ public class CourseRealizationController {
 	@Autowired
 	CourseRealizationService cs;
 	
-	@Autowired
-	CourseRealizationMapper courseRealizationMapper;
-
-	@RequestMapping("/all")
-	public ResponseEntity<Iterable<CourseRealizationDto>> getCourseRealizations() {
-		List<CourseRealization> courseRealization = cs.getCourseRealizations();
-		return ResponseEntity.ok(courseRealizationMapper.toDTO(courseRealization));
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping("/all")
+	public ResponseEntity<Iterable<CourseRealization>> getCourseRealizations() {
+		return new ResponseEntity<Iterable<CourseRealization>>(cs.getCourseRealizations(), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -42,11 +39,16 @@ public class CourseRealizationController {
 		return new ResponseEntity<CourseRealization>(courserealization, HttpStatus.OK);
 	}
 
-	@RequestMapping("/{id}")
-	public CourseRealizationDto getCourseRealization(@PathVariable Long id) {
-		CourseRealization courseRealization = cs.getCourseRealization(id);
-		return courseRealizationMapper.toDTO(courseRealization);
-	}
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping(value="/{id}", method=RequestMethod.GET)
+    public ResponseEntity<CourseRealization> getCourseRealizationById(@PathVariable Long id) {
+        Optional<CourseRealization> courseRealization=  cs.getCourseRealization(id);
+        if(courseRealization.isPresent()) {
+            return new ResponseEntity<CourseRealization>(courseRealization.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<CourseRealization>(HttpStatus.NOT_FOUND);
+    }
+
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<CourseRealization> deleteCourseRealization(@PathVariable Long id) {

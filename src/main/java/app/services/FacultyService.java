@@ -1,10 +1,10 @@
 package app.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import app.entities.Faculty;
 import app.repositories.FacultyRepository;
 import app.repositories.UniversityRepository;
@@ -18,18 +18,18 @@ public class FacultyService {
 	@Autowired
 	UniversityRepository universityRepository;
 	
-	public List<Faculty> getAll(){
+	public Iterable<Faculty> getAll(){
 		return facRep.findAll();
 	}
 	
-	public List<Faculty> getFacultiesOnUni(Long id){
+	public Iterable<Faculty> getFacultiesOnUni(Long id){
 		System.out.println(id);
 		return facRep.getFacultiesOnUni(id);
 	}
 	
 	
-	public Faculty getOne(Long id){
-		return facRep.findById(id).orElse(null);
+	public Optional<Faculty> getOne(Long id){
+		return facRep.findById(id);
 	}
 	
 	public void addFaculty(Faculty fac) {

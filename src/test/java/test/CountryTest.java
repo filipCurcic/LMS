@@ -1,4 +1,4 @@
-package app;
+package test;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasSize;
@@ -18,6 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import app.App;
 import app.entities.Country;
 import app.repositories.CountryRepository;
 import app.services.CountryService;
@@ -39,11 +40,11 @@ public class CountryTest {
 	
 	@Before
 	public void setupCountry() {
-		countryService.addCountry(new Country(1l, "Serbia"));
-		countryService.addCountry(new Country(2l, "USA"));
-		countryService.addCountry(new Country(3l, "Italy"));
-		countryService.addCountry(new Country(4l, "France"));
-		countryService.addCountry(new Country(5l, "Spain"));
+//		countryService.addCountry(new Country(1l, "Serbia"));
+//		countryService.addCountry(new Country(2l, "USA"));
+//		countryService.addCountry(new Country(3l, "Italy"));
+//		countryService.addCountry(new Country(4l, "France"));
+//		countryService.addCountry(new Country(5l, "Spain"));
 	}
 	
 	@After

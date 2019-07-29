@@ -10,6 +10,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import app.utils.View.ShowTitle;
+
 @Entity
 public class TitleType {
 	
@@ -19,6 +23,7 @@ public class TitleType {
 	@NotNull
 	private String name;
 	
+	@JsonView(ShowTitle.class)
 	@OneToMany(mappedBy = "titleType")
 	private Set<Title> title;
 	

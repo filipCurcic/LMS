@@ -1,12 +1,10 @@
 package app.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import app.entities.Address;
 import app.entities.StudyCourse;
 import app.repositories.StudyCourseRepository;
 
@@ -16,18 +14,18 @@ public class StudyCourseService {
 	@Autowired
 	StudyCourseRepository stuCouRep;
 	
-	public List<StudyCourse> getAll(){
+	public Iterable<StudyCourse> getAll(){
 		return stuCouRep.findAll();
 	}
 	
 	//Get course by Faculty id
-	public List<StudyCourse> getCourseOnFaculty(Long id){
+	public Optional<StudyCourse> getCourseOnFaculty(Long id){
 		return stuCouRep.getCourseOnFaculty(id);
 	}
 	
 	
-	public StudyCourse getOne(Long id){
-		return stuCouRep.findById(id).orElse(null);
+	public Optional<StudyCourse> getOne(Long id){
+		return stuCouRep.findById(id);
 	}
 	
 	public void addStudyCourse(StudyCourse stuCou) {

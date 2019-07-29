@@ -1,6 +1,5 @@
 package app.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +14,12 @@ public class AddressService {
 	@Autowired
 	AddressRepository addressRep;
 	
-	public List<Address> getAddress() {
+	public Iterable<Address> getAddress() {
 		return addressRep.findAll();
 	}
 	
-	public Address getOne(Long id) {
-		return addressRep.findById(id).orElse(null);
+	public Optional<Address> getOne(Long id) {
+		return addressRep.findById(id);
 	}
 	
 	public void addAddress(Address address) {

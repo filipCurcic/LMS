@@ -1,6 +1,5 @@
 package app.controllers;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import app.dto.TitleDto;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import app.entities.Title;
-import app.mappers.TitleMapper;
 import app.services.TitleService;
+import app.utils.View.HideOptionalProperties;
 
 
 @CrossOrigin(origins= {"http://localhost:4200"} ) 
@@ -27,28 +27,28 @@ public class TitleController {
 	@Autowired
 	TitleService ts;
 	
-	@Autowired
-	TitleMapper titleMapper;
-
-	@RequestMapping("/all")
-	public ResponseEntity<Iterable<TitleDto>> getTitles() {
-		List<Title> title = ts.getTitles();
-		System.out.println("controller");
-		return ResponseEntity.ok(titleMapper.toDTO(title));
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping("/all")
+	public ResponseEntity<Iterable<Title>> getTitles() {
+		return new ResponseEntity<Iterable<Title>>(ts.getTitles(), HttpStatus.OK);
 	}
 
-	@RequestMapping(value="/", method=RequestMethod.POST)
+	@RequestMapping(value="/add", method=RequestMethod.POST)
 	public ResponseEntity<Title> addTitle(@RequestBody Title title) {
 		ts.addTitle(title);
 		return new ResponseEntity<Title>(title, HttpStatus.OK);
 	}
 
 
-	@RequestMapping("/{id}")
-	public TitleDto getOne(@PathVariable Long id) {
-		Title title = ts.getOne(id);
-		return titleMapper.toDTO(title);
-	}
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping(value="/{id}", method=RequestMethod.GET)
+    public ResponseEntity<Title> getTitleById(@PathVariable Long id) {
+        Optional<Title> title= ts.getOne(id);
+        if(title.isPresent()) {
+            return new ResponseEntity<Title>(title.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<Title>(HttpStatus.NOT_FOUND);
+    }
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Title> removeTitle(@PathVariable Long id) {

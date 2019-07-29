@@ -8,12 +8,17 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonView;
+
+import app.utils.View.ShowStudyCourse;
+import app.utils.View.ShowStudyCourseTeacher;
+import app.utils.View.ShowTeacher;
 
 
 @Entity
@@ -35,7 +40,7 @@ public class Faculty {
 	@NotNull
 	private String description;
 	
-	
+	@JsonView(ShowStudyCourse.class)
 	@OneToMany(mappedBy="faculty")
 	private Set<StudyCourse> studyCourse;
 	
@@ -45,6 +50,7 @@ public class Faculty {
 	@OneToOne(cascade=CascadeType.ALL)
 	private Address address;
 	
+	@JsonView(ShowTeacher.class)
 	@OneToMany(mappedBy="faculty")
 	private Set<Teacher> teachers;
 	

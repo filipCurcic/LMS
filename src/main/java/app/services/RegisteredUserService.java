@@ -1,6 +1,5 @@
 package app.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +14,12 @@ public class RegisteredUserService {
 	@Autowired
 	private RegisteredUserRepository registeredUserRepository;
 	
-	public List<RegisteredUser> getRegisteredUser() {
+	public Iterable<RegisteredUser> getRegisteredUser() {
 		return registeredUserRepository.findAll();
 	}
 	
-	public RegisteredUser getOne(Long id) {
-		return registeredUserRepository.findById(id).orElse(null);
+	public Optional<RegisteredUser> getOne(Long id) {
+		return registeredUserRepository.findById(id);
 	}
 	
 	public Optional<RegisteredUser> getRegisteredUserByUserName(String username) {

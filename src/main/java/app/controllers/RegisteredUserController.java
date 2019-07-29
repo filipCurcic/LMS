@@ -1,6 +1,5 @@
 package app.controllers;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonView;
 
-import app.dto.RegisteredUserDto;
 import app.entities.RegisteredUser;
-import app.mappers.RegisteredUserMapper;
 import app.services.RegisteredUserService;
+import app.utils.View.HideOptionalProperties;
 
 @CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
@@ -27,21 +26,22 @@ public class RegisteredUserController {
 	@Autowired
 	RegisteredUserService registeredUserService;
 	
-	@Autowired
-	RegisteredUserMapper registeredUserMapper;
-
-	@RequestMapping("/all")
-	public ResponseEntity<Iterable<RegisteredUserDto>> getRegisteredUsers(){
-		List<RegisteredUser> registeredUser = registeredUserService.getRegisteredUser();
-		return ResponseEntity.ok(registeredUserMapper.toDTO(registeredUser));
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping("/all")
+	public ResponseEntity<Iterable<RegisteredUser>> getRegisteredUsers(){
+		return new ResponseEntity<Iterable<RegisteredUser>>(registeredUserService.getRegisteredUser(), HttpStatus.OK);
 
 	}
 
-	@RequestMapping("/{id}")
-	public RegisteredUserDto getRegisteredUser(@PathVariable Long id) {
-		RegisteredUser registeredUser = registeredUserService.getOne(id);
-		return registeredUserMapper.toDTO(registeredUser);
-	}
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping(value="/{id}", method=RequestMethod.GET)
+    public ResponseEntity<RegisteredUser> getRegisteredUserById(@PathVariable Long id) {
+        Optional<RegisteredUser> registeredUser = registeredUserService.getOne(id);
+        if(registeredUser.isPresent()) {
+            return new ResponseEntity<RegisteredUser>(registeredUser.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<RegisteredUser>(HttpStatus.NOT_FOUND);
+    }
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ResponseEntity<RegisteredUser> addRegisteredUser(@RequestBody RegisteredUser registeredUser){

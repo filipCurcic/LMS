@@ -1,13 +1,10 @@
 package app.services;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import app.entities.Course;
 import app.entities.StudyYear;
 import app.repositories.CourseRepository;
 import app.repositories.StudyYearRepository;
@@ -24,12 +21,12 @@ public class StudyYearService {
 	@Autowired
 	CourseRepository courseRepository;
 	
-	public List<StudyYear> getAll(){
+	public Iterable<StudyYear> getAll(){
 		return stuYRep.findAll();
 	}
 	
-	public StudyYear getOne(Long id){
-		return stuYRep.findById(id).orElse(null);
+	public Optional<StudyYear> getOne(Long id){
+		return stuYRep.findById(id);
 	}
 	
 	public Optional<StudyYear> getYearOfStudyById(Long id) {

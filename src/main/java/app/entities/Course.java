@@ -14,6 +14,12 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import app.utils.View.ShowCourse;
+import app.utils.View.ShowCourseOutcome;
+import app.utils.View.ShowCourseRealization;
+
 @Entity
 public class Course {
 	@Id
@@ -32,18 +38,21 @@ public class Course {
 	private int researchWork;
 	private int otherClasses;
 	
+	@JsonView(ShowCourseRealization.class)
 	@OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private Set<CourseRealization> courseRealizations;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private StudyYear yearsOfStudy;
 	
+	@JsonView(ShowCourseOutcome.class)
 	@OneToMany(mappedBy = "course" ,fetch = FetchType.LAZY)
 	private Set<CourseOutcome> syllabus;
 	
 	@ManyToMany
 	private Set<Course> precondition;
 	
+	@JsonView(ShowCourse.class)
 	@ManyToMany(mappedBy="precondition")
 	private Set<Course> preconditionFor;
 	

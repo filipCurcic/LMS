@@ -1,6 +1,5 @@
 package app.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +17,16 @@ public class ExamService {
 	ExamRepository exRep;
 	
 	
-	public List<Exam> getAll(){
+	public Iterable<Exam> getAll(){
 		return exRep.findAll();
 	}
 	
-	public List<Exam> getExamsForStudent(Long studentId){
+	public Iterable<Exam> getExamsForStudent(Long studentId){
 		return exRep.getExamsForStudent(studentId);
 	}
 	
-	public Exam getOne(Long id){
-		return exRep.findById(id).orElse(null);
+	public Optional<Exam> getOne(Long id){
+		return exRep.findById(id);
 	}
 	
 	public void addExam(Exam fac) {

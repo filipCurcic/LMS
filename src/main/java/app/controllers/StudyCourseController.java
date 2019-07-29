@@ -1,14 +1,12 @@
 package app.controllers;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,14 +16,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import app.dto.StudyCourseDto;
-import app.entities.Student;
 import app.entities.StudyCourse;
-import app.mappers.StudyCoureseMapper;
 import app.services.FileService;
 import app.services.StudyCourseService;
+import app.utils.View.HideOptionalProperties;
 
 @Controller
 @RequestMapping("/study-course")
@@ -37,30 +34,34 @@ public class StudyCourseController {
 	@Autowired
 	StudyCourseService stuCouSer;
 	
-	@Autowired
-	StudyCoureseMapper studyCourseMapper;
-	
-	@RequestMapping("/all")
-	public ResponseEntity<Iterable<StudyCourseDto>> getUniversities(){
-		List<StudyCourse> studyCourse = stuCouSer.getAll();
-		return ResponseEntity.ok(studyCourseMapper.toDTO(studyCourse));
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping("/all")
+	public ResponseEntity<Iterable<StudyCourse>> getUniversities(){
+		return new ResponseEntity<Iterable<StudyCourse>>(stuCouSer.getAll(), HttpStatus.OK);
 	}
 	
-	@RequestMapping("/{id}")
-	public StudyCourseDto getStudyCourse(@PathVariable Long id) {
-		StudyCourse studyCourse = stuCouSer.getOne(id);
-		return studyCourseMapper.toDTO(studyCourse);
-	}
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping(value="/{id}", method=RequestMethod.GET)
+    public ResponseEntity<StudyCourse> getStudyCourseById(@PathVariable Long id) {
+        Optional<StudyCourse> studyCourse= stuCouSer.getOne(id);
+        if(studyCourse.isPresent()) {
+            return new ResponseEntity<StudyCourse>(studyCourse.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<StudyCourse>(HttpStatus.NOT_FOUND);
+    }
 	
 	// Get Course by Faculty id
-	@RequestMapping("/faculty/{id}")
-	public ResponseEntity<Iterable<StudyCourseDto>> getCourseOnFaculty(@PathVariable Long id){
-		List<StudyCourse> studyCourse = stuCouSer.getCourseOnFaculty(id);
-		return ResponseEntity.ok(studyCourseMapper.toDTO(studyCourse));
-	}
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping(value="/faculty/{id}", method=RequestMethod.GET)
+    public ResponseEntity<StudyCourse> getStudyCourseByFacultyId(@PathVariable Long id) {
+        Optional<StudyCourse> studyCourse= stuCouSer.getCourseOnFaculty(id);
+        if(studyCourse.isPresent()) {
+            return new ResponseEntity<StudyCourse>(studyCourse.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<StudyCourse>(HttpStatus.NOT_FOUND);
+    }
 	
-	
-	@RequestMapping(value = "/", method = RequestMethod.POST)
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ResponseEntity<StudyCourse> addStudyCourse(@RequestBody StudyCourse stuCou){
 		stuCouSer.addStudyCourse(stuCou);
 		return new ResponseEntity<StudyCourse>(stuCou, HttpStatus.OK);

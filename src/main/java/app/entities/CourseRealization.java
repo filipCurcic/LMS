@@ -9,10 +9,14 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonView;
+
+import app.utils.View.ShowCourseAttending;
+import app.utils.View.ShowCourseRealization;
+import app.utils.View.ShowExam;
 
 @Entity
 public class CourseRealization {
@@ -27,6 +31,7 @@ public class CourseRealization {
 	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private TeacherOnRealization teacherOnRealization;
 
+	@JsonView(ShowCourseAttending.class)
 	@OneToMany(mappedBy = "courseRealization", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private Set<CourseAttending> courseAttendings;
 	
@@ -36,9 +41,11 @@ public class CourseRealization {
 	@ManyToOne(cascade=CascadeType.ALL)
 	private StudyYear studyYear;
 	
+	@JsonView(ShowCourseRealization.class)
 	@OneToMany(mappedBy="studyYear")
 	private Set<CourseRealization> courseRealizations;
 	
+	@JsonView(ShowExam.class)
 	@OneToMany(mappedBy = "courseRealization")
 	private Set<Exam> exams;
 	

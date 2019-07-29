@@ -1,6 +1,5 @@
 package app.controllers;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import app.dto.CourseOutcomeDto;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import app.entities.CourseOutcome;
-import app.mappers.CourseOutcomeMapper;
 import app.services.CourseOutcomeService;
+import app.utils.View.HideOptionalProperties;
 
 @CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
@@ -26,13 +26,10 @@ public class CourseOutcomeController {
 	@Autowired
 	CourseOutcomeService cs;
 	
-	@Autowired
-	CourseOutcomeMapper courseOutcomeMapper;
-
-	@RequestMapping("/all")
-	public ResponseEntity<Iterable<CourseOutcomeDto>> getCourseOutcomes() {
-		List<CourseOutcome> courseOutcome = cs.getCourseOutcomes();
-		return ResponseEntity.ok(courseOutcomeMapper.toDTO(courseOutcome));
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping("/all")
+	public ResponseEntity<Iterable<CourseOutcome>> getCourseOutcomes() {
+		return new ResponseEntity<Iterable<CourseOutcome>>(cs.getCourseOutcomes(), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
@@ -41,11 +38,16 @@ public class CourseOutcomeController {
 		return new ResponseEntity<CourseOutcome>(courseoutcome, HttpStatus.OK);
 	}
 
-	@RequestMapping("/{id}")
-	public CourseOutcomeDto getCourseOutcome(@PathVariable Long id) {
-		CourseOutcome courseOutcome = cs.getCourseOutcome(id);
-		return courseOutcomeMapper.toDTO(courseOutcome);
-	}
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping(value="/{id}", method=RequestMethod.GET)
+    public ResponseEntity<CourseOutcome> getCourseOutcomeById(@PathVariable Long id) {
+        Optional<CourseOutcome> courseOutcome= cs.getCourseOutcome(id);
+        if(courseOutcome.isPresent()) {
+            return new ResponseEntity<CourseOutcome>(courseOutcome.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<CourseOutcome>(HttpStatus.NOT_FOUND);
+    }
+
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public ResponseEntity<CourseOutcome> deleteCourseOutcome(@PathVariable Long id) {

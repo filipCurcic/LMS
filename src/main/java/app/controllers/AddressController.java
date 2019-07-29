@@ -1,6 +1,5 @@
 package app.controllers;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
-import app.dto.AddressDto;
 import app.entities.Address;
-import app.mappers.AddressMapper;
 import app.services.AddressService;
 import app.utils.View.HideOptionalProperties;
 
@@ -29,20 +26,22 @@ public class AddressController {
 	@Autowired
 	AddressService addressService;
 	
-	@Autowired
-	AddressMapper addressMapper;
-	
-	@RequestMapping("/all")
-	public ResponseEntity<Iterable<AddressDto>> getAll(){
-		List<Address> address = addressService.getAddress();
-		return ResponseEntity.ok(addressMapper.toDTO(address));
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping(value="/all", method=RequestMethod.GET)
+	public ResponseEntity<Iterable<Address>> getAll(){
+		return new ResponseEntity<Iterable<Address>>(addressService.getAddress(), HttpStatus.OK);
 	}
 	
-	@RequestMapping("/{id}")
-	public AddressDto getAddress(@PathVariable Long id) {
-		Address address = addressService.getOne(id);
-		return addressMapper.toDTO(address);
-	}
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping(value="/{id}", method=RequestMethod.GET)
+    public ResponseEntity<Address> getAddressById(@PathVariable Long id) {
+        Optional<Address> address = addressService.getOne(id);
+        if(address.isPresent()) {
+            return new ResponseEntity<Address>(address.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<Address>(HttpStatus.NOT_FOUND);
+    }
+
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ResponseEntity<Address> addAddress(@RequestBody Address address){

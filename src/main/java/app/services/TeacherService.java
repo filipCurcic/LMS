@@ -1,6 +1,5 @@
 package app.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,16 +28,16 @@ public class TeacherService {
 	PasswordEncoder passwordEncoder;
     
 	
-	public List<Teacher> getTeachers() {
+	public Iterable<Teacher> getTeachers() {
 		return teacherRep.findAll();
 	}
 	
-	public Teacher getOne(Long id) {
-		return teacherRep.findById(id).orElse(null);
+	public Optional<Teacher> getOne(Long id) {
+		return teacherRep.findById(id);
 	}
 	
-	public Teacher getTeacherByUsername(String username) {
-        return teacherRep.getByUsername(username).orElse(null);
+	public Optional<Teacher> getTeacherByUsername(String username) {
+        return teacherRep.getByUsername(username);
     }
 	
 	

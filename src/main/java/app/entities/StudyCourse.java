@@ -13,6 +13,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import app.utils.View.ShowStudyCourseTeacher;
+
 
 
 @Entity
@@ -28,6 +32,7 @@ public class StudyCourse {
 	@ManyToOne(fetch = FetchType.EAGER,cascade= {CascadeType.MERGE, CascadeType.REMOVE})
 	private Faculty faculty;
 	
+	@JsonView(ShowStudyCourseTeacher.class)
 	@OneToMany(mappedBy="studyCourse")
 	private Set<StudyCourseTeacher> studyCourseTeacher;
 	

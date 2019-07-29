@@ -11,39 +11,33 @@ import javax.persistence.OneToMany;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import app.utils.View.ShowCity;
-import app.utils.View.ShowCountry;
 
 @Entity
 public class Country {
-	
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	@NotNull
 	private String name;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy="country")
+	@JsonView(ShowCity.class)
+	@OneToMany(mappedBy="country", cascade=CascadeType.ALL)
 	private Set<City> city;
 	
-
+	@Version
+	public int version = 0;
+	
 	public Country() {
 		
 	}
 	
-	public Country(String name) {
+	public Country(String name, Set<City> city) {
 		this.name = name;
-		
-	}
-	
-	public Country(Long id, String name) {
-		this.id = id;
-		this.name = name;
-		
+		this.city = city;
 	}
 
 	public Long getId() {
@@ -59,7 +53,7 @@ public class Country {
 		this.name = name;
 	}
 
-	
+
 	public Set<City> getCity() {
 		return city;
 	}

@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.fasterxml.jackson.annotation.JsonView;
+
 import app.entities.ForumSubForum;
 import app.services.ForumSubForumService;
 import app.utils.View.HideOptionalProperties;
@@ -20,6 +22,7 @@ import app.utils.View.HideOptionalProperties;
 @RestController
 @RequestMapping("/subforum")
 public class SubForumController {
+	
 	@Autowired
 	ForumSubForumService ss;
 

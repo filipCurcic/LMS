@@ -11,6 +11,9 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+
+import app.utils.View.ShowUserPermission;
 
 @Entity
 public class Permission {
@@ -23,7 +26,7 @@ public class Permission {
 	@Column(unique = true)
 	private String title;
 	
-	@JsonIgnore
+	@JsonView(ShowUserPermission.class)
 	@OneToMany(mappedBy="permission")
 	private Set<UserPermission> userPermission; 
 	

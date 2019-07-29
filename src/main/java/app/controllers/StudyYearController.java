@@ -1,7 +1,6 @@
 package app.controllers;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import app.dto.StudyYearDto;
-import app.entities.Course;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import app.entities.StudyYear;
-import app.mappers.StudyYearMapper;
 import app.services.StudyYearService;
+import app.utils.View.HideOptionalProperties;
 
 @CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
@@ -28,21 +27,22 @@ public class StudyYearController {
 	@Autowired
 	StudyYearService studyYearSer;
 	
-	@Autowired
-	StudyYearMapper studyYearMapper;
 	
-	
-	@RequestMapping("/all")
-	public ResponseEntity<Iterable<StudyYearDto>> getStudyYears(){
-		List<StudyYear> studyYear = studyYearSer.getAll();
-		return ResponseEntity.ok(studyYearMapper.toDTO(studyYear));
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping("/all")
+	public ResponseEntity<Iterable<StudyYear>> getStudyYears(){
+		return new ResponseEntity<Iterable<StudyYear>>(studyYearSer.getAll(), HttpStatus.OK);
 	}
 	
-	@RequestMapping("/{id}")
-	public StudyYearDto getStudyYear(@PathVariable Long id) {
-		StudyYear uni = studyYearSer.getOne(id);
-		return studyYearMapper.toDTO(uni);
-	}
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping(value="/{id}", method=RequestMethod.GET)
+    public ResponseEntity<StudyYear> getStudyYearById(@PathVariable Long id) {
+        Optional<StudyYear> studyYear = studyYearSer.getOne(id);
+        if(studyYear.isPresent()) {
+            return new ResponseEntity<StudyYear>(studyYear.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<StudyYear>(HttpStatus.NOT_FOUND);
+    }
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	@Secured("ROLE_ADMINISTRATOR_STAFF")

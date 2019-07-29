@@ -2,7 +2,6 @@ package app.controllers;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +19,14 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import app.dto.AdministratorStaffDto;
 import app.entities.AdministratorStaff;
 import app.entities.Student;
-import app.mappers.AdministratorStaffMapper;
 import app.services.AdministratorStaffService;
 import app.services.FileService;
+import app.utils.View.HideOptionalProperties;
 
 @CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
@@ -40,29 +39,35 @@ public class AdministratorStaffController {
 	@Autowired
     FileService fileService;
     
-	@Autowired
-	AdministratorStaffMapper administratorStaffMapper;
-	
-	@RequestMapping("/all")
-	public ResponseEntity<Iterable<AdministratorStaffDto>> getAll(){
-		List<AdministratorStaff> administratorStaff = adminStaffService.getAdministratorStaff();
-		return ResponseEntity.ok(administratorStaffMapper.toDTO(administratorStaff));
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping("/all")
+	public ResponseEntity<Iterable<AdministratorStaff>> getAll(){
+		return new ResponseEntity<Iterable<AdministratorStaff>>(adminStaffService.getAdministratorStaff(), HttpStatus.OK);
 	}
 	
 	
-	@RequestMapping("/{id}")
-	public AdministratorStaffDto getAdministratorStaff(@PathVariable Long id) {
-		AdministratorStaff administratorStaff = adminStaffService.getOne(id);
-		return administratorStaffMapper.toDTO(administratorStaff);
-	}
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping(value="/{id}", method=RequestMethod.GET)
+    public ResponseEntity<AdministratorStaff> getAdministratorStaffById(@PathVariable Long id) {
+        Optional<AdministratorStaff> administratorStaff = adminStaffService.getOne(id);
+        if(administratorStaff.isPresent()) {
+            return new ResponseEntity<AdministratorStaff>(administratorStaff.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<AdministratorStaff>(HttpStatus.NOT_FOUND);
+    }
 	
-	@RequestMapping("/username/{username}")
-	public ResponseEntity<AdministratorStaffDto> getAdministratorStaffByUsername (@PathVariable String username) {
-		AdministratorStaff administratorStaff = adminStaffService.getOneByUsername(username);
-		return new ResponseEntity<AdministratorStaffDto>(administratorStaffMapper.toDTO(administratorStaff), HttpStatus.OK);
-	}
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping("/username/{username}")
+	public ResponseEntity<AdministratorStaff> getAdministratorStaffByUsername(@PathVariable String username) {
+		Optional<AdministratorStaff> administratorStaff = adminStaffService.getOneByUsername(username);
+        if(administratorStaff.isPresent()) {
+            return new ResponseEntity<AdministratorStaff>(administratorStaff.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<AdministratorStaff>(HttpStatus.NOT_FOUND);
+    }
 	
-	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@Transactional
 	@Secured("ROLE_ADMINISTRATOR")
 	public ResponseEntity<AdministratorStaff> addAdministrator(@RequestPart("profileImage") MultipartFile file, @RequestPart("data") String administratorStaffString) throws IOException {

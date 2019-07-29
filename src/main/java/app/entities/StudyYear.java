@@ -13,6 +13,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import app.utils.View.ShowCourse;
+import app.utils.View.ShowStudentOnYear;
+
 @Entity
 public class StudyYear {
 
@@ -29,12 +34,14 @@ public class StudyYear {
 	@NotNull
 	private int studyYear; // (1, 2, 3, 4)
 	
+	@JsonView(ShowStudentOnYear.class)
 	@OneToMany(mappedBy="studyYear")
 	private Set<StudentOnYear> studentsOnYear;
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private StudyCourse studyCourse;
 	
+	@JsonView(ShowCourse.class)
 	@OneToMany(mappedBy="yearsOfStudy")
 	private Set<Course> courses;
 	

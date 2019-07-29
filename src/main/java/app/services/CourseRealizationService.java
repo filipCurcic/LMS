@@ -1,6 +1,5 @@
 package app.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +17,12 @@ public class CourseRealizationService {
 	public CourseRealizationService() {
 	}
 
-	public List<CourseRealization> getCourseRealizations() {
+	public Iterable<CourseRealization> getCourseRealizations() {
 		return cr.findAll();
 	}
 
-	public CourseRealization getCourseRealization(Long id) {
-		return cr.findById(id).orElse(null);
+	public Optional<CourseRealization> getCourseRealization(Long id) {
+		return cr.findById(id);
 	}
 
 	public void AddCourseRealization(CourseRealization courserealization) {

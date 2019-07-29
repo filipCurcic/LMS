@@ -1,6 +1,5 @@
 package app.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +14,12 @@ public class TeacherOnRealizationService {
 	@Autowired
 	TeacherOnRealizationRepository teacherOnRealizationRep;
 	
-	public List<TeacherOnRealization> getTeachersOnRealization() {
+	public Iterable<TeacherOnRealization> getTeachersOnRealization() {
 		return teacherOnRealizationRep.findAll();
 	}
 	
-	public TeacherOnRealization getOne(Long id) {
-		return teacherOnRealizationRep.findById(id).orElse(null);
+	public Optional<TeacherOnRealization> getOne(Long id) {
+		return teacherOnRealizationRep.findById(id);
 	}
 	
 	public void addTeacherOnRealization(TeacherOnRealization teacherOnRealization) {

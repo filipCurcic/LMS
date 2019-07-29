@@ -21,7 +21,7 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 	Optional<Student> getByUsername(String username);
 	
 	@Query("SELECT s FROM Student s WHERE s.registeredUser.username = ?1")
-	Student getLoggedStudent(String username);
+	Optional<Student> getLoggedStudent(String username);
 	
 	
 }

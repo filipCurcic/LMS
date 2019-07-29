@@ -13,6 +13,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import app.utils.View.ShowFaculty;
+import app.utils.View.ShowTeacher;
+
 @Entity
 public class University {
 	
@@ -35,7 +40,7 @@ public class University {
 	@NotNull
 	private String description;
 	
-	
+	@JsonView(ShowFaculty.class)
 	@OneToMany(mappedBy="university")
 	private Set<Faculty> faculties;
 	
@@ -43,6 +48,7 @@ public class University {
 	@JoinColumn(name="addressId")
 	private Address address;
 		
+	@JsonView(ShowTeacher.class)
 	@OneToMany(mappedBy="university")
 	private Set<Teacher> teachers;
 	

@@ -8,12 +8,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonView;
+
+import app.utils.View.ShowCheckin;
+import app.utils.View.ShowCourseAttending;
+import app.utils.View.ShowStudentOnYeear;
 
 @Entity
 public class Student{
@@ -40,12 +43,15 @@ public class Student{
 	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.REMOVE})
 	private Address address;
 	
+	@JsonView(ShowStudentOnYeear.class)
 	@OneToMany(mappedBy="student")
 	private Set<StudentOnYear> studentOnYear;
 	
+	@JsonView(ShowCourseAttending.class)
 	@OneToMany(mappedBy= "student")
 	private Set<CourseAttending> courseAttending;
 	
+	@JsonView(ShowCheckin.class)
 	@OneToMany(mappedBy = "checkedStudent")
 	private Set<Checkin> checkins;
 	

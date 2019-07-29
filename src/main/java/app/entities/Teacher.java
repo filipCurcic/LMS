@@ -13,6 +13,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import app.utils.View.ShowStudyCourseTeacher;
+import app.utils.View.ShowTeacherOnRealization;
+import app.utils.View.ShowTitle;
+
 @Entity
 public class Teacher {
 	
@@ -33,10 +39,11 @@ public class Teacher {
 	@Column(length=128)
 	private String profilePicturePath;
 	
-	
+	@JsonView(ShowTitle.class)
 	@OneToMany(mappedBy = "teacher")
 	private Set<Title> titles;
 	
+	@JsonView(ShowTeacherOnRealization.class)
 	@OneToMany(mappedBy="teacher")
 	private Set<TeacherOnRealization> teachersOnRealization;
 	
@@ -44,6 +51,7 @@ public class Teacher {
 	private University university;
 	
 	// Middle table with StudyCourse
+	@JsonView(ShowStudyCourseTeacher.class)
 	@OneToMany(mappedBy="teacher")
 	private Set<StudyCourseTeacher> studyCourseTeacher;
 	

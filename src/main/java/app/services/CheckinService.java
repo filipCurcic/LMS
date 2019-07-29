@@ -1,6 +1,5 @@
 package app.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +15,12 @@ public class CheckinService {
 	CheckinRepository cr;
 	
 	
-	public List<Checkin> getCheckins() {
+	public Iterable<Checkin> getCheckins() {
 		return cr.findAll();
 	}
 	
-	public Checkin getOneEvent(Long id) {
-		return cr.findById(id).orElse(null);
+	public Optional<Checkin> getOneEvent(Long id) {
+		return cr.findById(id);
 	}
 	
 	public void addCheckin(Checkin calendarEvent) {

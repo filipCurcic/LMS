@@ -1,6 +1,5 @@
 package app.controllers;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import app.dto.UniversityDto;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import app.entities.University;
-import app.mappers.UniversityMapper;
 import app.services.UniversityService;
+import app.utils.View.HideOptionalProperties;
 
 @Controller
 @RequestMapping("/university")
@@ -24,20 +24,21 @@ public class UniversityController {
 	@Autowired
 	UniversityService uniSer;
 	
-	@Autowired
-	UniversityMapper universityMapper;
-	
-	@RequestMapping("/all")
-	public ResponseEntity<Iterable<UniversityDto>> getUniversities(){
-		List<University> university = uniSer.getAll();
-		return ResponseEntity.ok(universityMapper.toDTO(university));
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping("/all")
+	public ResponseEntity<Iterable<University>> getUniversities(){
+		return new ResponseEntity<Iterable<University>>(uniSer.getAll(), HttpStatus.OK);
 	}
 	
-	@RequestMapping("/{id}")
-	public ResponseEntity<UniversityDto> getUniversity(@PathVariable Long id) {
-		University university = uniSer.getOne(id);
-		return new ResponseEntity<UniversityDto>(universityMapper.toDTO(university), HttpStatus.OK);
-	}
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping(value="/{id}", method=RequestMethod.GET)
+    public ResponseEntity<University> getUniversityById(@PathVariable Long id) {
+        Optional<University> unversity = uniSer.getOne(id);
+        if(unversity.isPresent()) {
+            return new ResponseEntity<University>(unversity.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<University>(HttpStatus.NOT_FOUND);
+    }
 	
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public ResponseEntity<University> addUniversity(@RequestBody University university){

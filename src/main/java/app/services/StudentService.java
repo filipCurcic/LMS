@@ -1,6 +1,5 @@
 package app.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -10,8 +9,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import app.entities.Student;
-import app.entities.StudentOnYear;
-import app.entities.StudyYear;
 import app.repositories.StudentRepository;
 import app.repositories.StudyYearRepository;
 
@@ -36,12 +33,12 @@ public class StudentService {
 	@Autowired
 	StudyYearRepository studyYearRepository;
     
-	public List<Student> getAll(){
+	public Iterable<Student> getAll(){
 		return stuRep.findAll();
 	}
 	
-	public Student getOne(Long id){
-		return stuRep.findById(id).orElse(null);
+	public Optional<Student> getOne(Long id){
+		return stuRep.findById(id);
 	}
 	
 	public Optional<Student> getOneStudent(Long id){
@@ -52,11 +49,8 @@ public class StudentService {
         return stuRep.getByUsername(username);
     }
 	
-	public Student getStudentByUsernamee(String username) {
-        return stuRep.getByUsername(username).orElse(null);
-    }
 	
-	public Student getLoggedStudent(String username) {
+	public Optional<Student> getLoggedStudent(String username) {
         return stuRep.getLoggedStudent(username);
     }
 	

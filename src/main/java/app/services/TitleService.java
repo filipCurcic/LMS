@@ -1,6 +1,5 @@
 package app.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +14,12 @@ public class TitleService {
 	@Autowired
 	TitleRepository titleRep;
 	
-	public List<Title> getTitles() {
+	public Iterable<Title> getTitles() {
 		return titleRep.findAll();
 	}
 	
-	public Title getOne(Long id) {
-		return titleRep.findById(id).orElse(null);
+	public Optional<Title> getOne(Long id) {
+		return titleRep.findById(id);
 	}
 	
 	public void addTitle(Title title) {

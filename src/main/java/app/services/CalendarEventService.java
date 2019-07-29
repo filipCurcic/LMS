@@ -1,6 +1,5 @@
 package app.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +14,12 @@ public class CalendarEventService {
 	@Autowired
 	CalendarEventRepository calendarEventRepository;
 	
-	public List<CalendarEvent> getCalendarEvents() {
+	public Iterable<CalendarEvent> getCalendarEvents() {
 		return calendarEventRepository.findAll();
 	}
 	
-	public CalendarEvent getOneEvent(Long id) {
-		return calendarEventRepository.findById(id).orElse(null);
+	public Optional<CalendarEvent> getOneEvent(Long id) {
+		return calendarEventRepository.findById(id);
 	}
 	
 	public void addCalendarEvent(CalendarEvent calendarEvent) {

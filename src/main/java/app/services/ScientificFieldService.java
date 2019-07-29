@@ -1,6 +1,5 @@
 package app.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +13,12 @@ public class ScientificFieldService {
 	@Autowired
 	ScientificFieldRepository scientificFieldRep;
 	
-	public List<ScientificField> getScientificFields() {
+	public Iterable<ScientificField> getScientificFields() {
 		return scientificFieldRep.findAll();
 	}
 	
-	public ScientificField getOne(Long id) {
-		return scientificFieldRep.findById(id).orElse(null);
+	public Optional<ScientificField> getOne(Long id) {
+		return scientificFieldRep.findById(id);
 	}
 	
 	public void addScientificField(ScientificField scientificField) {

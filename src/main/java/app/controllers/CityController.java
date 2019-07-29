@@ -1,7 +1,6 @@
 package app.controllers;
 
 import java.util.Optional;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,12 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
-import app.dto.CityDto;
-import app.dto.CountryDto;
-import app.dto.StudentDto;
 import app.entities.City;
-import app.entities.Country;
-import app.mappers.CityMapper;
 import app.services.CityService;
 import app.utils.View.HideOptionalProperties;
 
@@ -33,30 +27,23 @@ public class CityController {
 	@Autowired
 	CityService cityService;
 	
-	@Autowired
-	CityMapper cityMapper;
-	
-	
-	
-	@RequestMapping("/all")
-	public ResponseEntity<Iterable<CityDto>> getAll(){
-		List<City> city= cityService.getAll();
-		return ResponseEntity.ok(cityMapper.toDTO(city));
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping("/all")
+	public ResponseEntity<Iterable<City>> getAll(){
+		return new ResponseEntity<Iterable<City>>(cityService.getAll(), HttpStatus.OK);
 	}
 
 	
-	@RequestMapping("/{id}")
-	public CityDto getCity(@PathVariable Long id) {
-		City city = cityService.getOne(id);
-		return cityMapper.toDTO(city);
-	}
-	
-	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public ResponseEntity<City> addCity(@RequestBody City city){
-		cityService.addCity(city);
-		return new ResponseEntity<City>(city, HttpStatus.OK);
-	}
-	
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping(value="/{id}", method=RequestMethod.GET)
+    public ResponseEntity<City> getCityById(@PathVariable Long id) {
+        Optional<City> city = cityService.getOne(id);
+        if(city.isPresent()) {
+            return new ResponseEntity<City>(city.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<City>(HttpStatus.NOT_FOUND);
+    }
+
 	@RequestMapping(value="/country/{countryId}", method=RequestMethod.GET)
     public ResponseEntity<Iterable<Optional<City>>> getCityByCountry(@PathVariable Long countryId) {
         return new ResponseEntity<Iterable<Optional<City>>>(cityService.getCityByCountry(countryId), HttpStatus.OK);

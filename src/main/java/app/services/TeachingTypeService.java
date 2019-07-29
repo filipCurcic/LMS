@@ -1,6 +1,5 @@
 package app.services;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +14,12 @@ public class TeachingTypeService {
 	@Autowired
 	TeachingTypeRepository teachingTypeRep;
 
-	public List<TeachingType> getTeachingTypes() {
+	public Iterable<TeachingType> getTeachingTypes() {
 		return teachingTypeRep.findAll();
 	}
 
-	public TeachingType getOne(Long id) {
-		return teachingTypeRep.findById(id).orElse(null);
+	public Optional<TeachingType> getOne(Long id) {
+		return teachingTypeRep.findById(id);
 	}
 
 	public void addTeachingType(TeachingType teachingType) {

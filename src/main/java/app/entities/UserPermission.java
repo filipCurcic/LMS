@@ -18,7 +18,7 @@ public class UserPermission {
 	@ManyToOne
 	private Permission permission;
 	
-	@JsonIgnore
+	//@JsonIgnore
 	@ManyToOne
 	private RegisteredUser registeredUser;
 	
