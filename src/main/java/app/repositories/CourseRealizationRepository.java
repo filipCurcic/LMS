@@ -8,4 +8,6 @@ import app.entities.CourseRealization;
 
 @Repository
 public interface CourseRealizationRepository extends JpaRepository<CourseRealization, Long> {
+	
+	Iterable<CourseRealization> findByStudyYearId(Long id);
 }

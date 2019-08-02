@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.entities.Faculty;
+import app.repositories.AddressRepository;
 import app.repositories.FacultyRepository;
 import app.repositories.UniversityRepository;
 
@@ -17,6 +18,9 @@ public class FacultyService {
 	
 	@Autowired
 	UniversityRepository universityRepository;
+	
+	@Autowired
+	AddressRepository addressRepository;
 	
 	public Iterable<Faculty> getAll(){
 		return facRep.findAll();
@@ -34,6 +38,7 @@ public class FacultyService {
 	
 	public void addFaculty(Faculty fac) {
 		fac.setUniversity(universityRepository.getOne(1l));
+		fac.setAddress(addressRepository.getOne(1l));
 		facRep.save(fac);
 	}
 	

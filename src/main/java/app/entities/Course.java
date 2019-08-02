@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Where;
+
 import com.fasterxml.jackson.annotation.JsonView;
 
 import app.utils.View.ShowCourse;
@@ -22,6 +24,7 @@ import app.utils.View.ShowCourseRealization;
 
 @Entity
 public class Course {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -30,8 +33,8 @@ public class Course {
 	private String name;
 	@NotNull
 	private int espb;
-	//@NotNull
-	private boolean mandatory = false; 
+	@NotNull
+	private Boolean mandatory;
 	private int numberOfLectures;
 	private int numberOfExercises;
 	private int otherTypesOfTeachings;
@@ -42,7 +45,7 @@ public class Course {
 	@OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private Set<CourseRealization> courseRealizations;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private StudyYear yearsOfStudy;
 	
 	@JsonView(ShowCourseOutcome.class)
@@ -59,7 +62,7 @@ public class Course {
 	
 	public Course() {}
 
-	public Course(Long id, @Size(max = 50) @NotNull String name, @NotNull int espb, boolean mandatory,
+	public Course(Long id, @Size(max = 50) @NotNull String name, @NotNull int espb, Boolean mandatory,
 			int numberOfLectures, int numberOfExercises, int otherTypesOfTeachings, int researchWork, int otherClasses,
 			Set<CourseRealization> courseRealizations, StudyYear yearsOfStudy, Set<CourseOutcome> syllabus,
 			Set<Course> precondition, Set<Course> preconditionFor) {
@@ -79,9 +82,6 @@ public class Course {
 		this.precondition = precondition;
 		this.preconditionFor = preconditionFor;
 	}
-
-
-
 
 
 	@Override
@@ -159,7 +159,7 @@ public class Course {
 		return name;
 	}
 
-
+	
 
 	public void setName(String name) {
 		this.name = name;
@@ -177,19 +177,13 @@ public class Course {
 		this.espb = espb;
 	}
 
-
-
-	public boolean isMandatory() {
+	public Boolean getMandatory() {
 		return mandatory;
 	}
 
-
-
-	public void setMandatory(boolean mandatory) {
+	public void setMandatory(Boolean mandatory) {
 		this.mandatory = mandatory;
 	}
-
-
 
 	public int getNumberOfLectures() {
 		return numberOfLectures;
@@ -302,9 +296,4 @@ public class Course {
 		this.preconditionFor = preconditionFor;
 	}
 	
-	
-	
-	
-	
-
 }

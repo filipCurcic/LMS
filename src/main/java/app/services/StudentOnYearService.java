@@ -39,9 +39,9 @@ public class StudentOnYearService {
 	        }
 	    }
 	 
-     public Optional<StudentOnYear> getStudentYearByYearOfStudyId(Long id) {
-        return stuOnYRep.findById(id);
+	 public Optional<StudentOnYear> getStudentYearByStudyYearIdAndStudentId(Long studyYearId, Long studentId) {
+	        return stuOnYRep.findByStudyYearIdAndStudentId(studyYearId, studentId);
 	    }
-
 	
+	 
 }

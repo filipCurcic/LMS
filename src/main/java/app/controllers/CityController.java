@@ -44,7 +44,8 @@ public class CityController {
         return new ResponseEntity<City>(HttpStatus.NOT_FOUND);
     }
 
-	@RequestMapping(value="/country/{countryId}", method=RequestMethod.GET)
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping(value="/country/{countryId}", method=RequestMethod.GET)
     public ResponseEntity<Iterable<Optional<City>>> getCityByCountry(@PathVariable Long countryId) {
         return new ResponseEntity<Iterable<Optional<City>>>(cityService.getCityByCountry(countryId), HttpStatus.OK);
     }

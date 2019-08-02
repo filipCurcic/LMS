@@ -71,8 +71,8 @@ public class TeacherController {
     }
 	
 	
-	
-	@RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping(value = "/add", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	@Transactional
 	@PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR_STAFF','ROLE_ADMINISTRATOR')")
 	public ResponseEntity<Teacher> uploadFile(@RequestPart("profileImage") MultipartFile file, @RequestPart("data") String teacherStr) throws IOException {
@@ -93,7 +93,7 @@ public class TeacherController {
 		return new ResponseEntity<Teacher>(HttpStatus.NO_CONTENT);
 	}
 	
-	@RequestMapping(value="/{username}", method=RequestMethod.PUT, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	@RequestMapping(value="/username/{username}", method=RequestMethod.PUT, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Teacher> updateTeacher(@PathVariable String username, @RequestPart("profileImage") Optional<MultipartFile> file, @RequestPart("data") String teacher) throws IOException {
     	Teacher t = new ObjectMapper().readValue(teacher, Teacher.class);
 		if(file.isPresent()) {

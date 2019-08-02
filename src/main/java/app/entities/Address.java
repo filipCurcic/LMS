@@ -25,8 +25,6 @@ public class Address {
 	@ManyToOne(fetch = FetchType.EAGER)
 	private City city;
 	
-	@Version
-	private int version = 0;
 	
 	
 	public Address() {

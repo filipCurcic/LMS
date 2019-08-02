@@ -32,4 +32,8 @@ public class CourseService {
 		Optional<Course> course = cr.findById(id);
 		cr.delete(course.get());
 	}
+	
+	public Iterable<Course> getPrerequisitesForMandatorySubjectsByStudyYear(Long studyYearId) {
+        return cr.getPreconditionForMandatoryCourseByStudyYear(studyYearId);
+    }
 }

@@ -26,8 +26,6 @@ public class TeachingType {
 	@JoinColumn(name="teacherOnRealizationId")
 	private TeacherOnRealization teacherOnRealization;
 	
-	@Version
-	private int version = 0;
 	
 	
 	public TeachingType() {}
@@ -64,16 +62,6 @@ public class TeachingType {
 	public void setTeacherOnRealization(TeacherOnRealization teacherOnRealization) {
 		this.teacherOnRealization = teacherOnRealization;
 	}
-
-	public int getVersion() {
-		return version;
-	}
-
-	public void setVersion(int version) {
-		this.version = version;
-	}
-	
-	
 	
 
 }

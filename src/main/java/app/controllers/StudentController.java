@@ -15,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +32,7 @@ import app.services.StudentService;
 import app.utils.GeneratePDF;
 import app.utils.View.HideOptionalProperties;
 
+@CrossOrigin(origins = { "http://localhost:4200" })
 @Controller
 @RequestMapping("/student")
 public class StudentController {
@@ -102,13 +104,9 @@ public class StudentController {
 	@Transactional
     @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR_STAFF','ROLE_ADMINISTRATOR')")
 	public ResponseEntity<Student> addStudent(@RequestPart("profileImage") MultipartFile file, @RequestPart("data") String studentStr) throws IOException {
-		System.out.println("controller");
 		Student student = new ObjectMapper().readValue(studentStr, Student.class);
-		System.out.println("controller1");
 		fileService.addProfileImageStudent(file, "student_" + student.getRegisteredUser().getUsername(), student);
-		System.out.println("controller2");
 		stuSer.addStudent(student);
-		System.out.println("controller4");
 		return new ResponseEntity<Student>(student, HttpStatus.OK);
 	}
 	

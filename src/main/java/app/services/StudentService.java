@@ -59,12 +59,7 @@ public class StudentService {
 	public void addStudent(Student student) {
 		loginService.addPermssion(student.getRegisteredUser(), "ROLE_STUDENT");
 		student.getRegisteredUser().setPassword(passwordEncoder.encode(student.getRegisteredUser().getPassword()));
-		System.out.println("service");
-//		StudyYear studyYear = studyYearRepository.findFirstByStudyYear(1);
-//		StudentOnYear studentOnYear = new StudentOnYear();
-//		studentOnYear.setStudyYear(studyYear);
-//		student.getStudentOnYear().add(studentOnYear);
-        stuRep.save(student);
+		stuRep.save(student);
         System.out.println("service saved");
 	}
 	

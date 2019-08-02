@@ -16,6 +16,7 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import app.utils.View.ShowCourse;
+import app.utils.View.ShowCourseRealization;
 import app.utils.View.ShowStudentOnYear;
 
 @Entity
@@ -38,12 +39,17 @@ public class StudyYear {
 	@OneToMany(mappedBy="studyYear")
 	private Set<StudentOnYear> studentsOnYear;
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.EAGER)
 	private StudyCourse studyCourse;
 	
 	@JsonView(ShowCourse.class)
 	@OneToMany(mappedBy="yearsOfStudy")
 	private Set<Course> courses;
+	
+	@JsonView(ShowCourseRealization.class)
+	@OneToMany(mappedBy="studyYear")
+	private Set<CourseRealization> courseRealizations;
+
 	
 	public StudyYear() {}
 

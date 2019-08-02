@@ -14,6 +14,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Where;
+
 import com.fasterxml.jackson.annotation.JsonView;
 
 import app.utils.View.ShowStudyCourse;
@@ -54,14 +56,12 @@ public class Faculty {
 	@OneToMany(mappedBy="faculty")
 	private Set<Teacher> teachers;
 	
-	@Version
-	private int version = 0;
 	
 	public Faculty() {}
 
 	
 	public Faculty(@NotNull String name, @NotNull String contact, @NotNull String email, @NotNull String description,
-			Set<StudyCourse> studyCourse, University university, Address address, Set<Teacher> teachers, int version) {
+			Set<StudyCourse> studyCourse, University university, Address address, Set<Teacher> teachers) {
 		super();
 		this.name = name;
 		this.contact = contact;
@@ -71,19 +71,17 @@ public class Faculty {
 		this.university = university;
 		this.address = address;
 		this.teachers = teachers;
-		this.version = version;
 	}
 	
 	
 	public Faculty(Long id, String name, String contact, String email,
-			String description, University university, int version) {
+			String description, University university) {
 		this.id = id;
 		this.name = name;
 		this.contact = contact;
 		this.email = email;
 		this.description = description;
 		this.university = university;
-		this.version = version;
 	}
 
 
@@ -153,13 +151,6 @@ public class Faculty {
 		this.studyCourse = studyCourse;
 	}
 
-	public int getVersion() {
-		return version;
-	}
-
-	public void setVersion(int version) {
-		this.version = version;
-	}
 
 	public University getUniversity() {
 		return university;

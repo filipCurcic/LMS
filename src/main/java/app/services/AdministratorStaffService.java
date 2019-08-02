@@ -8,6 +8,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import app.entities.AdministratorStaff;
+import app.entities.Course;
+import app.entities.CourseAttending;
+import app.entities.CourseRealization;
+import app.entities.ElectiveCourseAttendance;
 import app.entities.Student;
 import app.entities.StudentOnYear;
 import app.entities.StudyYear;
@@ -30,6 +34,15 @@ public class AdministratorStaffService {
 	
 	@Autowired
 	StudentOnYearService studentOnYearService;
+	
+	@Autowired
+	CourseService courseService;
+	
+	@Autowired
+	CourseRealizationService courseRealizationService;
+	
+	@Autowired
+	CourseAttendingService courseAttendingService;
 	
 	@Autowired
 	RegisteredUserService registeredUserService;
@@ -77,23 +90,63 @@ public class AdministratorStaffService {
 	        }
 	}
 	
-	public Iterable<Student> getStudentsForEnrollmentToTheNextYear(String studyCourse, int studyYear) {
-        return administratorStaffRepository.findStudentsForEnrollmentToTheNextYear(studyCourse, studyYear);
-    }
-	
-	public Boolean enrollmentStudentToTheNextYear(ArrayList<String> ids) { 
-    	Optional<Student> student = studentService.getOneStudent(Long.valueOf(ids.get(0)));
-    	if(student.isPresent()) {
-    		Student s = student.get();
-    		s.setStudyYear(s.getStudyYear()+1);
-    		Optional<StudyYear> oldstudyYear= studyYearService.getYearOfStudyById(Long.valueOf(ids.get(1)));
-    		Optional<StudyYear> sy = studyYearService.getNextYearOfStudyByStudyProgram(Long.valueOf(ids.get(1)));
-    		Optional<StudentOnYear> soy = studentOnYearService.getStudentYearByYearOfStudyId(oldstudyYear.get().getId());
-    		soy.get().setStudyYear(sy.get());
-    		studentOnYearService.updateStudentOnYear(soy.get().getId(), soy.get());;
-    		return true;
+	public Iterable<Student> getStudentsForEnrollmentToTheNextYear(Long studyYearId) {
+    	ArrayList<Student> studentsForEnrollmentToTheNextYear = new ArrayList<Student>();
+        Optional<StudyYear> nextStudyYear = studyYearService.getNextYearOfStudyByStudyProgram(studyYearId);
+        if(!nextStudyYear.isPresent()) { 
+        	return studentsForEnrollmentToTheNextYear;
+        }
+        ArrayList<Course> preconditions = (ArrayList<Course>) courseService.getPrerequisitesForMandatorySubjectsByStudyYear(nextStudyYear.get().getId());
+        ArrayList<Student> tempStudents = (ArrayList<Student>) administratorStaffRepository.findStudentsForEnrollmentToTheNextYear(studyYearId);
+    	
+    	int preconditionsSize = preconditions.size();
+    	if(preconditionsSize == 0) {
+    		studentsForEnrollmentToTheNextYear = (ArrayList<Student>) tempStudents;
+    		return studentsForEnrollmentToTheNextYear;
     	}
+    	for(int i = 0; i < tempStudents.size(); i++) {
+			int passedPrecondition = 0;
+			for(CourseAttending ca : tempStudents.get(i).getCourseAttending()) {
+				for(Course precondition: preconditions) {
+    				if(ca.getGrade() != null && precondition.getId() == ca.getCourseRealization().getCourse().getId()) {
+    					passedPrecondition = passedPrecondition + 1;
+    				}
+				}
+			}
+			if(passedPrecondition == preconditionsSize) {
+				studentsForEnrollmentToTheNextYear.add(tempStudents.get(i));
+			}	
+			
+		}
+    	
+    	return studentsForEnrollmentToTheNextYear;
+    }
+    
+	public Boolean enrollmentStudentToTheNextYear(Long studentId, StudyYear studyYear) { 
+    	Optional<Student> student = studentService.getOne(studentId);
+        if(student.isPresent()) {
+        	Optional<StudyYear> oldStudyYear = studyYearService.getYearOfStudyById(studyYear.getId());
+        	Optional<StudyYear> newYearOfStudy = studyYearService.getNextYearOfStudyByStudyProgram(studyYear.getId());
+        	Optional<StudentOnYear> studentOnYear = studentOnYearService.getStudentYearByStudyYearIdAndStudentId(oldStudyYear.get().getId(), student.get().getId());
+        	studentOnYear.get().setStudyYear(newYearOfStudy.get());
+        	studentOnYearService.updateStudentOnYear(studentOnYear.get().getId(), studentOnYear.get());
+        	
+        	Iterable<CourseRealization> courseRealizations = courseRealizationService.getCourseRealizationByStudyYearId(newYearOfStudy.get().getId());
+        	for(CourseRealization cr: courseRealizations) {
+        		if(cr.getCourse().getMandatory()) {
+        			courseAttendingService.AddCourseAttending(new CourseAttending(null, student.get(), cr));
+        		}
+        		else if(!cr.getCourse().getMandatory()) {
+        			for(ElectiveCourseAttendance eca: student.get().getElectiveCourseAttendances()) {
+        				if(eca.getCourseRealization().getId() == cr.getId()) {
+        					courseAttendingService.AddCourseAttending(new CourseAttending(null, student.get(), cr));
+        				}
+        			}
+        		}
+        	}
+        	return true;
+        }
         return false;
     }
-	
+
 }

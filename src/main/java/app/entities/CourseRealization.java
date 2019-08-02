@@ -17,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import app.utils.View.ShowCourseAttending;
 import app.utils.View.ShowCourseRealization;
 import app.utils.View.ShowExam;
+import app.utils.View.ShowTeacherOnRealization;
 
 @Entity
 public class CourseRealization {
@@ -44,6 +45,11 @@ public class CourseRealization {
 	@JsonView(ShowCourseRealization.class)
 	@OneToMany(mappedBy="studyYear")
 	private Set<CourseRealization> courseRealizations;
+	
+	@JsonView(ShowTeacherOnRealization.class)
+	@OneToMany(mappedBy="courseRealization")
+	private Set<TeacherOnRealization> teacherOnRealizations;
+	
 	
 	@JsonView(ShowExam.class)
 	@OneToMany(mappedBy = "courseRealization")
@@ -172,6 +178,28 @@ public class CourseRealization {
 
 	public void setExams(Set<Exam> exams) {
 		this.exams = exams;
+	}
+
+
+
+
+
+
+
+
+	public Set<TeacherOnRealization> getTeacherOnRealizations() {
+		return teacherOnRealizations;
+	}
+
+
+
+
+
+
+
+
+	public void setTeacherOnRealizations(Set<TeacherOnRealization> teacherOnRealizations) {
+		this.teacherOnRealizations = teacherOnRealizations;
 	}
 
 

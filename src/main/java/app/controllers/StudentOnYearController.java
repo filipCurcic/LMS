@@ -42,7 +42,7 @@ public class StudentOnYearController {
         return new ResponseEntity<StudentOnYear>(HttpStatus.NOT_FOUND);
     }
 	
-	@RequestMapping(value = "/", method = RequestMethod.POST)
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ResponseEntity<StudentOnYear> addStudentOnYear(@RequestBody StudentOnYear stuOnY){
 		stuOnYSer.addStudentOnYear(stuOnY);
 		return new ResponseEntity<StudentOnYear>(stuOnY, HttpStatus.OK);

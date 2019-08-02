@@ -38,13 +38,10 @@ public class Title {
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Teacher teacher;
 	
-	@Version
-	private int version = 0;
-	
 	public Title() {}
 
 	public Title(Long id, @NotNull String name, @NotNull Date dateOfSelection, @NotNull Date dateOfCessation,
-			TitleType titleType, ScientificField scientificField, Teacher teacher, int version) {
+			TitleType titleType, ScientificField scientificField, Teacher teacher) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -53,7 +50,7 @@ public class Title {
 		this.titleType = titleType;
 		this.scientificField = scientificField;
 		this.teacher = teacher;
-		this.version = version;
+		
 	}
 
 	public Long getId() {
@@ -111,21 +108,5 @@ public class Title {
 	public void setTeacher(Teacher teacher) {
 		this.teacher = teacher;
 	}
-
-	public int getVersion() {
-		return version;
-	}
-
-	public void setVersion(int version) {
-		this.version = version;
-	}
-
-
-
-
-
-	
-	
-	
 
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import app.entities.University;
 import app.services.UniversityService;
 import app.utils.View.HideOptionalProperties;
 
+@CrossOrigin(origins = { "http://localhost:4200" })
 @Controller
 @RequestMapping("/university")
 public class UniversityController {
@@ -40,7 +42,7 @@ public class UniversityController {
         return new ResponseEntity<University>(HttpStatus.NOT_FOUND);
     }
 	
-	@RequestMapping(value = "/", method = RequestMethod.POST)
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ResponseEntity<University> addUniversity(@RequestBody University university){
 		uniSer.addUniversity(university);
 		return new ResponseEntity<University>(university, HttpStatus.OK);
