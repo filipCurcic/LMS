@@ -27,23 +27,16 @@ public class City {
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Country country;
 	
-	@JsonView(ShowAddress.class)
-	@OneToMany(mappedBy="city")
-	private Set<Address> address;
-	
-	@Version
-	private int version = 0;
-	
 	
 	public City() {
 		
 	}
 
 
-	public City(String name, Country country, Set<Address> address) {
+	public City(String name, Country country) {
 		this.name = name;
 		this.country = country;
-		this.address = address;
+		
 	}
 
 
@@ -76,14 +69,6 @@ public class City {
 	}
 
 
-	public Set<Address> getAddress() {
-		return address;
-	}
-
-
-	public void setAddress(Set<Address> address) {
-		this.address = address;
-	}
 
 
 	

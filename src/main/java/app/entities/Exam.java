@@ -1,20 +1,22 @@
 package app.entities;
 
-import java.util.Date;
+import java.sql.Date;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonView;
 
-
+import app.utils.View.ShowExamRealization;
+import app.utils.View.ShowExamTopic;
 
 @Entity
 public class Exam {
@@ -23,69 +25,67 @@ public class Exam {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@JsonFormat(pattern="yyyy-MM-dd")
+//	@Temporal(TemporalType.TIME)
 	private Date startTime;
 	
-	@NotNull
-	private String name;
-	
-	@JsonFormat(pattern="yyyy-MM-dd")
+//	@Temporal(TemporalType.TIME)
 	private Date endTime;
+	
 	@NotNull
-	private int points;
+	private Integer points;
 	
-	private String examTerm;
+	@NotNull
+	private Integer durationInMinutes;
 	
-	private int grade;
-	
-	private int duration;
-	
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "check_id", referencedColumnName = "id")
-	private Checkin checkin;
-	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade={CascadeType.REMOVE, CascadeType.MERGE})
 	private CourseRealization courseRealization;
+	
+	@JsonView(ShowExamRealization.class)
+	@OneToMany(mappedBy="exam")
+	private Set<ExamRealization> examRealizations;
+	
+	@JsonView(ShowExamTopic.class)
+	@OneToMany(mappedBy="exam", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Set<ExamTopic> syllabus;
 
+	@ManyToOne(cascade={CascadeType.REFRESH, CascadeType.MERGE})
+	private ExamType examType;
+	
+	public Exam() {
+		
+	}
 
-	public Exam() {}
-
-	public Exam(String name, Date startTime, Date endTime, int points, int duration, String examTerm, int grade) {
+	public Exam(Date startTime, Date endTime, @NotNull Integer points, @NotNull Integer durationInMinutes,
+			CourseRealization courseRealization, Set<ExamRealization> examRealizations, Set<ExamTopic> syllabus,
+			ExamType examType) {
 		super();
-		this.name = name;
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.points = points;
-		this.duration = duration;
-		this.grade = grade;
-	}
-
-	public int getGrade() {
-		return grade;
-	}
-
-	public void setGrade(int grade) {
-		this.grade = grade;
+		this.durationInMinutes = durationInMinutes;
+		this.courseRealization = courseRealization;
+		this.examRealizations = examRealizations;
+		this.syllabus = syllabus;
+		this.examType = examType;
 	}
 	
-
-	public String getName() {
-		return name;
+	public Exam(Date startTime, Date endTime, Integer points, Integer durationInMinutes,
+			CourseRealization courseRealization, ExamType examType, Set<ExamRealization> examRealizations,
+			Set<ExamTopic> syllabus) {
+		super();
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.points = points;
+		this.durationInMinutes = durationInMinutes;
+		this.courseRealization = courseRealization;
+		this.examType = examType;
+		this.examRealizations = examRealizations;
+		this.syllabus = syllabus;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	
 
-	public String getExamTerm() {
-		return examTerm;
-	}
 
-	public void setExamTerm(String examTerm) {
-		this.examTerm = examTerm;
-	}
+
 
 	public Long getId() {
 		return id;
@@ -111,25 +111,60 @@ public class Exam {
 		this.endTime = endTime;
 	}
 
-	public int getPoints() {
+	public Integer getPoints() {
 		return points;
 	}
 
-	public void setPoints(int points) {
+	public void setPoints(Integer points) {
 		this.points = points;
 	}
 
-	public int getDuration() {
-		return duration;
+	public Integer getDurationInMinutes() {
+		return durationInMinutes;
 	}
 
-	public void setDuration(int duration) {
-		this.duration = duration;
+	public void setDurationInMinutes(Integer durationInMinutes) {
+		this.durationInMinutes = durationInMinutes;
+	}
+
+	public CourseRealization getCourseRealization() {
+		return courseRealization;
+	}
+
+	public void setCourseRealization(CourseRealization courseRealization) {
+		this.courseRealization = courseRealization;
 	}
 
 
+	public Set<ExamRealization> getExamRealizations() {
+		return examRealizations;
+	}
+
+
+	public void setExamRealizations(Set<ExamRealization> examRealizations) {
+		this.examRealizations = examRealizations;
+	}
+
+
+	public Set<ExamTopic> getSyllabus() {
+		return syllabus;
+	}
+
+
+	public void setSyllabus(Set<ExamTopic> syllabus) {
+		this.syllabus = syllabus;
+	}
+
+
+	public ExamType getExamType() {
+		return examType;
+	}
+
+
+	public void setExamType(ExamType examType) {
+		this.examType = examType;
+	}
 	
-
-
+	
 	
 }

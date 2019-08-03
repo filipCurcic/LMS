@@ -11,10 +11,14 @@ public class View {
 	public interface ShowTitle {};
 	public interface ShowTeacherOnRealization {};
 	public interface ShowStudyCourseTeacher {};
+	public interface ShowStudyYear {};
 	public interface ShowUserPermission {};
 	public interface ShowStudentOnYear {};
+	public interface ShowExamRealization {};
+	public interface ShowExamTopic {};
 	public interface ShowCourse {};
 	public interface ShowStudentOnYeear {};
+	public interface ShowElectiveCourseAttendance {};
 	public interface ShowCourseAttending {};
 	public interface ShowCheckin {};
 	public interface ShowStudyCourse {};

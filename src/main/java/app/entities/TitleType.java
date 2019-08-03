@@ -27,8 +27,6 @@ public class TitleType {
 	@OneToMany(mappedBy = "titleType")
 	private Set<Title> title;
 	
-	@Version
-	private int version = 0;
 	
 	public TitleType() {}
 
@@ -64,14 +62,5 @@ public class TitleType {
 		this.title = title;
 	}
 
-	public int getVersion() {
-		return version;
-	}
-
-	public void setVersion(int version) {
-		this.version = version;
-	}
 	
-	
-
 }

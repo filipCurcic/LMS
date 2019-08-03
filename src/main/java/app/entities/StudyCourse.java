@@ -16,6 +16,7 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import app.utils.View.ShowStudyCourseTeacher;
+import app.utils.View.ShowStudyYear;
 
 
 
@@ -36,25 +37,23 @@ public class StudyCourse {
 	@OneToMany(mappedBy="studyCourse")
 	private Set<StudyCourseTeacher> studyCourseTeacher;
 	
+	@JsonView(ShowStudyYear.class)
 	@OneToMany(mappedBy= "studyCourse")
 	private Set<StudyYear> studyYear;
 	
-	@Version
-	private int version = 0;
 	
 	private String imgPath;
 	
 	public StudyCourse () {}
 	
 
-	public StudyCourse(Long id, @NotNull String name, Faculty faculty, Set<StudyCourseTeacher> studyCourseTeacher,
-			int version) {
+	public StudyCourse(Long id, @NotNull String name, Faculty faculty, Set<StudyCourseTeacher> studyCourseTeacher) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.faculty = faculty;
 		this.studyCourseTeacher = studyCourseTeacher;
-		this.version = version;
+		
 	}
 
 
@@ -91,16 +90,6 @@ public class StudyCourse {
 
 	public void setStudyCourseTeacher(Set<StudyCourseTeacher> studyCourseTeacher) {
 		this.studyCourseTeacher = studyCourseTeacher;
-	}
-
-
-	public int getVersion() {
-		return version;
-	}
-
-
-	public void setVersion(int version) {
-		this.version = version;
 	}
 
 

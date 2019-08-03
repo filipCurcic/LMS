@@ -13,8 +13,11 @@ import javax.persistence.OneToOne;
 import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Where;
+
 import com.fasterxml.jackson.annotation.JsonView;
 
+import app.utils.View.ShowAddress;
 import app.utils.View.ShowFaculty;
 import app.utils.View.ShowTeacher;
 
@@ -40,20 +43,18 @@ public class University {
 	@NotNull
 	private String description;
 	
-	@JsonView(ShowFaculty.class)
-	@OneToMany(mappedBy="university")
-	private Set<Faculty> faculties;
+//	@JsonView(ShowFaculty.class)
+//	@OneToMany(mappedBy="university")
+//	private Set<Faculty> faculties;
 	
+	@JsonView(ShowAddress.class)
 	@OneToOne
-	@JoinColumn(name="addressId")
 	private Address address;
 		
 	@JsonView(ShowTeacher.class)
 	@OneToMany(mappedBy="university")
 	private Set<Teacher> teachers;
 	
-	@Version
-	private int version = 0;
 	
 	public University () {
 		
@@ -61,17 +62,16 @@ public class University {
 
 	
 	public University(String name,Date establishmentDate, String contact,
-			String email, String description, Set<Faculty> faculties, Address address,
-			Set<Teacher> teachers, int version) {
+			String email, String description, Address address,
+			Set<Teacher> teachers) {
 		this.name = name;
 		this.establishmentDate = establishmentDate;
 		this.contact = contact;
 		this.email = email;
 		this.description = description;
-		this.faculties = faculties;
 		this.address = address;
 		this.teachers = teachers;
-		this.version = version;
+		
 	}
 
 	
@@ -193,22 +193,13 @@ public class University {
 
 
 
-	public Set<Faculty> getFaculties() {
-		return faculties;
-	}
-
-	public void setFaculties(Set<Faculty> faculties) {
-		this.faculties = faculties;
-	}
-
-	public int getVersion() {
-		return version;
-	}
-
-	public void setVersion(int version) {
-		this.version = version;
-	}
-
+//	public Set<Faculty> getFaculties() {
+//		return faculties;
+//	}
+//
+//	public void setFaculties(Set<Faculty> faculties) {
+//		this.faculties = faculties;
+//	}
 
 
 	public Set<Teacher> getTeachers() {
@@ -220,18 +211,5 @@ public class University {
 	public void setTeachers(Set<Teacher> teachers) {
 		this.teachers = teachers;
 	}	
-	
-	
-
-	
-	
-	
-	
-
-
-	
-	
-	
-	
 
 }

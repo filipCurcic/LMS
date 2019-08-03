@@ -12,10 +12,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.Where;
+
 import com.fasterxml.jackson.annotation.JsonView;
 
 import app.utils.View.ShowCheckin;
 import app.utils.View.ShowCourseAttending;
+import app.utils.View.ShowElectiveCourseAttendance;
 import app.utils.View.ShowStudentOnYeear;
 
 @Entity
@@ -51,14 +54,15 @@ public class Student{
 	@OneToMany(mappedBy= "student")
 	private Set<CourseAttending> courseAttending;
 	
-	@JsonView(ShowCheckin.class)
-	@OneToMany(mappedBy = "checkedStudent")
-	private Set<Checkin> checkins;
+	
+	@JsonView(ShowElectiveCourseAttendance.class)
+	@OneToMany(mappedBy="student")
+	private Set<ElectiveCourseAttendance> electiveCourseAttendances;
+
 	
 	@ManyToOne(cascade=CascadeType.ALL)
 	private RegisteredUser registeredUser;
 
-	private int studyYear;
 	
 	public Student() {}
 
@@ -118,6 +122,18 @@ public class Student{
 	}
 
 	
+	public Set<ElectiveCourseAttendance> getElectiveCourseAttendances() {
+		return electiveCourseAttendances;
+	}
+
+	public void setElectiveCourseAttendances(Set<ElectiveCourseAttendance> electiveCourseAttendances) {
+		this.electiveCourseAttendances = electiveCourseAttendances;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
 	public boolean deleted() {
 		return deleted;
 	}
@@ -169,14 +185,7 @@ public class Student{
 		this.registeredUser = registeredUser;
 	}
 
-	public int getStudyYear() {
-		return studyYear;
-	}
-
-	public void setStudyYear(int studyYear) {
-		this.studyYear = studyYear;
-	}
-	
+		
 	
 	
 	

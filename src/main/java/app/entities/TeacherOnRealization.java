@@ -1,5 +1,6 @@
 package app.entities;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -7,7 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -20,27 +20,27 @@ public class TeacherOnRealization {
 	@NotNull
 	private int numberOfClasses;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Teacher teacher;
 	
+	@ManyToOne(cascade=CascadeType.ALL)
+	private CourseRealization courseRealization;
+
 	
 	@OneToOne(mappedBy = "teacherOnRealization")
     private TeachingType teachingType;
 	
-	@Version
-	private int version = 0;
 	
 	public TeacherOnRealization() {}
 	
 	
 
-	public TeacherOnRealization(@NotNull int numberOfClasses, Teacher teacher, TeachingType teachingType,
-			int version) {
+	public TeacherOnRealization(@NotNull int numberOfClasses, Teacher teacher, TeachingType teachingType) {
 		super();
 		this.numberOfClasses = numberOfClasses;
 		this.teacher = teacher;
 		this.teachingType = teachingType;
-		this.version = version;
+		
 	}
 
 
@@ -93,16 +93,16 @@ public class TeacherOnRealization {
 
 
 
-	public int getVersion() {
-		return version;
+	public CourseRealization getCourseRealization() {
+		return courseRealization;
 	}
 
 
 
-	public void setVersion(int version) {
-		this.version = version;
+	public void setCourseRealization(CourseRealization courseRealization) {
+		this.courseRealization = courseRealization;
 	}
-
+	
 	
 	
 }

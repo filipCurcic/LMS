@@ -28,11 +28,12 @@ public class Country {
 	@OneToMany(mappedBy="country", cascade=CascadeType.ALL)
 	private Set<City> city;
 	
-	@Version
-	public int version = 0;
-	
 	public Country() {
 		
+	}
+	
+	public Country(String name) {
+		this.name = name;
 	}
 	
 	public Country(String name, Set<City> city) {

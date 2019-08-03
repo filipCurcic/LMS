@@ -27,8 +27,6 @@ public class ScientificField {
 	@OneToMany(mappedBy = "scientificField")
 	private Set<Title> title;
 	
-	@Version
-	private int version = 0;
 	
 	public ScientificField() {}
 
@@ -64,14 +62,7 @@ public class ScientificField {
 		this.title = title;
 	}
 
-	public int getVersion() {
-		return version;
-	}
 
-	public void setVersion(int version) {
-		this.version = version;
-	}
-	
 	
 	
 

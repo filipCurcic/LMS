@@ -19,7 +19,7 @@ public class CourseAttending {
 	@ManyToOne(cascade=CascadeType.ALL)
 	private Student student;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private CourseRealization courseRealization;
 	
 	public CourseAttending() {}

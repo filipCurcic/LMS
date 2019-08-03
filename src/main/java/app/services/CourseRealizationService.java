@@ -20,6 +20,10 @@ public class CourseRealizationService {
 	public Iterable<CourseRealization> getCourseRealizations() {
 		return cr.findAll();
 	}
+	
+	public Iterable<CourseRealization> getCourseRealizationByStudyYearId(Long id) {
+		return cr.findByStudyYearId(id);
+	}
 
 	public Optional<CourseRealization> getCourseRealization(Long id) {
 		return cr.findById(id);
