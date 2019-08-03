@@ -6,12 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.entities.ForumSubFacultyForum;
+import app.entities.ForumSubForum;
 import app.repositories.ForumFacultySubForumRepository;
+import app.repositories.ForumSubForumRepository;
 
 @Service
 public class ForumFacultySubForumService {
 	@Autowired
 	ForumFacultySubForumRepository fr;
+	
+	@Autowired
+	ForumSubForumRepository sfr;
 
 	public ForumFacultySubForumService() {
 	}
@@ -31,5 +36,9 @@ public class ForumFacultySubForumService {
 	public void deleteForumFacultySubForum(Long id) {
 		Optional<ForumSubFacultyForum> forumfacultysubforum = fr.findById(id);
 		fr.delete(forumfacultysubforum.get());
+	}
+	
+	public Iterable<ForumSubForum> getSubForums(Long id) {
+		return sfr.getSubForums(id);
 	}
 }

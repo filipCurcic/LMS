@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
+import app.entities.ForumReply;
 import app.entities.ForumThread;
 import app.services.ForumThreadService;
 import app.utils.View.HideOptionalProperties;
@@ -25,6 +26,7 @@ public class ForumThreadController {
 	@Autowired
 	ForumThreadService fs;
 
+	@JsonView(HideOptionalProperties.class)
 	@RequestMapping("/all")
 	public ResponseEntity<Iterable<ForumThread>> getForumThreads() {
 		return new ResponseEntity<Iterable<ForumThread>>(fs.getForumThreads(), HttpStatus.OK);
@@ -44,6 +46,12 @@ public class ForumThreadController {
 			return new ResponseEntity<ForumThread>(forumthread.get(), HttpStatus.OK);
 		}
 		return new ResponseEntity<ForumThread>(HttpStatus.NOT_FOUND);
+	}
+	
+	@JsonView(HideOptionalProperties.class)
+	@RequestMapping("/{id}/replies")
+	public ResponseEntity<Iterable<ForumReply>> getReplies(@PathVariable Long id) {
+		return new ResponseEntity<Iterable<ForumReply>>(fs.getReplies(id), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

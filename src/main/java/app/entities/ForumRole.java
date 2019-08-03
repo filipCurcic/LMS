@@ -9,6 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import app.utils.View.ShowForumUserRole;
+
 @Entity
 public class ForumRole {
 	
@@ -19,6 +23,7 @@ public class ForumRole {
 	@NotNull
 	private String name;
 	
+	@JsonView(ShowForumUserRole.class)
 	@OneToMany(mappedBy = "role")
 	private Set<ForumUserRole> users;
 

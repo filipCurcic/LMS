@@ -11,6 +11,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import app.utils.View.ShowForumReply;
+
 @Entity
 public class ForumThread {
 	
@@ -30,6 +34,9 @@ public class ForumThread {
 	@ManyToOne
 	private ForumUser author;
 	
+	private String threadName;
+	
+	@JsonView(ShowForumReply.class)
 	@OneToMany(mappedBy = "forumThread")
 	private Set<ForumReply> replies;
 	
@@ -37,7 +44,7 @@ public class ForumThread {
 	private ForumSubForum subForum;
 
 	public ForumThread(Long id, @NotNull Date dateOfCreation, @NotNull String content, ForumFile file, ForumUser author,
-			Set<ForumReply> replies, ForumSubForum subForum) {
+			Set<ForumReply> replies, ForumSubForum subForum, String threadName) {
 		super();
 		this.id = id;
 		this.dateOfCreation = dateOfCreation;
@@ -46,8 +53,17 @@ public class ForumThread {
 		this.author = author;
 		this.replies = replies;
 		this.subForum = subForum;
+		this.threadName = threadName;
 	}
 	
+	public String getThreadName() {
+		return threadName;
+	}
+
+	public void setThreadName(String threadName) {
+		this.threadName = threadName;
+	}
+
 	public ForumThread() {}
 
 	public ForumThread(Long id, @NotNull Date dateOfCreation, @NotNull String content, ForumUser author) {

@@ -25,6 +25,7 @@ public class ForumUserController {
 	@Autowired
 	ForumUserService fs;
 
+	@JsonView(HideOptionalProperties.class)
 	@RequestMapping("/all")
 	public ResponseEntity<Iterable<ForumUser>> getForumUsers() {
 		return new ResponseEntity<Iterable<ForumUser>>(fs.getForumUsers(), HttpStatus.OK);

@@ -25,6 +25,7 @@ public class ForumReplyController {
 	@Autowired
 	ForumReplyService fs;
 
+	@JsonView(HideOptionalProperties.class)
 	@RequestMapping("/all")
 	public ResponseEntity<Iterable<ForumReply>> getForumReplys() {
 		return new ResponseEntity<Iterable<ForumReply>>(fs.getForumReplies(), HttpStatus.OK);

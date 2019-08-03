@@ -25,6 +25,7 @@ public class ForumRoleController {
 	@Autowired
 	ForumRoleService fs;
 
+	@JsonView(HideOptionalProperties.class)
 	@RequestMapping("/all")
 	public ResponseEntity<Iterable<ForumRole>> getForumRoles() {
 		return new ResponseEntity<Iterable<ForumRole>>(fs.getForumRoles(), HttpStatus.OK);

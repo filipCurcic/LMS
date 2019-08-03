@@ -25,6 +25,7 @@ public class ForumFileController {
 	@Autowired
 	ForumFileService fs;
 
+	@JsonView(HideOptionalProperties.class)
 	@RequestMapping("/all")
 	public ResponseEntity<Iterable<ForumFile>> getForumFiles() {
 		return new ResponseEntity<Iterable<ForumFile>>(fs.getForumFiles(), HttpStatus.OK);

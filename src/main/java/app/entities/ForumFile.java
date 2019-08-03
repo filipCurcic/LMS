@@ -9,6 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import app.utils.View.ShowForumThread;
+
 @Entity
 public class ForumFile {
 	
@@ -21,6 +25,7 @@ public class ForumFile {
 	@NotNull
 	private String url;
 	
+	@JsonView(ShowForumThread.class)
 	@OneToMany(mappedBy = "file")
 	private Set<ForumThread> threads;
 

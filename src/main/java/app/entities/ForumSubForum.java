@@ -13,6 +13,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
+import app.utils.View.ShowForumThread;
+
 @Entity
 public class ForumSubForum {
 	@Id
@@ -27,7 +31,7 @@ public class ForumSubForum {
 	
 	
 	
-	
+	@JsonView(ShowForumThread.class)
 	@OneToMany(mappedBy = "subForum")
 	private Set<ForumThread> threads;
 	

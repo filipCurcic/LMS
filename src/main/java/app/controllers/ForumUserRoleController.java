@@ -24,7 +24,8 @@ import app.utils.View.HideOptionalProperties;
 public class ForumUserRoleController {
 	@Autowired
 	ForumUserRoleService fs;
-
+	
+	@JsonView(HideOptionalProperties.class)
 	@RequestMapping("/all")
 	public ResponseEntity<Iterable<ForumUserRole>> getForumUserRoles() {
 		return new ResponseEntity<Iterable<ForumUserRole>>(fs.getForumUserRoles(), HttpStatus.OK);
