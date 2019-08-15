@@ -56,4 +56,10 @@ public class ForumUserRoleController {
 		}
 		return new ResponseEntity<ForumUserRole>(HttpStatus.NO_CONTENT);
 	}
+	
+	
+	
+	
+	
+	
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import app.entities.ForumUser;
+import app.entities.Student;
 import app.services.ForumUserService;
 import app.utils.View.HideOptionalProperties;
 
@@ -56,4 +57,17 @@ public class ForumUserController {
 		}
 		return new ResponseEntity<ForumUser>(HttpStatus.NO_CONTENT);
 	}
+	
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping(value="/logged/{username}", method=RequestMethod.GET)
+    public ResponseEntity<ForumUser> getLoggedUser(@PathVariable String username) {
+        Optional<ForumUser> user = fs.getLoggedUser(username);
+        if(user.isPresent()) {
+            return new ResponseEntity<ForumUser>(user.get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<ForumUser>(HttpStatus.NOT_FOUND);
+    }
+	
+	
+	
 }

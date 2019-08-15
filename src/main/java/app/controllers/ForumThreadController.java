@@ -34,6 +34,9 @@ public class ForumThreadController {
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ResponseEntity<ForumThread> addForumThread(@RequestBody ForumThread forumthread) {
+		System.out.println(forumthread.getAuthor());
+		System.out.println(forumthread.getDateOfCreation());
+		System.out.println(forumthread.getSubForum());
 		fs.AddForumThread(forumthread);
 		return new ResponseEntity<ForumThread>(forumthread, HttpStatus.OK);
 	}

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import app.entities.ForumUser;
+import app.entities.Student;
 import app.repositories.ForumUserRepository;
 
 @Service
@@ -32,4 +33,8 @@ public class ForumUserService {
 		Optional<ForumUser> forumuser = fr.findById(id);
 		fr.delete(forumuser.get());
 	}
+	
+	public Optional<ForumUser> getLoggedUser(String username) {
+        return fr.getLoggedUser(username);
+    }
 }

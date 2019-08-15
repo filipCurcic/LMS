@@ -33,6 +33,8 @@ public class ForumReplyController {
 
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ResponseEntity<ForumReply> addForumReply(@RequestBody ForumReply forumreply) {
+		System.out.println(forumreply.getClass());
+
 		fs.AddForumReply(forumreply);
 		return new ResponseEntity<ForumReply>(forumreply, HttpStatus.OK);
 	}
