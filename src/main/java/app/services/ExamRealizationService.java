@@ -1,6 +1,6 @@
 package app.services;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Optional;
@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import app.dto.StudentExamRegistrationDTO;
 import app.entities.Exam;
 import app.entities.ExamRealization;
 import app.repositories.ExamRealizationRepository;
@@ -50,6 +51,30 @@ public class ExamRealizationService {
 	}
 
 		
+	public ArrayList<StudentExamRegistrationDTO> getRegisteredExamsBySubject(Long courseId, String teacherUsername) {
+		Calendar today = Calendar.getInstance();
+		today.setTime(new Date());
+		Calendar beforeFifteen = Calendar.getInstance();
+		beforeFifteen.setTime(new Date());
+		beforeFifteen.add(Calendar.DATE, -15);
+		ArrayList<Object[]> fetched = examRealizationRepository.findRegisteredExamsByCourse(courseId, teacherUsername,
+				beforeFifteen.getTime(), today.getTime());
+		ArrayList<StudentExamRegistrationDTO> registrations = new ArrayList<StudentExamRegistrationDTO>(fetched.size());
+		if (fetched.size() > 0) {
+			try {
+				for (int i = 0; i < fetched.size(); i++) {
+					registrations.add(new StudentExamRegistrationDTO((String) fetched.get(i)[0],
+							(String) fetched.get(i)[1], (String) fetched.get(i)[2], (Long) fetched.get(i)[3],
+							(Long) fetched.get(i)[4], (Long) fetched.get(i)[5], (Long) fetched.get(i)[6], (Long) fetched.get(i)[7]));
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}
+		return registrations;
+	}
+
 	public void add(ExamRealization er) {
 		examRealizationRepository.save(er);
 	}
@@ -65,4 +90,5 @@ public class ExamRealizationService {
 			examRealizationRepository.save(newER);		
 		}
 	}
+	
 }

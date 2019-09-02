@@ -18,14 +18,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import app.App;
-import app.entities.Country;
+import app.LearningManagementSystem;
 import app.repositories.CountryRepository;
 import app.services.CountryService;
 
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = App.class)
+@SpringBootTest(classes = LearningManagementSystem.class)
 @AutoConfigureMockMvc
 public class CountryTest {
 	

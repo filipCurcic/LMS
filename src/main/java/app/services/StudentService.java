@@ -60,7 +60,6 @@ public class StudentService {
 		loginService.addPermssion(student.getRegisteredUser(), "ROLE_STUDENT");
 		student.getRegisteredUser().setPassword(passwordEncoder.encode(student.getRegisteredUser().getPassword()));
 		stuRep.save(student);
-        System.out.println("service saved");
 	}
 	
 	public void removeStudent(Long id) {

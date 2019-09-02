@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import app.entities.ForumSubForum;
-import app.entities.ForumThread;
 import app.services.ForumSubForumService;
 import app.utils.View.HideOptionalProperties;
 
@@ -38,7 +37,7 @@ public class SubForumController {
 		ss.AddForumSubForum(subforum);
 		return new ResponseEntity<ForumSubForum>(subforum, HttpStatus.OK);
 	}
-	@JsonView(HideOptionalProperties.class)
+
 	@RequestMapping("/{id}")
 	public ResponseEntity<ForumSubForum> getSubForum(@PathVariable Long id) {
 		Optional<ForumSubForum> subforum = ss.getForumSubForum(id);
@@ -56,11 +55,5 @@ public class SubForumController {
 			return new ResponseEntity<ForumSubForum>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<ForumSubForum>(HttpStatus.NO_CONTENT);
-	}
-	
-	@JsonView(HideOptionalProperties.class)
-	@RequestMapping(value = "/{id}/threads")
-	public ResponseEntity<Iterable<ForumThread>> getThreads(@PathVariable Long id) {
-		return new ResponseEntity<Iterable<ForumThread>>(ss.getAllThreads(id), HttpStatus.OK);
 	}
 }

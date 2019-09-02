@@ -3,8 +3,6 @@ package app.controllers;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import javax.security.auth.Subject;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
+import app.entities.Course;
 import app.entities.CourseAttending;
 import app.entities.Student;
 import app.services.CourseAttendingService;
 import app.utils.View.HideOptionalProperties;
+import app.utils.View.ShowStudyYear;
 
 @CrossOrigin(origins = { "http://localhost:4200" })
 @RestController
@@ -64,9 +64,9 @@ public class CourseAttendingController {
 	}
 	
 	@JsonView(HideOptionalProperties.class)
-    @RequestMapping(value="/averageMark/{studentId}", method=RequestMethod.GET)
-    public ResponseEntity<Double> getAverageMark(@PathVariable Long studentId) {
-        Double averageMark = cs.findAvgMark(studentId);
+    @RequestMapping(value="/average-mark/{studentUsername}", method=RequestMethod.GET)
+    public ResponseEntity<Double> getAverageMark(@PathVariable String studentUsername) {
+        Double averageMark = cs.findAvgMark(studentUsername);
         return new ResponseEntity<Double>(averageMark, HttpStatus.OK);
     }
     
@@ -76,16 +76,16 @@ public class CourseAttendingController {
         return new ResponseEntity<Iterable<Student>>(cs.getStudentsWhoDidntPassExam(courseId), HttpStatus.OK);
     }
 
-//    @JsonView(HideOptionalProperties.class)
-//    @RequestMapping(value="/subjects/{studentUsername}", method=RequestMethod.GET)
-//    public ResponseEntity<ArrayList<Subject>> getCurrentSubjectsByStudentId(@PathVariable String studentUsername) {
-//    	return new ResponseEntity<ArrayList<Subject>>(subjectAttendanceService.getCurrentSubjects(studentUsername), HttpStatus.OK);
-//    }
+    @JsonView(HideOptionalProperties.class)
+    @RequestMapping(value="/current-courses/{studentUsername}", method=RequestMethod.GET)
+    public ResponseEntity<ArrayList<Course>> getCurrentCourseByStudentId(@PathVariable String studentUsername) {
+    	return new ResponseEntity<ArrayList<Course>>(cs.getCurrentCourses(studentUsername), HttpStatus.OK);
+    }
     
-//    @JsonView(ShowYearOfStudy.class)
-//    @RequestMapping(value="/pastSubjects/{studentUsername}", method=RequestMethod.GET)
-//    public ResponseEntity<ArrayList<Object>> getPastSubjectsByStudentUsername(@PathVariable String studentUsername) {
-//    	return new ResponseEntity<ArrayList<Object>>(subjectAttendanceService.getPastSubjects(studentUsername), HttpStatus.OK);
-//    }
+    @JsonView(HideOptionalProperties.class)
+    @RequestMapping(value="/past-courses/{studentUsername}", method=RequestMethod.GET)
+    public ResponseEntity<ArrayList<Object>> getPastCourseByStudentUsername(@PathVariable String studentUsername) {
+    	return new ResponseEntity<ArrayList<Object>>(cs.getPastCourses(studentUsername), HttpStatus.OK);
+    }
 
 }
