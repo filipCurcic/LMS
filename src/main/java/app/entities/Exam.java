@@ -55,19 +55,7 @@ public class Exam {
 		
 	}
 
-	public Exam(Date startTime, Date endTime, @NotNull Integer points, @NotNull Integer durationInMinutes,
-			CourseRealization courseRealization, Set<ExamRealization> examRealizations, Set<ExamTopic> syllabus,
-			ExamType examType) {
-		super();
-		this.startTime = startTime;
-		this.endTime = endTime;
-		this.points = points;
-		this.durationInMinutes = durationInMinutes;
-		this.courseRealization = courseRealization;
-		this.examRealizations = examRealizations;
-		this.syllabus = syllabus;
-		this.examType = examType;
-	}
+
 	
 	public Exam(Date startTime, Date endTime, Integer points, Integer durationInMinutes,
 			CourseRealization courseRealization, ExamType examType, Set<ExamRealization> examRealizations,

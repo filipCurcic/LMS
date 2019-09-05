@@ -2,6 +2,7 @@ package app.entities;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,16 +23,21 @@ public class News {
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date date;
 	
+	@Column(length=128)
+	private String profilePicturePath;
+	
+	private String name;
+	
 	
 	public News() {
 		super();
 	}
 	
-	public News(Long id, String headline, String body, Date date) {
+	public News(Long id, String headline, String body, String name) {
 		this.id = id;
 		this.headline = headline;
 		this.body = body;
-		this.date = date;
+		this.name = name;
 	}
 
 	public Long getId() {
@@ -53,6 +59,15 @@ public class News {
 	public String getBody() {
 		return body;
 	}
+	
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public void setBody(String body) {
 		this.body = body;
@@ -66,6 +81,14 @@ public class News {
 		this.date = date;
 	}
 	
+	
+	public String getProfilePicturePath() {
+		return profilePicturePath;
+	}
+
+	public void setProfilePicturePath(String profilePicturePath) {
+		this.profilePicturePath = profilePicturePath;
+	}
 	
 
 }
