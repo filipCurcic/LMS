@@ -54,7 +54,7 @@ public class ExamRealizationController {
 	@RequestMapping(value="/{teacherUsername}/grading/{courseId}", method=RequestMethod.GET)
 	public ResponseEntity<ArrayList<StudentExamRegistrationDTO>> getRegisteredExamsOnSubject(@PathVariable String teacherUsername, @PathVariable Long courseId){
 		ArrayList<StudentExamRegistrationDTO> registeredExams = examRealService.getRegisteredExamsBySubject(courseId, teacherUsername);
-		if(registeredExams.size() == 0) return new ResponseEntity<ArrayList<StudentExamRegistrationDTO>>(HttpStatus.NO_CONTENT);
+//		if(registeredExams.size() == 0) return new ResponseEntity<ArrayList<StudentExamRegistrationDTO>>(HttpStatus.NO_CONTENT);
 		return new ResponseEntity<ArrayList<StudentExamRegistrationDTO>>(registeredExams, HttpStatus.OK);
 	}
 

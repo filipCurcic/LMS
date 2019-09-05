@@ -106,7 +106,7 @@ public class AdministratorStaffController {
     
 	@Secured("ROLE_ADMINISTRATOR_STAFF")
     @JsonView(HideOptionalProperties.class)
-    @RequestMapping(value="/enroll/{studentId}", method=RequestMethod.POST)
+    @RequestMapping(value="/enroll/{studentId}", method=RequestMethod.PUT)
     public ResponseEntity<Boolean> enrollmentStudentToTheNextYear(@PathVariable Long studentId, @RequestBody StudyYear studyYear) {
         return new ResponseEntity<Boolean>(adminStaffService.enrollmentStudentToTheNextYear(studentId, studyYear), HttpStatus.OK);
     }

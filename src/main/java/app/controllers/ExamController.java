@@ -32,7 +32,7 @@ public class ExamController {
 	@Autowired
 	ExamService exSer;
 	
-	
+	@JsonView(HideOptionalProperties.class)
 	@RequestMapping("/all")
 	public ResponseEntity<Iterable<Exam>> getExams() {
 		return new ResponseEntity<Iterable<Exam>>(exSer.getAll(), HttpStatus.OK);
@@ -49,6 +49,7 @@ public class ExamController {
 		return new ResponseEntity<Exam>(exam, HttpStatus.OK);
 	}
 
+	@JsonView(HideOptionalProperties.class)
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Exam> getExam(@PathVariable Long id) {
 		

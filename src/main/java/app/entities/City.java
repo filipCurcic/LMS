@@ -24,8 +24,10 @@ public class City {
 	private Long id;
 	@NotNull
 	private String name;
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Country country;
+	
 	
 	
 	public City() {
