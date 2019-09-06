@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,7 +32,8 @@ public class ForumThreadController {
 	public ResponseEntity<Iterable<ForumThread>> getForumThreads() {
 		return new ResponseEntity<Iterable<ForumThread>>(fs.getForumThreads(), HttpStatus.OK);
 	}
-
+	
+	 @PreAuthorize("hasAnyRole('ROLE_ADMINISTRATOR_STAFF','ROLE_ADMINISTRATOR', 'ROLE_STUDENT')")
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public ResponseEntity<ForumThread> addForumThread(@RequestBody ForumThread forumthread) {
 		System.out.println(forumthread.getAuthor());
