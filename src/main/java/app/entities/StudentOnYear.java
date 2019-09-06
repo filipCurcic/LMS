@@ -20,9 +20,9 @@ public class StudentOnYear {
 	private String indeks;
 	@NotNull
 	private Date enrollmentDate;
-	@ManyToOne(cascade= CascadeType.MERGE)
+	@ManyToOne(cascade= {CascadeType.MERGE, CascadeType.REFRESH})
 	private StudyYear studyYear;
-	@ManyToOne(cascade= CascadeType.MERGE)
+	@ManyToOne(cascade= {CascadeType.MERGE, CascadeType.REFRESH})
 	private Student student;
 	
 	public StudentOnYear() {}

@@ -51,7 +51,7 @@ public class FacultyController {
     }
 
 	
-	//@JsonView(HideOptionalProperties.class)
+//	@JsonView(HideOptionalProperties.class)
     @RequestMapping(value = "/add", method = RequestMethod.POST)
 	@Secured("ROLE_ADMINISTRATOR")
 	public ResponseEntity<Faculty> addFaculty(@RequestBody Faculty faculty){

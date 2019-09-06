@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import app.entities.CourseRealization;
 import app.entities.Teacher;
+import app.repositories.CourseRealizationRepository;
 import app.repositories.TeacherRepository;
 
 @Service
@@ -26,6 +28,9 @@ public class TeacherService {
 	
 	@Autowired
 	PasswordEncoder passwordEncoder;
+	
+	@Autowired
+	CourseRealizationRepository courseRealizationRepository;
     
 	
 	public Iterable<Teacher> getTeachers() {
@@ -65,5 +70,9 @@ public class TeacherService {
 	            teacherRep.save(teacher);   
 	        }
 	}
+	
+	public Iterable<CourseRealization> getCourseRealizations(String username) {
+        return courseRealizationRepository.findByTeacherUsername(username);
+    }
 
 }

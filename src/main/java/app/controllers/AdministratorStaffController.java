@@ -98,14 +98,15 @@ public class AdministratorStaffController {
         return new ResponseEntity<AdministratorStaff>(adm, HttpStatus.OK);
     }
 	
-	//@JsonView(HideOptionalProperties.class)
+	@JsonView(HideOptionalProperties.class)
     @RequestMapping(value="/enrollment/{studyYearId}", method=RequestMethod.GET)
     public ResponseEntity<Iterable<Student>> getStudentsForEnrollmentToTheNextYear(@PathVariable Long studyYearId) {
         return new ResponseEntity<Iterable<Student>>(adminStaffService.getStudentsForEnrollmentToTheNextYear(studyYearId), HttpStatus.OK);
     }
     
+	@Secured("ROLE_ADMINISTRATOR_STAFF")
     @JsonView(HideOptionalProperties.class)
-    @RequestMapping(value="/enrollment/{studentId}", method=RequestMethod.POST)
+    @RequestMapping(value="/enroll/{studentId}", method=RequestMethod.PUT)
     public ResponseEntity<Boolean> enrollmentStudentToTheNextYear(@PathVariable Long studentId, @RequestBody StudyYear studyYear) {
         return new ResponseEntity<Boolean>(adminStaffService.enrollmentStudentToTheNextYear(studentId, studyYear), HttpStatus.OK);
     }

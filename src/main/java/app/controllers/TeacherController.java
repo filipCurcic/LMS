@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import app.entities.CourseRealization;
 import app.entities.Teacher;
 import app.services.FileService;
 import app.services.TeacherService;
@@ -119,4 +120,9 @@ public class TeacherController {
                 .body(new InputStreamResource(bis));
     }
 
+	@JsonView(HideOptionalProperties.class)
+    @RequestMapping(value="/{username}/courseRealizations", method=RequestMethod.GET)
+    public ResponseEntity<Iterable<CourseRealization>> getCourseRealizations(@PathVariable String username) {
+        return new ResponseEntity<Iterable<CourseRealization>>(teacherService.getCourseRealizations(username), HttpStatus.OK);
+    }
 }

@@ -20,10 +20,10 @@ public class TeacherOnRealization {
 	@NotNull
 	private int numberOfClasses;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE})
 	private Teacher teacher;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.REMOVE})
 	private CourseRealization courseRealization;
 
 	

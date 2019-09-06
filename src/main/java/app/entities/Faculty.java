@@ -11,15 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Version;
 import javax.validation.constraints.NotNull;
-
-import org.hibernate.annotations.Where;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
+import app.utils.View.ShowAddress;
 import app.utils.View.ShowStudyCourse;
-import app.utils.View.ShowStudyCourseTeacher;
 import app.utils.View.ShowTeacher;
 
 

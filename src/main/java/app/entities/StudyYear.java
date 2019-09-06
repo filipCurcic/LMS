@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -27,8 +29,10 @@ public class StudyYear {
 	private Long id;
 	
 	@NotNull
+	@Temporal(TemporalType.DATE)
 	private Date startDate;
 	
+	@Temporal(TemporalType.DATE)
 	@NotNull
 	private Date endDate;
 	
@@ -43,7 +47,7 @@ public class StudyYear {
 	private StudyCourse studyCourse;
 	
 	@JsonView(ShowCourse.class)
-	@OneToMany(mappedBy="yearsOfStudy")
+	@OneToMany(mappedBy="yearsOfStudy", cascade = {CascadeType.MERGE, CascadeType.REFRESH})
 	private Set<Course> courses;
 	
 	@JsonView(ShowCourseRealization.class)

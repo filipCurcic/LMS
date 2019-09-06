@@ -42,10 +42,10 @@ public class Course {
 	private int otherClasses;
 	
 	@JsonView(ShowCourseRealization.class)
-	@OneToMany(mappedBy = "course", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@OneToMany(mappedBy = "course", fetch = FetchType.EAGER, cascade = { CascadeType.REMOVE, CascadeType.MERGE })
 	private Set<CourseRealization> courseRealizations;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH, CascadeType.MERGE})
 	private StudyYear yearsOfStudy;
 	
 	@JsonView(ShowCourseOutcome.class)

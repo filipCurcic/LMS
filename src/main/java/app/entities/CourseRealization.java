@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -25,26 +27,21 @@ public class CourseRealization {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@Temporal(TemporalType.DATE)
 	private Date startDate;
-	
+	@Temporal(TemporalType.DATE)
 	private Date endDate;
 	
-	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	private TeacherOnRealization teacherOnRealization;
-
 	@JsonView(ShowCourseAttending.class)
 	@OneToMany(mappedBy = "courseRealization", cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	private Set<CourseAttending> courseAttendings;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER, cascade= {CascadeType.MERGE, CascadeType.REMOVE})
 	private Course course;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.EAGER, cascade= {CascadeType.MERGE, CascadeType.REMOVE})
 	private StudyYear studyYear;
 	
-	@JsonView(ShowCourseRealization.class)
-	@OneToMany(mappedBy="studyYear")
-	private Set<CourseRealization> courseRealizations;
 	
 	@JsonView(ShowTeacherOnRealization.class)
 	@OneToMany(mappedBy="courseRealization")
@@ -55,40 +52,22 @@ public class CourseRealization {
 	@OneToMany(mappedBy = "courseRealization")
 	private Set<Exam> exams;
 	
-
-
 	public CourseRealization() {
 		
 	}
 
-
-
-
-
-
-
-
-	public CourseRealization(Long id, Date startDate, Date endDate, TeacherOnRealization teacherOnRealization,
+	public CourseRealization(Long id, Date startDate, Date endDate,
 			Set<CourseAttending> courseAttendings, Course course, StudyYear studyYear,
-			Set<CourseRealization> courseRealizations, Set<Exam> exams) {
+			Set<Exam> exams) {
 		super();
 		this.id = id;
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.teacherOnRealization = teacherOnRealization;
 		this.courseAttendings = courseAttendings;
 		this.course = course;
 		this.studyYear = studyYear;
-		this.courseRealizations = courseRealizations;
 		this.exams = exams;
 	}
-
-
-
-
-
-
-
 
 	public Long getId() {
 		return id;
@@ -112,14 +91,6 @@ public class CourseRealization {
 
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
-	}
-
-	public TeacherOnRealization getTeacherOnRealization() {
-		return teacherOnRealization;
-	}
-
-	public void setTeacherOnRealization(TeacherOnRealization teacherOnRealization) {
-		this.teacherOnRealization = teacherOnRealization;
 	}
 
 	public Set<CourseAttending> getCourseAttendings() {
@@ -149,32 +120,9 @@ public class CourseRealization {
 	}
 
 
-	public Set<CourseRealization> getCourseRealizations() {
-		return courseRealizations;
-	}
-
-
-	public void setCourseRealizations(Set<CourseRealization> courseRealizations) {
-		this.courseRealizations = courseRealizations;
-	}
-
-
-
-
-
-
-
-
 	public Set<Exam> getExams() {
 		return exams;
 	}
-
-
-
-
-
-
-
 
 	public void setExams(Set<Exam> exams) {
 		this.exams = exams;

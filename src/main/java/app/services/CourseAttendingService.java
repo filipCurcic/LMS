@@ -32,8 +32,8 @@ public class CourseAttendingService {
 		return cr.findById(id);
 	}
 	
-	public Double findAvgMark(Long studentId) {
-		return cr.findAverageMark(studentId);
+	public Double findAvgMark(String studentUsername) {
+		return cr.findAverageMark(studentUsername);
 	}
 	
 	public Iterable<Student> getStudentsWhoDidntPassExam(Long courseId) {
@@ -41,12 +41,12 @@ public class CourseAttendingService {
     }
     
     public ArrayList<Course> getCurrentCourses(String username){
-    	return cr.findCurrentsCourse(username);
+    	return cr.findCurrentCourses(username);
     }
     
-//    public ArrayList<Object> getPastSubjects(String username){
-//    	return cr.findPastCourses(username);
-//    }
+    public ArrayList<Object> getPastCourses(String username){
+    	return cr.findPastCourses(username);
+    }
 
 	public void AddCourseAttending(CourseAttending courseattending) {
 		cr.save(courseattending);
@@ -56,4 +56,12 @@ public class CourseAttendingService {
 		Optional<CourseAttending> courseattending = cr.findById(id);
 		cr.delete(courseattending.get());
 	}
+	
+	public void updateCourseAttending(Long id, CourseAttending courseAttending) {
+        Optional<CourseAttending> ca= cr.findById(id);
+        if(ca.isPresent()) {
+            courseAttending.setId(ca.get().getId());
+            cr.save(courseAttending);
+        }
+    }
 }
